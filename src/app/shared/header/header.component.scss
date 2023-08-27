@@ -1,0 +1,23 @@
+.navbar{
+    height: 100%;
+    padding: 1rem;
+    height: 4rem;
+}
+
+
+.bars{   
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.bars i:hover{
+color: rgb(255, 255, 255);
+background-color: grey;
+padding: .3rem;
+border-radius: 30%;
+}
+
+.right{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 100px;
+}

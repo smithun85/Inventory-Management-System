@@ -1,0 +1,135 @@
+<div class="signup-container">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Signup </h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+      <small aria-hidden="true" class="visually-hidden">&times;</small>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="form-container" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <input
+          type="type"
+          class="form-control"
+          placeholder="First name"
+          formControlName="firstName"
+        />
+      </div>
+      <div
+        *ngIf="
+          signup.firstName?.invalid &&
+          (signup.firstName?.dirty || signup.firstName?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <small *ngIf="signup.firstName.errors?.['required']">
+          First name must be required.
+        </small>
+        <small *ngIf="signup.firstName.errors?.['minlength']"> 
+          First name more than 2 letters
+        </small>
+        <small *ngIf="signup.firstName.errors?.['maxlength']">
+          First Name less than 25 letters
+        </small>
+      </div>
+    
+      <div class="mb-3">
+        <input
+          type="type"
+          class="form-control"
+          placeholder="Last name"
+          formControlName="lastName"
+        />
+      </div>
+      <div
+        *ngIf="
+          signup.lastName?.invalid &&
+          (signup.lastName?.dirty || signup.lastName?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <small *ngIf="signup.lastName.errors?.['required']">
+          last name must be required.
+        </small>
+        <small> </small>
+      </div>
+      <div class="mb-3">
+        <input
+          type="email"
+          class="form-control"
+          placeholder="email"
+          formControlName="email"
+        />
+      </div>
+      <div
+      *ngIf="
+        signup.email?.invalid &&
+        (signup.email?.dirty || signup.email?.touched)
+      "
+      class="alert alert-danger"
+    >
+      <small *ngIf="signup.email.errors?.['required']">
+        email must be required.
+      </small>
+      <small> </small>
+    </div>
+    
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="password"
+          formControlName="password"
+          autocomplete="off"
+        />
+      </div>
+      <div
+      *ngIf="
+        signup.password?.invalid &&
+        (signup.password?.dirty || signup.password?.touched)
+      "
+      class="alert alert-danger"
+    >
+      <small *ngIf="signup.password.errors?.['required']">
+        password field must be required.
+      </small>
+      <small *ngIf="signup.password.errors?.['pattern']">
+        Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter,special char and one digit.
+      </small>
+    </div>
+    
+      <div class="mb-3">
+        <input
+          type="password"
+          class="form-control"
+          placeholder="confirm password"
+          formControlName="confirm_Password"
+          autocomplete="off"
+        />
+      </div>
+      <div
+      *ngIf="
+        signup.confirm_Password.invalid &&
+        (signup.confirm_Password.dirty || signup.confirm_Password.touched)
+      "
+      class="alert alert-danger"
+    >
+      <small *ngIf="signup.confirm_Password.errors?.['required']">
+        password field must be required.
+      </small>
+    
+      <!-- <small *ngIf="signup.confirm_Password.errors?.['passwordMismatch']">
+        password and conform_password must be matched 
+      </small> -->
+    </div>
+       
+        <div class="btn-signup">
+          <button type="submit" class="btn btn-primary signup" >signup</button>
+          <button type="button" class="btn btn-primary" (click)="resetForm()">reset</button>
+        </div>
+  
+     
+    </form>
+  </div>
+ 
+</div>
