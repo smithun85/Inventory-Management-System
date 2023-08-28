@@ -32,7 +32,7 @@ createChart(){
     this.chartData = chart.data;
     
   })
- console.log( this.chartData)
+//  console.log( this.chartData)
  let dataArrays:any = {};
  let label:any[] = [];
  let colors = ['red', 'blue','purple','pink'];
@@ -47,8 +47,8 @@ createChart(){
     dataArrays[key].push(item.reports[key]);
 }
  }))
- console.log(dataArrays)
- console.log(Object.values(dataArrays))
+//  console.log(dataArrays)
+//  console.log(Object.values(dataArrays))
 //  console.log(this.x_axis)
 //  console.log('y:',this.y_axis)
 //  console.log('label',label)

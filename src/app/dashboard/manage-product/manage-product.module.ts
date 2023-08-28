@@ -5,6 +5,12 @@ import { BrandsComponent } from './brands/brands.component';
 import { UnitsComponent } from './units/units.component';
 import { ProductsComponent } from './products/products.component';
 import { ManageProductRoutingModule } from './manage-product.routing';
+// FormsModule
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+//pagination
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { DialogsComponent } from './dialogs/dialogs.component';
 
 
 
@@ -13,11 +19,15 @@ import { ManageProductRoutingModule } from './manage-product.routing';
     CategoriesComponent,
     BrandsComponent,
     UnitsComponent,
-    ProductsComponent
+    ProductsComponent,
+    DialogsComponent,
   ],
   imports: [
     CommonModule,
     ManageProductRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    PaginationModule.forRoot()
   ]
 })
 export class ManageProductModule { }

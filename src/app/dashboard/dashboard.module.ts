@@ -9,7 +9,20 @@ import { HeaderComponent } from '../shared/header/header.component';
 import { SidebarComponent } from '../shared/sidebar/sidebar.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 
+// FormsModule
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
+//http for server;
+import { HttpClientModule } from '@angular/common/http';
+
+//dropdown
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+//modelModule:
+import { ModalModule } from 'ngx-bootstrap/modal';
+//pagination
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+// chart
 import { FullCalendarModule } from '@fullcalendar/angular';
 
 
@@ -28,6 +41,12 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     DashboardRoutingModule,
     PaginationModule.forRoot(),
     FullCalendarModule,
+    FormsModule,
+    ReactiveFormsModule,   
+    ModalModule.forRoot(),
+    HttpClientModule,
+    BsDropdownModule.forRoot(),
+    FontAwesomeModule, 
   ],
   exports:[DashboardLayoutComponent]
 })

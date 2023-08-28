@@ -8,7 +8,20 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // Bootstrap:
 import { ModalModule } from 'ngx-bootstrap/modal';
 // import { NgxChartsModule }from '@swimlane/ngx-charts';
+// FormsModule
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
+
+//http for server;
+import { HttpClientModule } from '@angular/common/http';
+
+//dropdown
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+
+//pagination
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -19,7 +32,12 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     AppRoutingModule,
     BrowserAnimationsModule,
     ModalModule.forRoot(),
-    // NgxChartsModule,
+    FormsModule,
+    ReactiveFormsModule,   
+    HttpClientModule,
+    BsDropdownModule.forRoot(),
+    PaginationModule.forRoot(),
+    FontAwesomeModule, 
    
   ],
   providers: [],

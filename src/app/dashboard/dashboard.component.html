@@ -97,8 +97,8 @@
                       <tr *ngFor="let item of product">
                         <td>{{item.product}}</td>
                         <td>{{item.warehouse}}</td>
-                        <td>{{item.alert}}</td>
-                        <td>{{item.stock}}</td>
+                        <td><button type="button" class="btn btn-warning">{{item.alert}}</button></td>
+                        <td><button type="button" class="btn btn-danger">{{item.stock}}</button></td>
                         <td>{{item.unit}}</td>
                       </tr>
                     </tbody>
@@ -127,6 +127,53 @@
                     </tbody>
                   </table>
        </div>
+   </div>
+
+   <div class="cards">
+    <div class="card">
+        <i>cart</i>
+       
+        <div class="content">
+            <span>10</span>
+            <span>Categories</span>
+        </div>
+        <div class="btnAll">
+            <button>view All</button>
+        </div>       
+    </div>
+    <div class="card">
+        <i>cart</i>
+       
+        <div class="content">
+            <span>8</span>
+            <span>Product</span>
+        </div>
+        <div class="btnAll">
+            <button>view All</button>
+        </div>       
+    </div>
+    <div class="card">
+        <i>cart</i>
+       
+        <div class="content">
+            <span>8</span>
+            <span>Suppliers</span>
+        </div>
+        <div class="btnAll">
+            <button>view All</button>
+        </div>       
+    </div>
+    <div class="card">
+        <i>cart</i>
+       
+        <div class="content">
+            <span>9</span>
+            <span>Customers</span>
+        </div>
+        <div class="btnAll">
+            <button>view All</button>
+        </div>       
+    </div>
    </div>
 </section>
 
