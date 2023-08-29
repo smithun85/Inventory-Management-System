@@ -11,7 +11,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 //pagination
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DialogsComponent } from './dialogs/dialogs.component';
-
+// Modals
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { DialogsComponent } from './dialogs/dialogs.component';
     ManageProductRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    PaginationModule.forRoot()
+    PaginationModule.forRoot(),
+    ModalModule.forRoot(),
   ]
 })
 export class ManageProductModule { }

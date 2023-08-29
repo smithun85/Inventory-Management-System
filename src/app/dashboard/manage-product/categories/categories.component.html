@@ -1,18 +1,15 @@
-<p>categories works!</p>
 <div class="container">
-    <h4>All sales</h4>
+    <h4>Categories</h4>
     <div class="salesList">
-        <p>Sales List</p>
+        <p>Category List</p>
         <div class="button">
             <button class="btn btn-primary">
                 <b>+</b>Add New Sales
               </button>
               <button class="btn btn-primary">
-                CSV
+                Import to CSV
               </button>
-              <button class="btn btn-primary">
-               PDF
-              </button>
+          
         </div>
     </div>
     <div class="header">
@@ -45,58 +42,36 @@
       <thead>
         <tr class="sort">
           <th>
-            <span (click)="sortClick('invoice')">Invoice No|Date</span>
+            <span (click)="sortClick('serialNo')">SN</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'invoice' && reverse === true"
+              [hidden]="sortType === 'serialNo' && reverse === true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'invoice' && reverse === false"
+              [hidden]="sortType === 'serialNo' && reverse === false"
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('customer')">Customer|Mobile</span>
+            <span (click)="sortClick('name')">Name</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'customer' && reverse == true"
+              [hidden]="sortType === 'name' && reverse == true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'customer' && reverse === false"
+              [hidden]="sortType === 'name' && reverse === false"
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('warehouse')">Warehouse|Total Amount</span>
+            <span (click)="sortClick('products')">Products</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'warehouse' && reverse == true"
+              [hidden]="sortType === 'products' && reverse == true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'warehouse' && reverse === false"
-            ></span>
-          </th>
-          <th>
-            <span (click)="sortClick('discount')">Discount|Receivable</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'discount' && reverse == true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'discount' && reverse === false"
-            ></span>
-          </th>
-          <th>
-            <span (click)="sortClick('received')">ReceivedDue</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'received' && reverse == true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'received' && reverse === false"
+              [hidden]="sortType === 'products' && reverse === false"
             ></span>
           </th>
           <th>Action</th>
@@ -105,32 +80,15 @@
       <div *ngIf="search_Data_Available; then printData; else empty"></div>
       <ng-template #printData>
         <tbody>
-          <tr *ngFor="let item of salesItem">
-            <td><p>{{ item.invoice }}</p>
-                <p>{{ item.date }}</p>
-            </td>
-            <td>
-                <p>{{ item.customer }}</p>
-                <p>{{ item.mobile }}</p>
-            </td>
-            <td>
-                <p>{{ item.warehouse }}</p>
-                <p>{{ item.totalAmount }}</p>
-            </td>
-            <td>
-                <p>{{ item.discount }}</p>
-                <p>{{ item.receivable }}</p>
-            </td>
-            <td>
-                <p>{{ item.received }}</p>
-                <p>{{ item.due }}</p>
-            </td>
+          <tr *ngFor="let item of categoriesItem">
+            <td>{{ item.serialNo }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.products }}</td>            
             <td>
               <div class="worksheet">
                 <button
                   type="button"
-                  class="btn btn-primary margin-right"
-                 
+                  class="btn btn-primary margin-right"                 
                 >
                 <i></i>
                   Edit
@@ -139,11 +97,10 @@
                 (click)="openDeleteModal(deleteModal, user.id)" -->
                 <button
                   type="button"
-                  class="btn btn-danger"
-                 
+                  class="btn btn-danger"     
                 >
                 <i></i>
-                  More
+                 Delete
                 </button>
               </div>
             </td>

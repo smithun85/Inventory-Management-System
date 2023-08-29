@@ -2,7 +2,8 @@ import { Component , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { salesApi } from '../../services/sales.service';
+import { ManageProductApi } from '../../services/manage-product.service';
+import { UNITS } from '../../Models/manage-product.models';
 
 @Component({
   selector: 'app-units',
@@ -11,8 +12,8 @@ import { salesApi } from '../../services/sales.service';
 })
 export class UnitsComponent {
 
-  public salesItem:any[]=[];
-  all_salesItem:any[]=[];
+  public unitsItem:UNITS[]=[];
+  all_unitsItem:UNITS[]=[];
 
   //searching:
 searchText:string = ''
@@ -34,23 +35,23 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private salesApi:salesApi
+  private ManageProductApi:ManageProductApi
 ) 
 {}
 
 ngOnInit(): void {  
 
-  this.salesItem = this.salesItem.slice(0,this.limit) 
-  this.getSalesData()
+  this.unitsItem = this.unitsItem.slice(0,this.limit) 
+  this.getUnitsData()
   this.paginate()     
 }
   //get All user_Data:
-  getSalesData(){
-    this.salesApi.getAllSales().subscribe( (item:any)=>{
-      console.log(item.salesList)
-      this.salesItem = item.salesList;
-      this. all_salesItem = item.salesList;
-      this.count = item.salesList.length;
+  getUnitsData(){
+    this.ManageProductApi.getUnits().subscribe( (unitsList:UNITS[])=>{
+      console.log(unitsList)
+      this.unitsItem = unitsList;
+      this. all_unitsItem = unitsList;
+      this.count = unitsList.length;
     })
   };
 
@@ -59,20 +60,20 @@ ngOnInit(): void {
 search(text:string){ 
   if(this.searchText !== ''){  
           
-    const searched_users = this.all_salesItem.filter(
+    const searched_users = this.all_unitsItem.filter(
       data =>{
-        return data.customer.toLowerCase().match(this.searchText.toLowerCase())
+        return data.name.toLowerCase().match(this.searchText.toLowerCase())
       }
     ) 
     //paginate with all searched data:
     let startItem = (this.currentPage-1) * this.limit;
     let endItem = this.currentPage * this.limit;
-    this.salesItem = searched_users.slice(startItem,endItem)
+    this.unitsItem = searched_users.slice(startItem,endItem)
 
-    this.search_Data_Available = this.salesItem.length > 0;         
+    this.search_Data_Available = this.unitsItem.length > 0;         
   } else{
     this.search_Data_Available = true
-    this.getSalesData()
+    this.getUnitsData()
     this.paginate()
   }     
 }
@@ -81,7 +82,7 @@ search(text:string){
 paginate(){  
   let startItem = (this.currentPage-1) * this.limit;
   let endItem = this.currentPage * this.limit;
-  this.salesItem = this.all_salesItem.slice(startItem,endItem)
+  this.unitsItem = this.all_unitsItem.slice(startItem,endItem)
 
   // console.log(startItem,endItem);
   // console.log("returnedLimitedItems", this.workData);
@@ -108,7 +109,7 @@ changeItemsPerPage(e:any){
   this.sortType = key; 
   this.reverse = !this.reverse
  let direction = !this.reverse  ? -1 : 1;
-    this.salesItem = this.all_salesItem.sort((a:any,b:any)=>{
+    this.unitsItem = this.all_unitsItem.sort((a:any,b:any)=>{
       console.log(a,b)
       console.log(a[key],b[key])
       if(a[key].toLowerCase().trim() < b[key].toLowerCase().trim()){   //a.key => not read b/c key is a dynamic data so use bracket notation
@@ -122,4 +123,3 @@ changeItemsPerPage(e:any){
     this.paginate()
 }
 }
-
