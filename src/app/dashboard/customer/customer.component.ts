@@ -2,7 +2,9 @@ import { Component , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { salesApi } from '../services/sales.service';
+import { CustomerApi } from '../services/customer.service';
+import { CUSTOMER } from '../Models/customer.model';
+
 
 @Component({
   selector: 'app-customer',
@@ -11,8 +13,8 @@ import { salesApi } from '../services/sales.service';
 })
 export class CustomerComponent {
 
-  public salesItem:any[]=[];
-  all_salesItem:any[]=[];
+  public customerItem:CUSTOMER[]=[];
+  all_customerItem:CUSTOMER[]=[];
 
   //searching:
 searchText:string = ''
@@ -34,23 +36,23 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private salesApi:salesApi
+  private customerApi:CustomerApi
 ) 
 {}
 
 ngOnInit(): void {  
 
-  this.salesItem = this.salesItem.slice(0,this.limit) 
-  this.getSalesData()
+  this.customerItem = this.customerItem.slice(0,this.limit) 
+  this.getcustomerData()
   this.paginate()     
 }
   //get All user_Data:
-  getSalesData(){
-    this.salesApi.getAllSales().subscribe( (item:any)=>{
-      console.log(item.salesList)
-      this.salesItem = item.salesList;
-      this. all_salesItem = item.salesList;
-      this.count = item.salesList.length;
+  getcustomerData(){
+    this.customerApi.getCustomer().subscribe( (item:CUSTOMER[])=>{
+      console.log(item)
+      this.customerItem = item;
+      this. all_customerItem = item;
+      this.count = item.length;
     })
   };
 
@@ -59,20 +61,20 @@ ngOnInit(): void {
 search(text:string){ 
   if(this.searchText !== ''){  
           
-    const searched_users = this.all_salesItem.filter(
+    const searched_users = this.all_customerItem.filter(
       data =>{
-        return data.customer.toLowerCase().match(this.searchText.toLowerCase())
+        return data.name.toLowerCase().match(this.searchText.toLowerCase())
       }
     ) 
     //paginate with all searched data:
     let startItem = (this.currentPage-1) * this.limit;
     let endItem = this.currentPage * this.limit;
-    this.salesItem = searched_users.slice(startItem,endItem)
+    this.customerItem = searched_users.slice(startItem,endItem)
 
-    this.search_Data_Available = this.salesItem.length > 0;         
+    this.search_Data_Available = this.customerItem.length > 0;         
   } else{
     this.search_Data_Available = true
-    this.getSalesData()
+    this.getcustomerData()
     this.paginate()
   }     
 }
@@ -81,7 +83,7 @@ search(text:string){
 paginate(){  
   let startItem = (this.currentPage-1) * this.limit;
   let endItem = this.currentPage * this.limit;
-  this.salesItem = this.all_salesItem.slice(startItem,endItem)
+  this.customerItem = this.all_customerItem.slice(startItem,endItem)
 
   // console.log(startItem,endItem);
   // console.log("returnedLimitedItems", this.workData);
@@ -108,7 +110,7 @@ changeItemsPerPage(e:any){
   this.sortType = key; 
   this.reverse = !this.reverse
  let direction = !this.reverse  ? -1 : 1;
-    this.salesItem = this.all_salesItem.sort((a:any,b:any)=>{
+    this.customerItem = this.all_customerItem.sort((a:any,b:any)=>{
       console.log(a,b)
       console.log(a[key],b[key])
       if(a[key].toLowerCase().trim() < b[key].toLowerCase().trim()){   //a.key => not read b/c key is a dynamic data so use bracket notation

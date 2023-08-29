@@ -1,18 +1,18 @@
-<p>customer works!</p>
+
 <div class="container">
-    <h4>All sales</h4>
+    <h4>All Customers</h4>
     <div class="salesList">
-        <p>Sales List</p>
+        <p>Customer List</p>
         <div class="button">
             <button class="btn btn-primary">
-                <b>+</b>Add New Sales
+                <b>+</b>Add New Customer
               </button>
-              <button class="btn btn-primary">
-                CSV
+              <button class="btn btn-info">
+               Notification to All
               </button>
-              <button class="btn btn-primary">
-               PDF
-              </button>
+              <button class="btn btn-success">
+                Action
+               </button>
         </div>
     </div>
     <div class="header">
@@ -45,58 +45,47 @@
       <thead>
         <tr class="sort">
           <th>
-            <span (click)="sortClick('invoice')">Invoice No|Date</span>
+            <span (click)="sortClick('name')">Name|Address</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'invoice' && reverse === true"
+              [hidden]="sortType === 'name' && reverse === true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'invoice' && reverse === false"
+              [hidden]="sortType === 'name' && reverse === false"
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('customer')">Customer|Mobile</span>
+            <span (click)="sortClick('email')">Mobile|Email</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'customer' && reverse == true"
+              [hidden]="sortType === 'email' && reverse == true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'customer' && reverse === false"
+              [hidden]="sortType === 'email' && reverse === false"
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('warehouse')">Warehouse|Total Amount</span>
+            <span (click)="sortClick('receivable')">Receivable</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'warehouse' && reverse == true"
+              [hidden]="sortType === 'receivable' && reverse == true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'warehouse' && reverse === false"
+              [hidden]="sortType === 'receivable' && reverse === false"
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('discount')">Discount|Receivable</span>
+            <span (click)="sortClick('payable')">Payable</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'discount' && reverse == true"
+              [hidden]="sortType === 'payable' && reverse == true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'discount' && reverse === false"
-            ></span>
-          </th>
-          <th>
-            <span (click)="sortClick('received')">ReceivedDue</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'received' && reverse == true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'received' && reverse === false"
+              [hidden]="sortType === 'payable' && reverse === false"
             ></span>
           </th>
           <th>Action</th>
@@ -105,25 +94,19 @@
       <div *ngIf="search_Data_Available; then printData; else empty"></div>
       <ng-template #printData>
         <tbody>
-          <tr *ngFor="let item of salesItem">
-            <td><p>{{ item.invoice }}</p>
-                <p>{{ item.date }}</p>
+          <tr *ngFor="let item of customerItem">
+            <td><p>{{ item.name }}</p>
+                <p>{{ item.address }}</p>
             </td>
             <td>
-                <p>{{ item.customer }}</p>
                 <p>{{ item.mobile }}</p>
+                <p>{{ item.email }}</p>
             </td>
             <td>
-                <p>{{ item.warehouse }}</p>
-                <p>{{ item.totalAmount }}</p>
+                <p>{{ item.receivable }}</p>                
             </td>
             <td>
-                <p>{{ item.discount }}</p>
-                <p>{{ item.receivable }}</p>
-            </td>
-            <td>
-                <p>{{ item.received }}</p>
-                <p>{{ item.due }}</p>
+                <p>{{ item.payable }}</p>               
             </td>
             <td>
               <div class="worksheet">
@@ -139,11 +122,17 @@
                 (click)="openDeleteModal(deleteModal, user.id)" -->
                 <button
                   type="button"
-                  class="btn btn-danger"
-                 
+                  class="btn btn-danger" 
                 >
                 <i></i>
-                  More
+                  Notify
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-danger" 
+                >
+                <i></i>
+                  Payment
                 </button>
               </div>
             </td>
