@@ -48,18 +48,17 @@
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="discount" placeholder="Discount">
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="receivable" placeholder="Receivale">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="payable" placeholder="Payable">
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="received" placeholder="Received">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="paid" placeholder="Paid">
             </div>
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="due" placeholder="Due">
             </div>
 
             <div class="mb-3 button">
-                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" > Add</button>
-                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" [disabled]="salesAllForm['invalid']"> Update</button>
+                <button type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" [disabled]="salesAllForm['invalid']"> Update</button>
                 <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
                   <!-- (click)="bsModalRef.hide()" [disabled]="salesAllForm['invalid']" -->
             </div>

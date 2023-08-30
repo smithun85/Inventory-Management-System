@@ -1,54 +1,25 @@
-<div class="section"></div>
 <section class="contents">
     <h5>Inventory Management</h5>
-   <div class="cards">
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>sales</span>
-            <span>10</span>
+   <div class="card-1">
+    <div class="card" *ngFor="let item of cart">
+        <div class="card-body">
+           <div class="cart">
+            <div class=" ">
+              <i class="{{item.bgcolor}} {{ item.icon }} icon" ></i> 
+             </div>      
+              <div class="content">
+                 <span>{{item.label}}</span>
+                <span>{{item.count}}</span>
+              </div>
+           </div>
+            <div class="btnAll">
+                <button class="{{item.text_color}} {{item.border}}">view All</button>
+            </div>       
         </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
-    </div>
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>sales return</span>
-            <span>10</span>
-        </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
-    </div>
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>Purchases</span>
-            <span>10</span>
-        </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
-    </div>
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>Purchases Return</span>
-            <span>10</span>
-        </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
     </div>
    </div>
 
-   <div class="card-1">
+   <div class="card-2">
     <div class="graph">
         <p class="card-title border-bottom">Monthly Purchase & Sales Report(last 12 Months)</p>
        <div class="canvas">
@@ -68,25 +39,25 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of product">
-                    <td>{{item.product}}</td>
-                    <td>{{item.sku}}</td>
-                    <td>{{item.quantity}}</td>
+                    <td class="p-3">{{item.product}}</td>
+                    <td class="p-3">{{item.sku}}</td>
+                    <td class="p-3">{{item.quantity}}</td>
                   </tr>
                 </tbody>
               </table>
         </div>
    </div>
 
-   <div class="card-2">
+   <div class="card-3">
     <div class="table-item">
         <div class="heading">
             <p>Product Alert Items</p>
-            <button>view All</button>
+            <button class="btn btn-outline-info"> view All</button>
         </div>
                 <table class="table table-1">
                     <thead>
                       <tr class="table-secondary">
-                        <th>Product</th>
+                        <th >Product</th>
                         <th>WareHouse</th>
                         <th>alert</th>
                         <th>Stock</th>
@@ -95,11 +66,11 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of product">
-                        <td>{{item.product}}</td>
-                        <td>{{item.warehouse}}</td>
-                        <td><button type="button" class="btn btn-warning">{{item.alert}}</button></td>
-                        <td><button type="button" class="btn btn-danger">{{item.stock}}</button></td>
-                        <td>{{item.unit}}</td>
+                        <td class="p-3">{{item.product}}</td>
+                        <td class="p-3">{{item.warehouse}}</td>
+                        <td class="p-3"><button type="button" class="btn btn-warning">{{item.alert}}</button></td>
+                        <td class="p-3"><button type="button" class="btn btn-danger">{{item.stock}}</button></td>
+                        <td class="p-3">{{item.unit}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -108,73 +79,44 @@
        <div class="table-item">
         <div class="heading">
             <p>Top Selling Products</p>
-            <button>view All</button>
+            <button class="btn btn-outline-info">view All</button>
         </div>
                 <table class="table table-1">
                     <thead>
                       <tr class="table-secondary">
-                        <th>Product</th>
-                        <th>SKU</th>
-                        <th>Quantity</th>
+                        <th class="p-3">Product</th>
+                        <th class="p-3">SKU</th>
+                        <th class="p-3">Quantity</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let item of product">
-                        <td>{{item.product}}</td>
-                        <td>{{item.sku}}</td>
-                        <td>{{item.quantity}}</td>
+                        <td class="p-3">{{item.product}}</td>
+                        <td class="p-3">{{item.sku}}</td>
+                        <td class="p-3">{{item.quantity}}</td>
                       </tr>
                     </tbody>
                   </table>
        </div>
    </div>
 
-   <div class="cards">
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>10</span>
-            <span>Categories</span>
+   <div class="card-1">
+    <div class="card {{item.bgcolor}} " *ngFor="let item of cartBottom">
+        <div class="card-body">
+           <div class="">
+            <i class="{{ item.icon }} {{item.bgcolor}} shadow-lg rounded icon"></i> 
+           </div>      
+            <div class="content">
+                <span class="{{item.text_color}}">{{item.count}}</span>
+                <span class="{{item.text_color}}">{{item.label}}</span>
+            </div>
+            <div class="btnAll">
+                <button class="{{item.text_color}} {{item.border}}">view All</button>
+            </div>       
         </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
-    </div>
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>8</span>
-            <span>Product</span>
-        </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
-    </div>
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>8</span>
-            <span>Suppliers</span>
-        </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
-    </div>
-    <div class="card">
-        <i>cart</i>
-       
-        <div class="content">
-            <span>9</span>
-            <span>Customers</span>
-        </div>
-        <div class="btnAll">
-            <button>view All</button>
-        </div>       
     </div>
    </div>
+  
 </section>
 
 <router-outlet></router-outlet>  

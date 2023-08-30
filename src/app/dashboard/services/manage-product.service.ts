@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BRANDS, CATEGORY, PRODUCTS, UNITS } from '../Models/manage-product.models';
+import { BRANDS, CATEGORY, PRODUCTS, UNITS } from '../models/manage-product.models';
 import { brands, categories, products, units } from './data/manage-product-data';
 
 
@@ -123,13 +123,5 @@ export class ManageProductApi{
     }
     return of(null)
     };
-    // Delete the Categaries id:
- deleteProductsData(id:number):Observable<boolean>{
-    const productsIndex =  products.findIndex( (data)=> data.id === id)
-    if(productsIndex !== -1){
-        products.splice(productsIndex,1)
-       return of(true)
-    }
-    return of(false)
-     }
+
 }

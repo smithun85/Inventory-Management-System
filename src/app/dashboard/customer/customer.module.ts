@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 //pagination
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DialogsComponent } from './dialogs/dialogs.component';
-// Modals
+// dialog:model
 import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
@@ -23,6 +23,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     ReactiveFormsModule,
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
+    
   ]
 })
 export class CustomerModule { }

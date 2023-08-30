@@ -1,1 +1,57 @@
-<p>dialogs works!</p>
+<div class="container">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">  
+       
+      <form class="form" [formGroup]="supplierForm" (ngSubmit)="onSubmit()">            
+        <div class="mb-3">
+          <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="serialNo" placeholder="Serial No">
+      </div>
+        <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name" placeholder="Name" >
+            </div>
+            <!-- <div
+            *ngIf="
+              supplierForm.controls['name']?.invalid &&
+              (supplierForm.controls['name']?.dirty ||
+                supplierForm.controls['name']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="supplierForm['name'].errors?.['required']">
+                name is required.
+            </div>
+            <div *ngIf="supplierForm['name'].errors?.['minlength']">
+              minimum char length must be 3.
+            </div>
+            <div *ngIf="supplierForm['name'].errors?.['maxlength']">
+              maximum char length should be less than 50
+            </div>
+          </div> -->
+            <div class="mb-3">
+                <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="mobile" placeholder="Mobile No.">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="email" placeholder="email">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="receivable" placeholder="Receivable Amount">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="payable" placeholder="Payable">
+            </div>
+            <div class="mb-3 button">
+                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" > Add</button>
+                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" [disabled]="supplierForm['invalid']"> Update</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
+                  <!-- (click)="bsModalRef.hide()" [disabled]="supplierForm['invalid']" -->
+            </div>
+        </form>
+    </div>    
+</div>
+
+

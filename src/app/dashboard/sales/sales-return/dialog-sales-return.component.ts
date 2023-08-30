@@ -2,16 +2,14 @@ import { Component , OnInit, TemplateRef} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { salesApi } from '../../services/sales.service';
+import { salesApi } from '../../services/dashboard-sales.service';
 
 @Component({
-  selector: 'app-dialogs',
-  templateUrl: './dialogs.component.html',
-  styleUrls: ['./dialogs.component.scss']
+  selector: 'app-dialog-sales-return',
+  templateUrl: './dialog-sales-return.component.html',
 })
-export class DialogsComponent implements OnInit{
- 
- 
+export class DialogSalesReturnComponent {
+
   salesAllForm:FormGroup | any
   public salesItem:any[]=[];
   isSubmitted:boolean = false
@@ -62,16 +60,12 @@ onSubmit(){
   //   this.salesAllForm.markAllAsTouched();
   //   return;
   // }
+  this.salesApi.updateSalesReturnData(this.salesAllForm.value,this.id).subscribe()
 
-  if(this.isAdded){
-    this.salesApi.postSalesData(this.salesAllForm.value).subscribe()
-  }
-  else if(this.isEditted){
-    this.salesApi.updateSalessData(this.salesAllForm.value,this.id).subscribe()
-  };
    
   this.salesAllForm.reset()
   // console.log("UsersData:",this.userData);    
 }
 
 }
+

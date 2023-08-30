@@ -1,24 +1,18 @@
-import { Component , OnInit, TemplateRef} from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { PurchaseApi } from '../../services/purchase.service';
 
 @Component({
-  selector: 'app-dialogs',
-  templateUrl: './dialogs.component.html',
-  styleUrls: ['./dialogs.component.scss']
+  selector: 'app-dialog-purchase-return',
+  templateUrl: './dialog-purchase-return.component.html',
 })
-export class DialogsComponent implements OnInit{
- 
- 
+export class DialogPurchaseReturnComponent {
   purchaseAllForm:FormGroup | any
   public purchaseItem:any[]=[];
   isSubmitted:boolean = false
 
 //this data comes from allpurchaseComponent through modal
-  isAdded?: boolean ;
-  isEditted?:boolean ;
   title?: string; 
   invoice?:string;
   purchaseAllFormAdd?:FormGroup;
@@ -32,7 +26,7 @@ export class DialogsComponent implements OnInit{
 
   constructor(
     public bsModalRef: BsModalRef,
-    private router: Router,
+    
     private purchaseApi:PurchaseApi,
   ){}
  
@@ -49,20 +43,12 @@ resetForm(){
 
 //Post and update userForm_Data
 onSubmit(){  
-  console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.purchaseAllForm.value);
   //  if (this.purchaseAllForm.invalid) {
   //   this.purchaseAllForm.markAllAsTouched();
   //   return;
   // }
-
-  if(this.isAdded){
-    this.purchaseApi.postpurchaseListData(this.purchaseAllForm.value).subscribe()
-  }
-  else if(this.isEditted){
-    this.purchaseApi.updatepurchaseListsData(this.purchaseAllForm.value,this.id).subscribe()
-  };
-   
+    this.purchaseApi.updatepurchaseListReturnData(this.purchaseAllForm.value,this.id).subscribe()   
   this.purchaseAllForm.reset()
   // console.log("UsersData:",this.userData);    
 }

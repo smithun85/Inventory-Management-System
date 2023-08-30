@@ -1,10 +1,9 @@
-
 import { Component , OnInit, TemplateRef} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { salesApi } from '../../services/dashboard-sales.service';
-import { CustomerApi } from '../../services/customer.service';
+import { salesApi } from '../../../services/dashboard-sales.service';
+import { ManageProductApi } from '../../../services/manage-product.service';
 
 @Component({
   selector: 'app-dialogs',
@@ -14,7 +13,7 @@ import { CustomerApi } from '../../services/customer.service';
 export class DialogsComponent implements OnInit{
  
  
-  salesAllForm:FormGroup | any
+  productManage_Form:FormGroup | any
   public salesItem:any[]=[];
   isSubmitted:boolean = false
 
@@ -23,7 +22,7 @@ export class DialogsComponent implements OnInit{
   isEditted?:boolean ;
   title?: string; 
   invoice?:string;
-  salesAllFormAdd?:FormGroup;
+  productManage_FormAdd?:FormGroup;
   formData?:any;
   id?:any;
   
@@ -34,45 +33,40 @@ export class DialogsComponent implements OnInit{
 
   constructor(
     public bsModalRef: BsModalRef,
-    private router: Router,
-    private customerApi:CustomerApi,
+    private manageProductApi:ManageProductApi,
   ){}
  
 
   ngOnInit(): void {
    
-      this.salesAllForm = this.salesAllFormAdd
+      this.productManage_Form = this.productManage_FormAdd
       
       // console.log(this.formData);
     
   }
-  //=====Getter method============
-get usersControls(){
-  return this.salesAllForm.controls;
-};
 
 //reset Form:
 resetForm(){
-  this.salesAllForm.reset()
+  this.productManage_Form.reset()
 }
 
 //Post and update userForm_Data
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
-  console.log("Form_value",this.salesAllForm.value);
-  //  if (this.salesAllForm.invalid) {
-  //   this.salesAllForm.markAllAsTouched();
+  console.log("Form_value",this.productManage_Form.value);
+  //  if (this.productManage_Form.invalid) {
+  //   this.productManage_Form.markAllAsTouched();
   //   return;
   // }
 
   if(this.isAdded){
-    this.customerApi.postcustomerData(this.salesAllForm.value).subscribe()
+    this.manageProductApi.postCategoriesData(this.productManage_Form.value).subscribe()
   }
   else if(this.isEditted){
-    this.customerApi.updatecustomersData(this.salesAllForm.value,this.id).subscribe()
+    this.manageProductApi.updateCategoriesData(this.productManage_Form.value,this.id).subscribe()
   };
    
-  this.salesAllForm.reset()
+  this.productManage_Form.reset()
   // console.log("UsersData:",this.userData);    
 }
 

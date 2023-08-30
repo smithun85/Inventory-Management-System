@@ -1,11 +1,11 @@
 
 <div class="container">
-  <h4>All Customers</h4>
+  <h4>All Supplier</h4>
   <div class="salesList">
-      <p>Customer List</p>
+      <p>Supplier List</p>
       <div class="button">
-          <button class="btn btn-primary">
-              <b>+</b>Add New Customer
+          <button class="btn btn-primary" (click)="openDialogForm()">
+              <b>+</b>Add New Supplier
             </button>
             <button class="btn btn-info">
              Import to CVS
@@ -43,6 +43,17 @@
     <thead>
       <tr class="sort">
         <th>
+          <span (click)="sortClick('serialNo')">SN</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'serialNo' && reverse === true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'serialNo' && reverse === false"
+          ></span>
+        </th>
+        <th>
           <span (click)="sortClick('name')">Name</span>
           <span
             class="sortorder descending"
@@ -65,17 +76,6 @@
           ></span>
         </th>
         <th>
-          <span (click)="sortClick('receivable')">Receivable</span>
-          <span
-            class="sortorder descending"
-            [hidden]="sortType === 'receivable' && reverse == true"
-          ></span>
-          <span
-            class="sortorder"
-            [hidden]="sortType === 'receivable' && reverse === false"
-          ></span>
-        </th>
-        <th>
           <span (click)="sortClick('payable')">Payable</span>
           <span
             class="sortorder descending"
@@ -86,6 +86,18 @@
             [hidden]="sortType === 'payable' && reverse === false"
           ></span>
         </th>
+        <th>
+          <span (click)="sortClick('receivable')">Receivable</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'receivable' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'receivable' && reverse === false"
+          ></span>
+        </th>
+        
         <th>Action</th>
       </tr>
     </thead>
@@ -93,6 +105,8 @@
     <ng-template #printData>
       <tbody>
         <tr *ngFor="let item of supplierItem">
+          <td><p>{{ item.serialNo }}</p>
+          </td>
           <td><p>{{ item.name }}</p>
           </td>
           <td>
@@ -100,17 +114,18 @@
               <p>{{ item.email }}</p>
           </td>
           <td>
+            <p>{{ item.payable }}</p>               
+        </td>
+          <td>
               <p>{{ item.receivable }}</p>                
           </td>
-          <td>
-              <p>{{ item.payable }}</p>               
-          </td>
+          
           <td>
             <div class="worksheet">
               <button
                 type="button"
                 class="btn btn-primary margin-right"
-               
+                (click)="openDialogFormUpdate(item.id)"
               >
               <i></i>
                 Edit
@@ -119,14 +134,14 @@
               (click)="openDeleteModal(deleteModal, user.id)" -->
               <button
                 type="button"
-                class="btn btn-danger" 
+                class="btn btn-primary margin-right"
               >
               <i></i>
                 Notify
               </button>
               <button
                 type="button"
-                class="btn btn-danger" 
+                class="btn btn-primary margin-right"
               >
               <i></i>
                 Payment

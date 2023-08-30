@@ -1,4 +1,4 @@
-import { BRANDS, CATEGORY, PRODUCTS, UNITS } from "../../Models/manage-product.models";
+import { BRANDS, CATEGORY, PRODUCTS, UNITS } from "../../models/manage-product.models";
 
 export let categories:CATEGORY[] = [
     {
@@ -85,7 +85,7 @@ export let units:UNITS[] = [
 export let products:PRODUCTS[] = [
     {
         id:1,
-        image:'',
+        image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD…RAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQP//Z',
         name:'Product-1',
         SKU:'SK133',
         category:'Foot Wear',

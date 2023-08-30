@@ -1,8 +1,9 @@
 import { Component , OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { salesApi } from '../../services/sales.service';
+import { PurchaseApi } from '../../services/purchase.service'; 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { DialogsComponent } from '../dialogs/dialogs.component';
 
 @Component({
   selector: 'app-all-purchases',
@@ -11,8 +12,23 @@ import { salesApi } from '../../services/sales.service';
 })
 export class AllPurchasesComponent {
 
-  public salesItem:any[]=[];
-  all_salesItem:any[]=[]
+  purchaseAllForm:FormGroup = new FormGroup({
+    invoice: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    date: new FormControl('',[Validators.required]),
+    supplier: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+    warehouse: new FormControl('', Validators.required),
+    totalAmount: new FormControl('', Validators.required),
+    discount:new FormControl('',Validators.requiredTrue),
+    payable: new FormControl('', Validators.required),
+    paid: new FormControl('', Validators.required),
+    due:new FormControl('',Validators.requiredTrue)
+  });
+  bsModalRef?: BsModalRef;
+  isAdded: boolean = false;
+  isEditted: boolean = false;
+  public purchaseListItem:any[]=[];
+  all_purchaseListItem:any[]=[]
 
 //searching:
 searchText:string = ''
@@ -33,24 +49,80 @@ sortType: string = 'name';
 
 
 constructor(
-  private router: Router,
-  private salesApi:salesApi
+  private PurchaseApi:PurchaseApi,
+  private modalService: BsModalService,
 ) 
 {}
 
 ngOnInit(): void {  
-
-  this.salesItem = this.salesItem.slice(0,this.limit) 
-  this.getSalesData()
+  this.purchaseListItem = this.purchaseListItem.slice(0,this.limit) 
+  this.getpurchaseListData()
   this.paginate()     
+};
+
+//Add Sales Data
+openDialogForm(){
+  this.isAdded = true
+  this.isEditted = false
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Add Purchase Data',
+      isAdded:true,
+    isEditted:false,
+    purchaseAllFormAdd:this.purchaseAllForm
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+console.log(id);
+this.purchaseListItem.map( item=>{
+if(item.id === id){
+  this.purchaseAllForm = new FormGroup({
+    invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    date:new FormControl(item.date),
+    supplier:new FormControl(item.supplier),
+    mobile:new FormControl(item.mobile),
+    warehouse:new FormControl(item.warehouse),
+    totalAmount:new FormControl(item.totalAmount),
+    discount:new FormControl(item.discount),
+    payable:new FormControl(item.payable),
+    paid:new FormControl(item.paid),
+    due:new FormControl(item.due),
+  });
+  let id = item.id
+  
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Update Purchase Data',
+      isAdded:false,
+      isEditted:true,
+      purchaseAllFormAdd:this.purchaseAllForm,
+      id:id,
+      // formData:formData,
+      
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.getpurchaseListData();
+
+  this.bsModalRef.content.closeBtnName = 'Close';
+  
+}
+});
+
+
 }
   //get All user_Data:
-  getSalesData(){
-    this.salesApi.getAllSales().subscribe( (item:any)=>{
-      console.log(item.salesList)
-      this.salesItem = item.salesList;
-      this. all_salesItem = item.salesList;
-      this.count = item.salesList.length;
+  getpurchaseListData(){
+    this.PurchaseApi.getAllPurchaseList().subscribe( (item:any)=>{
+      console.log(item.purchaseListList)
+      this.purchaseListItem = item;
+      this. all_purchaseListItem = item;
+      this.count = item.length;
     })
   };
 
@@ -59,7 +131,7 @@ ngOnInit(): void {
 search(text:string){ 
   if(this.searchText !== ''){  
           
-    const searched_users = this.all_salesItem.filter(
+    const searched_users = this.all_purchaseListItem.filter(
       data =>{
         return data.customer.toLowerCase().match(this.searchText.toLowerCase())
       }
@@ -67,12 +139,12 @@ search(text:string){
     //paginate with all searched data:
     let startItem = (this.currentPage-1) * this.limit;
     let endItem = this.currentPage * this.limit;
-    this.salesItem = searched_users.slice(startItem,endItem)
+    this.purchaseListItem = searched_users.slice(startItem,endItem)
 
-    this.search_Data_Available = this.salesItem.length > 0;         
+    this.search_Data_Available = this.purchaseListItem.length > 0;         
   } else{
     this.search_Data_Available = true
-    this.getSalesData()
+    this.getpurchaseListData()
     this.paginate()
   }     
 }
@@ -81,7 +153,7 @@ search(text:string){
 paginate(){  
   let startItem = (this.currentPage-1) * this.limit;
   let endItem = this.currentPage * this.limit;
-  this.salesItem = this.all_salesItem.slice(startItem,endItem)
+  this.purchaseListItem = this.all_purchaseListItem.slice(startItem,endItem)
 
   // console.log(startItem,endItem);
   // console.log("returnedLimitedItems", this.workData);
@@ -109,7 +181,7 @@ changeItemsPerPage(e:any){
   this.sortType = key; 
   this.reverse = !this.reverse
  let direction = !this.reverse  ? -1 : 1;
-    this.salesItem = this.all_salesItem.sort((a:any,b:any)=>{
+    this.purchaseListItem = this.all_purchaseListItem.sort((a:any,b:any)=>{
       console.log(a,b)
       console.log(a[key],b[key])
       if(a[key].toLowerCase().trim() < b[key].toLowerCase().trim()){   //a.key => not read b/c key is a dynamic data so use bracket notation

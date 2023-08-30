@@ -1,9 +1,11 @@
 import { Component , OnInit} from '@angular/core';
-import { Router } from '@angular/router';
 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ManageProductApi } from '../../services/manage-product.service';
-import { CATEGORY } from '../../Models/manage-product.models';
+import { CATEGORY } from '../../models/manage-product.models';
+import { DialogsComponent } from './dialogs/dialogs.component';
 
 @Component({
   selector: 'app-categories',
@@ -11,6 +13,16 @@ import { CATEGORY } from '../../Models/manage-product.models';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent {
+
+  productManage_Form:FormGroup = new FormGroup({
+    serialNo: new FormControl('',[Validators.required]),
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    products: new FormControl('', Validators.required),
+   
+  });
+  bsModalRef?: BsModalRef;
+  isAdded: boolean = false;
+  isEditted: boolean = false;
 
   public categoriesItem:CATEGORY[]=[];
   all_categoriesItem:CATEGORY[]=[];
@@ -34,8 +46,8 @@ sortType: string = 'name';
 
 
 constructor(
-  private router: Router,
-  private ManageProductApi:ManageProductApi
+  private ManageProductApi:ManageProductApi,
+  private modalService: BsModalService,
 ) 
 {}
 
@@ -44,6 +56,54 @@ ngOnInit(): void {
   this.categoriesItem = this.categoriesItem.slice(0,this.limit) 
   this.getCategoriesData()
   this.paginate()     
+};
+
+//Add Category Data
+openDialogForm(){
+  this.isAdded = true
+  this.isEditted = false
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Add Customer',
+      isAdded:true,
+    isEditted:false,
+    productManage_FormAdd:this.productManage_Form
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+console.log(id);
+this.categoriesItem.map( item=>{
+if(item.id === id){
+  this.productManage_Form = new FormGroup({
+    serialNo:new FormControl(item.serialNo),
+    name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
+    products:new FormControl(item.products),   
+  });
+  let id = item.id
+  
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Update Sales Data',
+      isAdded:false,
+      isEditted:true,
+      productManage_FormAdd:this.productManage_Form,
+      id:id,
+      // formData:formData,
+      
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.getCategoriesData();
+  this.bsModalRef.content.closeBtnName = 'Close'; 
+}
+});
+
+
 }
   //get All user_Data:
   getCategoriesData(){

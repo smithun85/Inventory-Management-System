@@ -10,10 +10,12 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 //pagination
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { DialogsComponent } from './dialogs/dialogs.component';
-// Modals
+import { DialogsComponent } from './categories/dialogs/dialogs.component';
+// dialog:model
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { DialogBrandsComponent } from './brands/dialog-brands.component';
+import { DialogProductsComponent } from './products/dialog-products.component';
+import { DialogUnitsComponent } from './units/dialog-units.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     UnitsComponent,
     ProductsComponent,
     DialogsComponent,
+    DialogBrandsComponent,
+    DialogProductsComponent,
+    DialogUnitsComponent,
+   
   ],
   imports: [
     CommonModule,

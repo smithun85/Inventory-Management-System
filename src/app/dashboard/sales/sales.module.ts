@@ -9,16 +9,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 //pagination
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { DialogsComponent } from './dialogs/dialogs.component';
-
-// Modals
+// dialog:model
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { DialogSalesReturnComponent } from './sales-return/dialog-sales-return.component';
 
 
 @NgModule({
   declarations: [
     SalesReturnComponent,
     AllSalesComponent,
-    DialogsComponent
+    DialogsComponent,
+    DialogSalesReturnComponent
   ],
   imports: [
     CommonModule,

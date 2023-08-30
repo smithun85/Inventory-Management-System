@@ -1,13 +1,8 @@
-<p>sales-return works!</p>
-
 <div class="container">
-    <h4>All sales</h4>
+    <h4>All sales Return</h4>
     <div class="salesList">
-        <p>Sales List</p>
+        <p>Sales Return List</p>
         <div class="button">
-            <button class="btn btn-primary">
-                <b>+</b>Add New Sales
-              </button>
               <button class="btn btn-primary">
                 CSV
               </button>
@@ -79,7 +74,7 @@
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('discount')">Discount|Receivable</span>
+            <span (click)="sortClick('discount')">Discount|Payable</span>
             <span
               class="sortorder descending"
               [hidden]="sortType === 'discount' && reverse == true"
@@ -90,14 +85,14 @@
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('received')">ReceivedDue</span>
+            <span (click)="sortClick('paid')">Paid|Due</span>
             <span
               class="sortorder descending"
-              [hidden]="sortType === 'received' && reverse == true"
+              [hidden]="sortType === 'paid' && reverse == true"
             ></span>
             <span
               class="sortorder"
-              [hidden]="sortType === 'received' && reverse === false"
+              [hidden]="sortType === 'paid' && reverse === false"
             ></span>
           </th>
           <th>Action</th>
@@ -120,10 +115,10 @@
             </td>
             <td>
                 <p>{{ item.discount }}</p>
-                <p>{{ item.receivable }}</p>
+                <p>{{ item.payable }}</p>
             </td>
             <td>
-                <p>{{ item.received }}</p>
+                <p>{{ item.paid }}</p>
                 <p>{{ item.due }}</p>
             </td>
             <td>
@@ -131,7 +126,7 @@
                 <button
                   type="button"
                   class="btn btn-primary margin-right"
-                 
+                  (click)="openDialogFormUpdate(item.id)"
                 >
                 <i></i>
                   Edit

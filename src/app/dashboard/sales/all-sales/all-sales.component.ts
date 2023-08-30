@@ -1,8 +1,11 @@
 import { Component , OnInit} from '@angular/core';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { salesApi } from '../../services/sales.service';
+import { salesApi } from '../../services/dashboard-sales.service';
+import { DialogsComponent } from '../dialogs/dialogs.component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-all-sales',
@@ -10,6 +13,22 @@ import { salesApi } from '../../services/sales.service';
   styleUrls: ['./all-sales.component.scss']
 })
 export class AllSalesComponent implements OnInit {
+
+  salesAllForm:FormGroup = new FormGroup({
+    invoice: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    date: new FormControl('',[Validators.required]),
+    customer: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+    warehouse: new FormControl('', Validators.required),
+    totalAmount: new FormControl('', Validators.required),
+    discount:new FormControl('',Validators.requiredTrue),
+    receivable: new FormControl('', Validators.required),
+    received: new FormControl('', Validators.required),
+    due:new FormControl('',Validators.requiredTrue)
+  });
+  bsModalRef?: BsModalRef;
+  isAdded: boolean = false;
+  isEditted: boolean = false;
 
   public salesItem:any[]=[];
   all_salesItem:any[]=[]
@@ -34,16 +53,88 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private salesApi:salesApi
+  private salesApi:salesApi,
+  private modalService: BsModalService,
 ) 
-{}
+{ }
 
 ngOnInit(): void {  
+  this.getSalesData();
+  this.salesItem = this.salesItem.slice(0,this.limit) ; 
+  this.paginate() ;    
+};
 
-  this.salesItem = this.salesItem.slice(0,this.limit) 
-  this.getSalesData()
-  this.paginate()     
+//Add Sales Data
+openDialogForm(){
+  this.isAdded = true
+  this.isEditted = false
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Add Sales Data',
+      isAdded:true,
+    isEditted:false,
+    salesAllFormAdd:this.salesAllForm
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+console.log(id);
+this.salesItem.map( item=>{
+if(item.id === id){
+  this.salesAllForm = new FormGroup({
+    invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    date:new FormControl(item.date),
+    customer:new FormControl(item.customer),
+    mobile:new FormControl(item.mobile),
+    warehouse:new FormControl(item.warehouse),
+    totalAmount:new FormControl(item.totalAmount),
+    discount:new FormControl(item.discount),
+    receivable:new FormControl(item.receivable),
+    received:new FormControl(item.received),
+    due:new FormControl(item.due),
+  });
+  let id = item.id
+   
+  // let formData = {
+  //   invoice:item.invoice,
+  //   date:item.date,
+  //   customer:item.customer,
+  //   mobile:item.mobile,
+  //   warehouse:item.warehouse,
+  //   totalAmount:item.totalAmount,
+  //   discount:item.discount,
+  //   receivable:item.receivable,
+  //   received:item.received,
+  //   due:item.due,
+  // }
+  
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Update Sales Data',
+      isAdded:false,
+      isEditted:true,
+      salesAllFormAdd:this.salesAllForm,
+      id:id,
+      getMethod:this.getSalesData()
+      // formData:formData,
+      
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.getSalesData();
+
+  this.bsModalRef.content.closeBtnName = 'Close';
+  
 }
+});
+
+
+}
+
   //get All user_Data:
   getSalesData(){
     this.salesApi.getAllSales().subscribe( (item:any)=>{
@@ -51,7 +142,8 @@ ngOnInit(): void {
       this.salesItem = item.salesList;
       this. all_salesItem = item.salesList;
       this.count = item.salesList.length;
-    })
+    });
+    
   };
 
 
@@ -73,7 +165,7 @@ search(text:string){
   } else{
     this.search_Data_Available = true
     this.getSalesData()
-    this.paginate()
+    
   }     
 }
 
@@ -82,7 +174,7 @@ paginate(){
   let startItem = (this.currentPage-1) * this.limit;
   let endItem = this.currentPage * this.limit;
   this.salesItem = this.all_salesItem.slice(startItem,endItem)
-
+ 
   // console.log(startItem,endItem);
   // console.log("returnedLimitedItems", this.workData);
 

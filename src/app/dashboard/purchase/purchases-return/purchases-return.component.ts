@@ -1,8 +1,9 @@
 import { Component , OnInit} from '@angular/core';
-import { Router } from '@angular/router';
-
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { salesApi } from '../../services/sales.service';
+import { PurchaseApi } from '../../services/purchase.service'; 
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { DialogPurchaseReturnComponent } from './dialog-purchase-return.component';
 
 @Component({
   selector: 'app-purchases-return',
@@ -11,8 +12,10 @@ import { salesApi } from '../../services/sales.service';
 })
 export class PurchasesReturnComponent {
 
-  public salesItem:any[]=[];
-  all_salesItem:any[]=[];
+  purchaseAllForm:FormGroup | any;
+  bsModalRef?: BsModalRef;
+  public purchaseReturnItem:any[]=[];
+  all_purchaseReturnItem:any[]=[];
 
   //searching:
 searchText:string = ''
@@ -33,24 +36,62 @@ sortType: string = 'name';
 
 
 constructor(
-  private router: Router,
-  private salesApi:salesApi
+
+  private purchaseApi:PurchaseApi,
+  private modalService: BsModalService,
 ) 
 {}
 
 ngOnInit(): void {  
 
-  this.salesItem = this.salesItem.slice(0,this.limit) 
-  this.getSalesData()
+  this.purchaseReturnItem = this.purchaseReturnItem.slice(0,this.limit) 
+  this.getpurchaseReturnData()
   this.paginate()     
-}
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+  console.log(id);
+  this.purchaseReturnItem.map( item=>{
+  if(item.id === id){
+    this.purchaseAllForm = new FormGroup({
+      invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+      date:new FormControl(item.date),
+      supplier:new FormControl(item.supplier),
+      mobile:new FormControl(item.mobile),
+      warehouse:new FormControl(item.warehouse),
+      totalAmount:new FormControl(item.totalAmount),
+      lessed:new FormControl(item.lessed),
+      receivable:new FormControl(item.receivable),
+      received:new FormControl(item.received),
+      due:new FormControl(item.due),
+    });
+    let id = item.id
+    
+    const initialState:ModalOptions = {
+      initialState:{
+        title:'Update Purchase return Data',
+        purchaseAllFormAdd:this.purchaseAllForm,
+        id:id,
+      }
+    };
+    this.bsModalRef = this.modalService.show(DialogPurchaseReturnComponent, initialState);
+    this.getpurchaseReturnData();
+  
+    this.bsModalRef.content.closeBtnName = 'Close';
+    
+  }
+  });
+  
+  
+  }
   //get All user_Data:
-  getSalesData(){
-    this.salesApi.getAllSales().subscribe( (item:any)=>{
-      console.log(item.salesList)
-      this.salesItem = item.salesList;
-      this. all_salesItem = item.salesList;
-      this.count = item.salesList.length;
+  getpurchaseReturnData(){
+    this.purchaseApi.getpurchaseListReturn().subscribe( (item:any)=>{
+      console.log(item)
+      this.purchaseReturnItem = item;
+      this. all_purchaseReturnItem = item;
+      this.count = item.length;
     })
   };
 
@@ -59,7 +100,7 @@ ngOnInit(): void {
 search(text:string){ 
   if(this.searchText !== ''){  
           
-    const searched_users = this.all_salesItem.filter(
+    const searched_users = this.all_purchaseReturnItem.filter(
       data =>{
         return data.customer.toLowerCase().match(this.searchText.toLowerCase())
       }
@@ -67,12 +108,12 @@ search(text:string){
     //paginate with all searched data:
     let startItem = (this.currentPage-1) * this.limit;
     let endItem = this.currentPage * this.limit;
-    this.salesItem = searched_users.slice(startItem,endItem)
+    this.purchaseReturnItem = searched_users.slice(startItem,endItem)
 
-    this.search_Data_Available = this.salesItem.length > 0;         
+    this.search_Data_Available = this.purchaseReturnItem.length > 0;         
   } else{
     this.search_Data_Available = true
-    this.getSalesData()
+    this.getpurchaseReturnData()
     this.paginate()
   }     
 }
@@ -81,7 +122,7 @@ search(text:string){
 paginate(){  
   let startItem = (this.currentPage-1) * this.limit;
   let endItem = this.currentPage * this.limit;
-  this.salesItem = this.all_salesItem.slice(startItem,endItem)
+  this.purchaseReturnItem = this.all_purchaseReturnItem.slice(startItem,endItem)
 
   // console.log(startItem,endItem);
   // console.log("returnedLimitedItems", this.workData);
@@ -108,7 +149,7 @@ changeItemsPerPage(e:any){
   this.sortType = key; 
   this.reverse = !this.reverse
  let direction = !this.reverse  ? -1 : 1;
-    this.salesItem = this.all_salesItem.sort((a:any,b:any)=>{
+    this.purchaseReturnItem = this.all_purchaseReturnItem.sort((a:any,b:any)=>{
       console.log(a,b)
       console.log(a[key],b[key])
       if(a[key].toLowerCase().trim() < b[key].toLowerCase().trim()){   //a.key => not read b/c key is a dynamic data so use bracket notation

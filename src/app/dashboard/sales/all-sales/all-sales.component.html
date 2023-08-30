@@ -3,7 +3,7 @@
     <div class="salesList">
         <p>Sales List</p>
         <div class="button">
-            <button class="btn btn-primary">
+            <button type="button" class="btn btn-primary" (click)="openDialogForm()">
                 <b>+</b>Add New Sales
               </button>
               <button class="btn btn-primary">
@@ -15,7 +15,6 @@
         </div>
     </div>
     <div class="header">
-        <!-- (click)="openFormSignupModal(modal)" -->
       <div class="left-side">
             <label>Show</label>
             <select (change)="changeItemsPerPage($event.target)">
@@ -88,7 +87,7 @@
             ></span>
           </th>
           <th>
-            <span (click)="sortClick('received')">ReceivedDue</span>
+            <span (click)="sortClick('received')">Received|Due</span>
             <span
               class="sortorder descending"
               [hidden]="sortType === 'received' && reverse == true"
@@ -129,17 +128,15 @@
                 <button
                   type="button"
                   class="btn btn-primary margin-right"
-                 
+                  (click)="openDialogFormUpdate(item.id)"
                 >
                 <i></i>
                   Edit
                 </button>
-                <!-- (click)="openFormUpdateModal(modal, user.id)"
-                (click)="openDeleteModal(deleteModal, user.id)" -->
+               
                 <button
                   type="button"
                   class="btn btn-danger"
-                 
                 >
                 <i></i>
                   More

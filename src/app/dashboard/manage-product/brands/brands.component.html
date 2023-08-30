@@ -4,8 +4,8 @@
     <div class="salesList">
         <p>Brands List</p>
         <div class="button">
-            <button class="btn btn-primary">
-                <b>+</b>Add New Sales
+            <button class="btn btn-primary" (click)="openDialogForm()">
+                <b>+</b>Add New Brand
               </button>
               <button class="btn btn-primary">
                 Import to CSV
@@ -89,7 +89,8 @@
               <div class="worksheet">
                 <button
                   type="button"
-                  class="btn btn-primary margin-right"                 
+                  class="btn btn-primary margin-right"  
+                  (click)="openDialogFormUpdate(item.id)"                
                 >
                 <i></i>
                   Edit

@@ -3,14 +3,26 @@ import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ManageProductApi } from '../../services/manage-product.service';
-import { UNITS } from '../../Models/manage-product.models';
-
+import { UNITS } from '../../models/manage-product.models';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { DialogUnitsComponent } from './dialog-units.component';
 @Component({
   selector: 'app-units',
   templateUrl: './units.component.html',
   styleUrls: ['./units.component.scss']
 })
 export class UnitsComponent {
+
+  productManage_Form:FormGroup = new FormGroup({
+    serialNo: new FormControl('',[Validators.required]),
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    products: new FormControl('', Validators.required),
+   
+  });
+  bsModalRef?: BsModalRef;
+  isAdded: boolean = false;
+  isEditted: boolean = false;
 
   public unitsItem:UNITS[]=[];
   all_unitsItem:UNITS[]=[];
@@ -35,15 +47,63 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private ManageProductApi:ManageProductApi
+  private ManageProductApi:ManageProductApi,
+  private modalService: BsModalService,
 ) 
 {}
 
 ngOnInit(): void {  
-
   this.unitsItem = this.unitsItem.slice(0,this.limit) 
   this.getUnitsData()
   this.paginate()     
+};
+
+//Add Sales Data
+openDialogForm(){
+  this.isAdded = true
+  this.isEditted = false
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Add Customer',
+      isAdded:true,
+    isEditted:false,
+    productManage_FormAdd:this.productManage_Form
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogUnitsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+console.log(id);
+this.unitsItem.map( item=>{
+if(item.id === id){
+  this.productManage_Form = new FormGroup({
+    serialNo:new FormControl(item.serialNo),
+    name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
+    products:new FormControl(item.products),   
+  });
+  let id = item.id
+  
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Update Sales Data',
+      isAdded:false,
+      isEditted:true,
+      productManage_FormAdd:this.productManage_Form,
+      id:id,
+      // formData:formData,
+      
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogUnitsComponent, initialState);
+  this.getUnitsData();
+  this.bsModalRef.content.closeBtnName = 'Close'; 
+}
+});
+
+
 }
   //get All user_Data:
   getUnitsData(){

@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { CustomerApi } from '../services/customer.service';
-import { CUSTOMER } from '../Models/customer.model';
+import { CUSTOMER } from '../models/customer.model';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { DialogsComponent } from './dialogs/dialogs.component';
 
 
 @Component({
@@ -12,6 +15,19 @@ import { CUSTOMER } from '../Models/customer.model';
   styleUrls: ['./customer.component.scss']
 })
 export class CustomerComponent {
+
+  salesAllForm:FormGroup = new FormGroup({
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    address: new FormControl('',[Validators.required]),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+    email: new FormControl('', Validators.required),
+    receivable: new FormControl('', Validators.required),
+    payable: new FormControl('', Validators.required),
+   
+  });
+  bsModalRef?: BsModalRef;
+  isAdded: boolean = false;
+  isEditted: boolean = false;
 
   public customerItem:CUSTOMER[]=[];
   all_customerItem:CUSTOMER[]=[];
@@ -36,16 +52,70 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private customerApi:CustomerApi
+  private customerApi:CustomerApi,
+  private modalService: BsModalService,
 ) 
 {}
 
 ngOnInit(): void {  
-
   this.customerItem = this.customerItem.slice(0,this.limit) 
   this.getcustomerData()
   this.paginate()     
+};
+
+//Add Sales Data
+openDialogForm(){
+  this.isAdded = true
+  this.isEditted = false
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Add Customer',
+      isAdded:true,
+    isEditted:false,
+    salesAllFormAdd:this.salesAllForm
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+console.log(id);
+this.customerItem.map( item=>{
+if(item.id === id){
+  this.salesAllForm = new FormGroup({
+    name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    address:new FormControl(item.address),
+    mobile:new FormControl(item.mobile),
+    email:new FormControl(item.email),
+    receivable:new FormControl(item.receivable),
+    payable:new FormControl(item.payable),
+  });
+  let id = item.id
+  
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Update Sales Data',
+      isAdded:false,
+      isEditted:true,
+      salesAllFormAdd:this.salesAllForm,
+      id:id,
+      // formData:formData,
+      
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.getcustomerData();
+
+  this.bsModalRef.content.closeBtnName = 'Close';
+  
 }
+});
+
+
+}
+
   //get All user_Data:
   getcustomerData(){
     this.customerApi.getCustomer().subscribe( (item:CUSTOMER[])=>{
@@ -124,4 +194,3 @@ changeItemsPerPage(e:any){
     this.paginate()
 }
 }
-

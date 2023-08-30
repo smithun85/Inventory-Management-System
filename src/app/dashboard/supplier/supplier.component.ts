@@ -2,8 +2,13 @@ import { Component , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { SUPPLIER } from '../Models/supplier.model';
+import { SUPPLIER } from '../models/supplier.model';
 import { SupplierApi } from '../services/supplier.service';
+
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { DialogsComponent } from './dialogs/dialogs.component';
+
 
 @Component({
   selector: 'app-supplier',
@@ -11,6 +16,20 @@ import { SupplierApi } from '../services/supplier.service';
   styleUrls: ['./supplier.component.scss']
 })
 export class SupplierComponent {
+
+  salesAllForm:FormGroup = new FormGroup({
+    serialNo: new FormControl('',[Validators.required]),
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+    email: new FormControl('', Validators.required),
+    receivable: new FormControl('', Validators.required),
+    payable: new FormControl('', Validators.required),
+   
+  });
+  bsModalRef?: BsModalRef;
+  isAdded: boolean = false;
+  isEditted: boolean = false;
+
 
   public supplierItem:SUPPLIER[]=[];
   all_supplierItem:SUPPLIER[]=[];
@@ -35,18 +54,74 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private supplierApi:SupplierApi
+  private supplierApi:SupplierApi,
+  private modalService: BsModalService,
 ) 
 {}
 
 ngOnInit(): void {  
-
   this.supplierItem = this.supplierItem.slice(0,this.limit) 
-  this.getsupplierData()
+  this.getSupplierData()
   this.paginate()     
+};
+
+//Add Sales Data
+openDialogForm(){
+  this.isAdded = true
+  this.isEditted = false
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Add Customer',
+      isAdded:true,
+    isEditted:false,
+    supplierFormAdd:this.salesAllForm
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.getSupplierData();
+  this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+console.log(id);
+this.supplierItem.map( item=>{
+if(item.id === id){
+  this.salesAllForm = new FormGroup({
+    serialNo:new FormControl(item.serialNo),
+    name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
+    mobile:new FormControl(item.mobile),
+    email:new FormControl(item.email),
+    receivable:new FormControl(item.receivable),
+    payable:new FormControl(item.payable),
+  });
+  let id = item.id
+  
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Update Sales Data',
+      isAdded:false,
+      isEditted:true,
+      supplierFormAdd:this.salesAllForm,
+      id:id,
+      // formData:formData,
+      
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.getSupplierData();
+
+  this.bsModalRef.content.closeBtnName = 'Close';
+  
 }
+});
+
+
+};
+
+
   //get All user_Data:
-  getsupplierData(){
+  getSupplierData(){
     this.supplierApi.getsupplier().subscribe( (item:SUPPLIER[])=>{
       console.log(item)
       this.supplierItem = item;
@@ -73,7 +148,7 @@ search(text:string){
     this.search_Data_Available = this.supplierItem.length > 0;         
   } else{
     this.search_Data_Available = true
-    this.getsupplierData()
+    this.getSupplierData()
     this.paginate()
   }     
 }
@@ -123,4 +198,3 @@ changeItemsPerPage(e:any){
     this.paginate()
 }
 }
-

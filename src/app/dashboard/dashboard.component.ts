@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
-import { salesApi } from './services/sales.service';
+import { salesApi } from './services/dashboard-sales.service';
+import { CartModel } from './models/cart.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,6 +10,9 @@ import { salesApi } from './services/sales.service';
 })
 export class DashboardComponent implements OnInit{
 
+  // Card-1:
+  cart:CartModel[] = [];
+  cartBottom:CartModel[] = [];
    //Graph:
    chart: any = [];
    chartData:any  = []
@@ -23,8 +27,24 @@ export class DashboardComponent implements OnInit{
 ngOnInit(): void {
   this.createChart();
   this.createTable();
+  this.getCart();
+  this.getCartBottom();
 };
 constructor(private salesApi:salesApi){}
+
+getCart(){
+  this.salesApi.getCarts().subscribe( item=>{
+    // console.log(item);
+    this.cart = item
+  })
+};
+
+getCartBottom(){
+  this.salesApi.getCartsBottom().subscribe( item=>{
+    console.log(item);
+    this.cartBottom = item
+  })
+}
 
 createChart(){
   this.salesApi.getGraph().subscribe( chart=>{
@@ -86,7 +106,7 @@ Object.values(dataArrays).map((item:any,index:number)=>{
       // }  ]
     },
     options: {
-      aspectRatio:1.5,
+      aspectRatio:2,
       scales: {
         y: {
           beginAtZero: true

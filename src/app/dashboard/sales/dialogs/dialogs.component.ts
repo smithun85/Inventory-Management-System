@@ -2,7 +2,7 @@ import { Component , OnInit, TemplateRef} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { salesApi } from '../../services/sales.service';
+import { salesApi } from '../../services/dashboard-sales.service';
 
 @Component({
   selector: 'app-dialogs',

@@ -1,8 +1,13 @@
 import { Component , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { salesApi } from '../../services/sales.service';
+import { salesApi } from '../../services/dashboard-sales.service';
+import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
+
+import { SALES_RETURN } from '../../models/sales.model';
+
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DialogSalesReturnComponent } from './dialog-sales-return.component';
 
 @Component({
   selector: 'app-sales-return',
@@ -11,8 +16,11 @@ import { salesApi } from '../../services/sales.service';
 })
 export class SalesReturnComponent {
 
-  public salesItem:any[]=[];
-  all_salesItem:any[]=[];
+  bsModalRef?: BsModalRef;
+  salesAllForm:FormGroup | any;
+
+  public salesItem:SALES_RETURN[]=[];
+  all_salesItem:SALES_RETURN[]=[];
 
   //searching:
 searchText:string = ''
@@ -34,7 +42,8 @@ sortType: string = 'name';
 
 constructor(
   private router: Router,
-  private salesApi:salesApi
+  private salesApi:salesApi,
+  private modalService: BsModalService,
 ) 
 {}
 
@@ -43,14 +52,51 @@ ngOnInit(): void {
   this.salesItem = this.salesItem.slice(0,this.limit) 
   this.getSalesData()
   this.paginate()     
-}
-  //get All user_Data:
+};
+
+//update-modal
+openDialogFormUpdate(id:any){
+  console.log(id);
+  this.salesItem.map( item=>{
+  if(item.id === id){
+    this.salesAllForm = new FormGroup({
+      invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+      date:new FormControl(item.date),
+      customer:new FormControl(item.customer),
+      mobile:new FormControl(item.mobile),
+      warehouse:new FormControl(item.warehouse),
+      totalAmount:new FormControl(item.totalAmount),
+      discount:new FormControl(item.discount),
+      payable:new FormControl(item.payable),
+      paid:new FormControl(item.paid),
+      due:new FormControl(item.due),
+    });
+    let id = item.id
+    const initialState:ModalOptions = {
+      initialState:{
+        title:'Update Sales Return Data',
+        salesAllFormAdd:this.salesAllForm,
+        id:id,        
+      }
+    };
+    this.bsModalRef = this.modalService.show(DialogSalesReturnComponent, initialState);
+    this.getSalesData();
+  
+    this.bsModalRef.content.closeBtnName = 'Close';
+    
+  }
+  });
+  
+  
+  }
+
+  //get All sales Return Data:
   getSalesData(){
-    this.salesApi.getAllSales().subscribe( (item:any)=>{
-      console.log(item.salesList)
-      this.salesItem = item.salesList;
-      this. all_salesItem = item.salesList;
-      this.count = item.salesList.length;
+    this.salesApi.getSalesReturn().subscribe( (item:SALES_RETURN[])=>{
+      console.log(item)
+      this.salesItem = item;
+      this. all_salesItem = item;
+      this.count = item.length;
     })
   };
 

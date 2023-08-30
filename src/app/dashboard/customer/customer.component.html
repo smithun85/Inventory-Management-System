@@ -1,161 +1,160 @@
 
 <div class="container">
-    <h4>All Customers</h4>
-    <div class="salesList">
-        <p>Customer List</p>
-        <div class="button">
-            <button class="btn btn-primary">
-                <b>+</b>Add New Customer
-              </button>
-              <button class="btn btn-info">
-               Notification to All
-              </button>
-              <button class="btn btn-success">
-                Action
-               </button>
-        </div>
-    </div>
-    <div class="header">
-        <!-- (click)="openFormSignupModal(modal)" -->
-      <div class="left-side">
-            <label>Show</label>
-            <select (change)="changeItemsPerPage($event.target)">
-              <option [value]="item" *ngFor="let item of limits; let i = index">
-                {{ item }}
-              </option>
-            </select>
-            <label>entries</label>
-      </div>
-      
-      <div class="search d-flex">
-        <label for="">search</label>
-        <input
-          class="form-control me-2"
-          type="search"
-          [(ngModel)]="searchText"
-          (input)="search(searchText)"
-          aria-label="Search"
-        />
-        
-        
-      </div>
-    </div>
-  
-    <table class="table table-bordered">
-      <thead>
-        <tr class="sort">
-          <th>
-            <span (click)="sortClick('name')">Name|Address</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'name' && reverse === true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'name' && reverse === false"
-            ></span>
-          </th>
-          <th>
-            <span (click)="sortClick('email')">Mobile|Email</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'email' && reverse == true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'email' && reverse === false"
-            ></span>
-          </th>
-          <th>
-            <span (click)="sortClick('receivable')">Receivable</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'receivable' && reverse == true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'receivable' && reverse === false"
-            ></span>
-          </th>
-          <th>
-            <span (click)="sortClick('payable')">Payable</span>
-            <span
-              class="sortorder descending"
-              [hidden]="sortType === 'payable' && reverse == true"
-            ></span>
-            <span
-              class="sortorder"
-              [hidden]="sortType === 'payable' && reverse === false"
-            ></span>
-          </th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <div *ngIf="search_Data_Available; then printData; else empty"></div>
-      <ng-template #printData>
-        <tbody>
-          <tr *ngFor="let item of customerItem">
-            <td><p>{{ item.name }}</p>
-                <p>{{ item.address }}</p>
-            </td>
-            <td>
-                <p>{{ item.mobile }}</p>
-                <p>{{ item.email }}</p>
-            </td>
-            <td>
-                <p>{{ item.receivable }}</p>                
-            </td>
-            <td>
-                <p>{{ item.payable }}</p>               
-            </td>
-            <td>
-              <div class="worksheet">
-                <button
-                  type="button"
-                  class="btn btn-primary margin-right"
-                 
-                >
-                <i></i>
-                  Edit
-                </button>
-                <!-- (click)="openFormUpdateModal(modal, user.id)"
-                (click)="openDeleteModal(deleteModal, user.id)" -->
-                <button
-                  type="button"
-                  class="btn btn-danger" 
-                >
-                <i></i>
-                  Notify
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-danger" 
-                >
-                <i></i>
-                  Payment
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </ng-template>
-      <ng-template #empty>
-        <h2>data not found.......</h2>
-      </ng-template>
-    </table>
-  
-  
-      
-      <div class="pagination">
-        <pagination
-          [boundaryLinks]="showBoundaryLinks"
-          [totalItems]="count"
-          [itemsPerPage]="limit"
-          [rotate]="rotate"
-          [maxSize]="maxSize"
-          [(ngModel)]="currentPage"
-          name="currentPage"
-          (pageChanged)="changePage($event)"
-        ></pagination>
+  <h4>All Customers</h4>
+  <div class="salesList">
+      <p>Customer List</p>
+      <div class="button">
+          <button class="btn btn-primary" (click)="openDialogForm()">
+              <b>+</b>Add New Customer
+            </button>
+            <button class="btn btn-info">
+             Notification to All
+            </button>
+            <button class="btn btn-success">
+              Action
+             </button>
       </div>
   </div>
+  <div class="header">
+      <!-- (click)="openFormSignupModal(modal)" -->
+    <div class="left-side">
+          <label>Show</label>
+          <select (change)="changeItemsPerPage($event.target)">
+            <option [value]="item" *ngFor="let item of limits; let i = index">
+              {{ item }}
+            </option>
+          </select>
+          <label>entries</label>
+    </div>
+    
+    <div class="search d-flex">
+      <label for="">search</label>
+      <input
+        class="form-control me-2"
+        type="search"
+        [(ngModel)]="searchText"
+        (input)="search(searchText)"
+        aria-label="Search"
+      />
+      
+      
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="sort">
+        <th>
+          <span (click)="sortClick('name')">Name|Address</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'name' && reverse === true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'name' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('email')">Mobile|Email</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'email' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'email' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('receivable')">Receivable</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'receivable' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'receivable' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('payable')">Payable</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'payable' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'payable' && reverse === false"
+          ></span>
+        </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <div *ngIf="search_Data_Available; then printData; else empty"></div>
+    <ng-template #printData>
+      <tbody>
+        <tr *ngFor="let item of customerItem">
+          <td><p>{{ item.name }}</p>
+              <p>{{ item.address }}</p>
+          </td>
+          <td>
+              <p>{{ item.mobile }}</p>
+              <p>{{ item.email }}</p>
+          </td>
+          <td>
+              <p>{{ item.receivable }}</p>                
+          </td>
+          <td>
+              <p>{{ item.payable }}</p>               
+          </td>
+          <td>
+            <div class="worksheet">
+              <button
+                type="button"
+                class="btn btn-primary margin-right"
+                (click)="openDialogFormUpdate(item.id)"
+              >
+              <i></i>
+                Edit
+              </button>
+      
+              <button
+                type="button"
+                class="btn btn-danger" 
+              >
+              <i></i>
+                Notify
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger" 
+              >
+              <i></i>
+                Payment
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </ng-template>
+    <ng-template #empty>
+      <h2>data not found.......</h2>
+    </ng-template>
+  </table>
+
+
+    
+    <div class="pagination">
+      <pagination
+        [boundaryLinks]="showBoundaryLinks"
+        [totalItems]="count"
+        [itemsPerPage]="limit"
+        [rotate]="rotate"
+        [maxSize]="maxSize"
+        [(ngModel)]="currentPage"
+        name="currentPage"
+        (pageChanged)="changePage($event)"
+      ></pagination>
+    </div>
+</div>

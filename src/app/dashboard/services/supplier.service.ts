@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { SUPPLIER } from '../Models/supplier.model';
-import { suppliers } from './data/supplier-Data';
+import { SUPPLIER } from '../models/supplier.model';
+import { suppliers } from './data/supplier-data';
 
 @Injectable({providedIn:'root'})
 
@@ -19,9 +19,9 @@ export class SupplierApi{
     };
 
     //Update the suppliers data
-    updatesuppliersData(supplierFormData:any, id:number):Observable<any>{        
-        const supplierIndex = suppliers.findIndex( (data)=>data.id==id)
-        
+    updatesuppliersData(supplierFormData:any, id:number):Observable<any>{   
+        console.log(supplierFormData);     
+        const supplierIndex = suppliers.findIndex( (data)=>data.id==id)       
     if(supplierIndex !== -1){
         console.log('data');
        suppliers[supplierIndex] = supplierFormData;
