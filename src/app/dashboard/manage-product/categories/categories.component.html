@@ -13,7 +13,6 @@
       </div>
   </div>
   <div class="header">
-      <!-- (click)="openFormSignupModal(modal)" -->
     <div class="left-side">
           <label>Show</label>
           <select (change)="changeItemsPerPage($event.target)">
@@ -97,7 +96,8 @@
             
               <button
                 type="button"
-                class="btn btn-danger"     
+                class="btn btn-danger" 
+                (click)="openDeleteDialog(item.id)"    
               >
               <i></i>
                Delete

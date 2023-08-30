@@ -25,6 +25,7 @@ export class BrandsComponent implements OnInit {
   bsModalRef?: BsModalRef;
   isAdded: boolean = false;
   isEditted: boolean = false;
+  formModal:boolean = false;
 
   public brandsItem:BRANDS[]=[];
   all_brandsItem:BRANDS[]=[];
@@ -62,12 +63,14 @@ ngOnInit(): void {
 //Add Sales Data
 openDialogForm(){
   this.isAdded = true
-  this.isEditted = false
+  this.isEditted = false;
+  this.formModal = true
   const initialState:ModalOptions = {
     initialState:{
-      title:'Add Customer',
+      title:'Add Brands',
       isAdded:true,
     isEditted:false,
+    formModal: this.formModal,
     productManage_FormAdd:this.productManage_Form
     }
   };
@@ -78,6 +81,7 @@ openDialogForm(){
 //update-modal
 openDialogFormUpdate(id:any){
 console.log(id);
+this.formModal = true,
 this.brandsItem.map( item=>{
 if(item.id === id){
   this.productManage_Form = new FormGroup({
@@ -88,10 +92,11 @@ if(item.id === id){
   let id = item.id
   
   const initialState:ModalOptions = {
+    
     initialState:{
-      title:'Update Sales Data',
-      isAdded:false,
+      title:'Update Brand Data',
       isEditted:true,
+      formModal: this.formModal,
       productManage_FormAdd:this.productManage_Form,
       id:id,
       // formData:formData,
@@ -99,13 +104,31 @@ if(item.id === id){
     }
   };
   this.bsModalRef = this.modalService.show(DialogBrandsComponent, initialState);
-  this.getbrandsData();
   this.bsModalRef.content.closeBtnName = 'Close'; 
 }
 });
+};
 
-
-}
+//Delete:
+openDeleteDialog(id:any){
+  console.log(id);
+  this.brandsItem.map( item=>{
+    if(item.id === id){
+      let id = item.id,
+      deleteModal:true
+  
+      const initialState:ModalOptions = {
+        initialState:{
+          title:'Are you sure ? Do you want to delete this details',
+          id:id,         
+        }
+      };
+      this.bsModalRef = this.modalService.show(DialogBrandsComponent, initialState);
+      this.getbrandsData();
+      this.bsModalRef.content.closeBtnName = 'Close'; 
+  }
+  });
+};
   //get All user_Data:
   getbrandsData(){
     this.ManageProductApi.getBrands().subscribe( (brandsList:BRANDS[])=>{

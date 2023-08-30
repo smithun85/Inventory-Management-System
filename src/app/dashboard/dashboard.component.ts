@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { salesApi } from './services/dashboard-sales.service';
 import { CartModel } from './models/cart.model';
+import { AuthService } from '../Authentication/authServices/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,6 +12,7 @@ import { CartModel } from './models/cart.model';
 })
 export class DashboardComponent implements OnInit{
 
+  // user$ : Observable<any>
   // Card-1:
   cart:CartModel[] = [];
   cartBottom:CartModel[] = [];
@@ -30,7 +33,14 @@ ngOnInit(): void {
   this.getCart();
   this.getCartBottom();
 };
-constructor(private salesApi:salesApi){}
+constructor(
+  private salesApi:salesApi,
+  private auth: AuthService
+  ){
+  this.auth.getUser().subscribe( (res)=>{
+    console.log(res)
+  })
+  }
 
 getCart(){
   this.salesApi.getCarts().subscribe( item=>{

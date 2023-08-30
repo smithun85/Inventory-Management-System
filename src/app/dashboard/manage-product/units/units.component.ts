@@ -23,6 +23,7 @@ export class UnitsComponent {
   bsModalRef?: BsModalRef;
   isAdded: boolean = false;
   isEditted: boolean = false;
+  formModal:boolean = false;
 
   public unitsItem:UNITS[]=[];
   all_unitsItem:UNITS[]=[];
@@ -102,9 +103,28 @@ if(item.id === id){
   this.bsModalRef.content.closeBtnName = 'Close'; 
 }
 });
+};
 
-
-}
+//Delete:
+openDeleteDialog(id:any){
+  console.log(id);
+  this.unitsItem.map( item=>{
+    if(item.id === id){
+      let id = item.id,
+      deleteModal:true
+  
+      const initialState:ModalOptions = {
+        initialState:{
+          title:'Are you sure ? Do you want to delete this details',
+          id:id,         
+        }
+      };
+      this.bsModalRef = this.modalService.show(DialogUnitsComponent, initialState);
+      this.getUnitsData();
+      this.bsModalRef.content.closeBtnName = 'Close'; 
+  }
+  });
+};
   //get All user_Data:
   getUnitsData(){
     this.ManageProductApi.getUnits().subscribe( (unitsList:UNITS[])=>{

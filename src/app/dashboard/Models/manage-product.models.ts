@@ -18,7 +18,7 @@ export interface UNITS {
     id:number;
     serialNo:string;
    name:string;   
-        products:string;
+    products:string;
 }
 
 

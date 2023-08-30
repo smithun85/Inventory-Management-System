@@ -95,11 +95,10 @@
                 <i></i>
                   Edit
                 </button>
-                <!-- (click)="openFormUpdateModal(modal, user.id)"
-                (click)="openDeleteModal(deleteModal, user.id)" -->
                 <button
                   type="button"
-                  class="btn btn-danger"     
+                  class="btn btn-danger"
+                  (click)="openDeleteDialog(item.id)"      
                 >
                 <i></i>
                  Delete

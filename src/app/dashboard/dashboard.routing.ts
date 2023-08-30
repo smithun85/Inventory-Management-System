@@ -54,7 +54,12 @@ const routes:Routes= [
             {
                 path:'',
                 loadChildren: ()=> import('../dashboard/staff/staff.module').then(m=>m.StaffModule)
-            }
+            },
+            {
+                path:'**',
+                redirectTo:'',
+                pathMatch:'full'
+              }
           
         ];
 

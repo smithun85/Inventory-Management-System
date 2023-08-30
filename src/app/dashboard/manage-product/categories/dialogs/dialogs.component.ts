@@ -15,7 +15,8 @@ export class DialogsComponent implements OnInit{
  
   productManage_Form:FormGroup | any
   public salesItem:any[]=[];
-  isSubmitted:boolean = false
+  isSubmitted:boolean = false;
+
 
 //this data comes from allsalesComponent through modal
   isAdded?: boolean ;
@@ -25,6 +26,7 @@ export class DialogsComponent implements OnInit{
   productManage_FormAdd?:FormGroup;
   formData?:any;
   id?:any;
+  formModal?:boolean;
   
   
   
@@ -39,7 +41,9 @@ export class DialogsComponent implements OnInit{
 
   ngOnInit(): void {
    
+     if(this.formModal){
       this.productManage_Form = this.productManage_FormAdd
+     }
       
       // console.log(this.formData);
     
@@ -66,8 +70,13 @@ onSubmit(){
     this.manageProductApi.updateCategoriesData(this.productManage_Form.value,this.id).subscribe()
   };
    
-  this.productManage_Form.reset()
+this.bsModalRef.hide()
   // console.log("UsersData:",this.userData);    
+};
+
+deleteManageProduct(){
+  this.manageProductApi.deleteCategoriesData(this.id).subscribe();
+  this.bsModalRef.hide()
 }
 
 }

@@ -8,7 +8,11 @@
 
 // select bootstrap style
 @import "~@ng-select/ng-select/themes/default.theme.css";
-
+.body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
 
 .container{
     .salesList{
@@ -67,3 +71,5 @@
         content: '\25bc';
     }
     
+
+   

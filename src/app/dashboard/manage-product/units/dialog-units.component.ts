@@ -22,6 +22,7 @@ export class DialogUnitsComponent {
   productManage_FormAdd?:FormGroup;
   formData?:any;
   id?:any;
+  formModal?:boolean;
   
   
   
@@ -35,11 +36,9 @@ export class DialogUnitsComponent {
  
 
   ngOnInit(): void {
-   
+    if(this.formModal){
       this.productManage_Form = this.productManage_FormAdd
-      
-      // console.log(this.formData);
-    
+     }
   }
 
 //reset Form:
@@ -65,6 +64,11 @@ onSubmit(){
    
   this.productManage_Form.reset()
   // console.log("UsersData:",this.userData);    
+};
+
+deleteManageProduct(){
+  this.manageProductApi.deleteUnitsData(this.id).subscribe();
+  this.bsModalRef.hide()
 }
 
 }

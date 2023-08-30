@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="formModal">
     <div class="modal-header">
         <h4 class="modal-title pull-left">{{title}}</h4>
         <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
@@ -45,4 +45,17 @@
             </div>
         </form>
     </div>    
+</div>
+
+
+<!-- delete-Modal -->
+<div class="delete-popup">
+  <div>
+    <i>delete</i>
+    <p>{{title}}</p>
+    <button  type="button"  class="btn btn-info margin-right"(click)="bsModalRef.hide()">
+      <span>CANCEL</span>
+    </button>
+    <button  class="btn btn-danger margin-right" (click)="deleteManageProduct()">DELETE</button>
+  </div>
 </div>

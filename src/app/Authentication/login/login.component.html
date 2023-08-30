@@ -4,41 +4,36 @@
 
   <div class="modal-header">
     <h4 class="modal-title pull-left">{{title}}</h4>
-    <!-- <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
-      <span aria-hidden="true" class="visually-hidden">&times;</span>
-    </button> -->
   </div>
+
   <div class="modal-body">
-    <form  class="form-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="message">
+      <p *ngIf=" apiRes.code==500" class="text-danger">{{apiRes.response.message}}</p>
+    </div>
+    <form  class="form-container" [formGroup]="loginForm" (ngSubmit)="postLoginForm(loginForm)">
       <div class="mb-3">
-          <input type="email" class="form-control" placeholder="Enter email" formControlName="email">
+          <input type="email" class="form-control" placeholder="Enter Username" formControlName="username">
       </div>
-      <div class="alert alert-danger" *ngIf="login.email.invalid && (login.email.dirty || login.email.touched)">
-        <span *ngIf="login.email.errors?.['required']">Email must be required</span>
-        <span *ngIf="login.email.errors?.['email']">Email is not valid</span>
-      </div>
+      <!-- <div class="alert alert-danger" *ngIf="login.username.invalid && (login.username.dirty || login.username.touched)">
+        <span *ngIf="login.username.errors?.['required']">username must be required</span>
+        <span *ngIf="login.username.errors?.['username']">username is not valid</span>
+      </div> -->
   
       <div class="mb-3">
           <input type="password" class="form-control" placeholder="enter password" autocomplete="off" formControlName="password">
        </div>
-       <div class="alert alert-danger" *ngIf="login.password.invalid && (login.password.dirty || login.password.touched)">
+       <!-- <div class="alert alert-danger" *ngIf="login.password.invalid && (login.password.dirty || login.password.touched)">
         <span *ngIf="login.password.errors?.['required']">password must be required</span>
         <span *ngIf="login.password.errors?.['minlength']">Paaword length must be greater than 5</span>
-      </div>
+      </div> -->
        
     
         <div class="button">
-          <button type="submit" class="btn btn-primary" [disabled]="isLoading">
-            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="isLoading"></span>
-            {{isLoading ? 'please wait' : 'login'}}</button>
-          <!-- <a [routerLink]="['forget-password']">Forget Password</a> -->
-          <a  (click)="openForgetPassword()">Forget Password</a>
+          <button type="submit" class="btn btn-primary" [disabled]="sending">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="sending"></span>
+            {{sending ? 'please wait' : 'login'}}</button>
         </div>
       </form>
-      <div class="registration">
-        <!-- <a (click)="openResetPassword()">Reset password</a>  -->
-        <a (click)="openSignupComponent()">Go To SignUp</a>  
-      </div>
 
   </div>
    

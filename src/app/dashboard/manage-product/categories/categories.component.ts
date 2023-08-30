@@ -23,6 +23,8 @@ export class CategoriesComponent {
   bsModalRef?: BsModalRef;
   isAdded: boolean = false;
   isEditted: boolean = false;
+  formModal:boolean = false
+  deleteModal:boolean=false;
 
   public categoriesItem:CATEGORY[]=[];
   all_categoriesItem:CATEGORY[]=[];
@@ -60,13 +62,13 @@ ngOnInit(): void {
 
 //Add Category Data
 openDialogForm(){
-  this.isAdded = true
-  this.isEditted = false
+  this.isAdded = true;
+  this.formModal = true
   const initialState:ModalOptions = {
     initialState:{
-      title:'Add Customer',
-      isAdded:true,
-    isEditted:false,
+      title:'Add Category',
+      isAdded: this.isAdded,
+    formModal: this.formModal,
     productManage_FormAdd:this.productManage_Form
     }
   };
@@ -88,9 +90,9 @@ if(item.id === id){
   
   const initialState:ModalOptions = {
     initialState:{
-      title:'Update Sales Data',
-      isAdded:false,
+      title:'Update category Data',
       isEditted:true,
+      formModal:true,
       productManage_FormAdd:this.productManage_Form,
       id:id,
       // formData:formData,
@@ -98,13 +100,31 @@ if(item.id === id){
     }
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
-  this.getCategoriesData();
   this.bsModalRef.content.closeBtnName = 'Close'; 
 }
 });
+};
 
-
-}
+//Delete:
+openDeleteDialog(id:any){
+  console.log(id);
+  this.categoriesItem.map( item=>{
+    if(item.id === id){
+      let id = item.id,
+      deleteModal:true
+  
+      const initialState:ModalOptions = {
+        initialState:{
+          title:'Are you sure ? Do you want to delete this details',
+          id:id,         
+        }
+      };
+      this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+      this.getCategoriesData();
+      this.bsModalRef.content.closeBtnName = 'Close'; 
+  }
+  });
+};
   //get All user_Data:
   getCategoriesData(){
     this.ManageProductApi.getCategories().subscribe( (categoriesList:CATEGORY[])=>{

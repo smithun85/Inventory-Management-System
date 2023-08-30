@@ -8,19 +8,19 @@ export let categories:CATEGORY[] = [
         products:'23'
     },
     {
-        id:1,
+        id:2,
         serialNo:'51',
         name:'Asample',
         products:'21'
     },
     {
-        id:1,
+        id:3,
         serialNo:'51',
         name:'sample',
         products:'12'
     },
     {
-        id:1,
+        id:4,
         serialNo:'15',
         name:'Csample',
         products:'52'
