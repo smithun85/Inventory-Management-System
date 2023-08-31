@@ -23,6 +23,8 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+// import { LoadingInterceptor } from './loading.interceptor';
+
 @NgModule({
   declarations: [
     AppComponent,
