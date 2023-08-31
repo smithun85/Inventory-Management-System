@@ -4,7 +4,7 @@ import { PurchaseApi } from '../../services/purchase.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { DialogsComponent } from '../dialogs/dialogs.component';
-
+import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as';
 @Component({
   selector: 'app-all-purchases',
   templateUrl: './all-purchases.component.html',
@@ -28,7 +28,13 @@ export class AllPurchasesComponent {
   isAdded: boolean = false;
   isEditted: boolean = false;
   public purchaseListItem:any[]=[];
-  all_purchaseListItem:any[]=[]
+  all_purchaseListItem:any[]=[];
+
+  // pdf
+  exportAsConfig: ExportAsConfig = {
+    type: 'xlsx', // the type you want to download
+    elementIdOrContent: 'sampleTable', // the id of html/table element
+  };
 
 //searching:
 searchText:string = ''
@@ -51,6 +57,7 @@ sortType: string = 'name';
 constructor(
   private PurchaseApi:PurchaseApi,
   private modalService: BsModalService,
+  private exportAsService: ExportAsService
 ) 
 {}
 
@@ -113,9 +120,40 @@ if(item.id === id){
   
 }
 });
-
-
 }
+
+// Save pdf
+savePDF(){
+  this.exportAsConfig.type ='pdf';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+};
+
+saveCVS(){
+  this.exportAsConfig.type ='xlsx';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+ 
+}
+
+
+
   //get All user_Data:
   getpurchaseListData(){
     this.PurchaseApi.getAllPurchaseList().subscribe( (item:any)=>{

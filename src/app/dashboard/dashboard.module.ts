@@ -25,6 +25,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 // chart
 import { FullCalendarModule } from '@fullcalendar/angular';
 
+// pdf excel
+import { ExportAsModule } from 'ngx-export-as';
 
 
 @NgModule({
@@ -47,6 +49,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
     HttpClientModule,
     BsDropdownModule.forRoot(),
     FontAwesomeModule, 
+    ExportAsModule,
   ],
   exports:[DashboardLayoutComponent]
 })
