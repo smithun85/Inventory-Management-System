@@ -16,10 +16,11 @@ import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as
 })
 export class UnitsComponent {
 
+  digits =/^[0-9\+\-\ ]*$/;
   productManage_Form:FormGroup = new FormGroup({
-    serialNo: new FormControl('',[Validators.required]),
+
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-    products: new FormControl('', Validators.required),
+    products: new FormControl('',[ Validators.required, Validators.pattern(this.digits)]),
    
   });
   bsModalRef?: BsModalRef;
@@ -120,9 +121,9 @@ console.log(id);
 this.unitsItem.map( item=>{
 if(item.id === id){
   this.productManage_Form = new FormGroup({
-    serialNo:new FormControl(item.serialNo, Validators.required),
+    serialNo:new FormControl(item.serialNo),
     name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
-    products:new FormControl(item.products, Validators.required),   
+    products: new FormControl(item.products,[ Validators.required, Validators.pattern(this.digits)]),  
   });
   let id = item.id
   

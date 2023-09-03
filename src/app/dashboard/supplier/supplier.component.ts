@@ -17,13 +17,14 @@ import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as
 })
 export class SupplierComponent {
 
+  email = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+  digits =/^[0-9\+\-\ ]*$/;
   salesAllForm:FormGroup = new FormGroup({
-    serialNo: new FormControl('',[Validators.required]),
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
-    email: new FormControl('', Validators.required),
-    receivable: new FormControl('', Validators.required),
-    payable: new FormControl('', Validators.required),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern(this.digits)]),
+    email: new FormControl('', [Validators.required, Validators.pattern(this.email)]),
+    receivable: new FormControl('', [Validators.required, Validators.pattern(this.digits)]),
+    payable: new FormControl('', [Validators.required, Validators.pattern(this.digits)]),
    
   });
   bsModalRef?: BsModalRef;
@@ -111,12 +112,12 @@ console.log(id);
 this.supplierItem.map( item=>{
 if(item.id === id){
   this.salesAllForm = new FormGroup({
-    serialNo:new FormControl(item.serialNo, Validators.required),
+    serialNo:new FormControl(item.serialNo),
     name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
-    mobile:new FormControl(item.mobile, [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
-    email:new FormControl(item.email, Validators.required),
-    receivable:new FormControl(item.receivable, Validators.required),
-    payable:new FormControl(item.payable, Validators.required),
+    mobile:new FormControl(item.mobile,[Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern(this.digits)]),
+    email:new FormControl(item.email,[Validators.required, Validators.pattern(this.email)]),
+    receivable:new FormControl(item.receivable,[Validators.required, Validators.pattern(this.digits)]),
+    payable:new FormControl(item.payable,[Validators.required, Validators.pattern(this.digits)]),
   });
   let id = item.id
   

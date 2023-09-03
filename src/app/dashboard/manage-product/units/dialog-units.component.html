@@ -8,21 +8,6 @@
       <div class="modal-body">  
        
       <form class="form" [formGroup]="productManage_Form" (ngSubmit)="onSubmit()">            
-            <div class="mb-3">
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="serialNo" placeholder="Serial No." >
-            </div>
-            <div
-            *ngIf="
-              productManage_Form.controls['serialNo']?.invalid &&
-              (productManage_Form.controls['serialNo']?.dirty ||
-                productManage_Form.controls['serialNo']?.touched)
-            "
-            class="alert alert-danger"
-          >
-            <div *ngIf="productManage_Form.controls['serialNo'].errors?.['required']">
-                serialNo is required.
-            </div>
-          </div>
           
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name" placeholder="Name">
@@ -58,6 +43,9 @@
           >
             <div *ngIf="productManage_Form.controls['products'].errors?.['required']">
                 products is required.
+            </div>
+            <div *ngIf=" productManage_Form.controls['products'].errors?.['pattern']">
+              Only number is valid not character.
             </div>
           </div>
 

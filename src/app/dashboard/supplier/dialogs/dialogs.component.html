@@ -8,21 +8,7 @@
       <div class="modal-body">  
        
       <form class="form" [formGroup]="supplierForm" (ngSubmit)="onSubmit()">            
-        <div class="mb-3">
-          <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="serialNo" placeholder="Serial No">
-      </div>
-      <div
-      *ngIf="
-        supplierForm.controls['serialNo']?.invalid &&
-        (supplierForm.controls['serialNo']?.dirty ||
-          supplierForm.controls['serialNo']?.touched)
-      "
-      class="alert alert-danger"
-    >
-      <div *ngIf="supplierForm.controls['serialNo'].errors?.['required']">
-          serialNo is required.
-      </div>
-    </div>
+ 
         <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name" placeholder="Name" >
             </div>
@@ -44,51 +30,43 @@
               maximum char length should be less than 50
             </div>
           </div>
-            <div class="mb-3">
-                <input type="number" class="form-control" id="exampleFormControlInput1" formControlName="mobile" placeholder="Mobile No.">
-            </div>
-            <div
-            *ngIf="
-              supplierForm.controls['mobile']?.invalid &&
-              (supplierForm.controls['mobile']?.dirty || supplierForm.controls['mobile']?.touched)
-            "
-            class="alert alert-danger"
-          >
-            <div *ngIf="supplierForm.controls['mobile'].errors?.['required'] ">
-              mobile is required.
-            </div>
-            <div *ngIf="supplierForm.controls['mobile'].errors?.['minlength'] || supplierForm.controls['mobile'].errors?.['maxlength']">
-              Phone number must be 10 Digits.
-            </div>
-          </div>
-            <div class="mb-3">
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="email" placeholder="email">
-            </div>
-            <div
-            *ngIf="
-              supplierForm.controls['email']?.invalid &&
-              (supplierForm.controls['email']?.dirty || supplierForm.controls['email']?.touched)
-            "
-            class="alert alert-danger"
-          >
-            <div *ngIf="supplierForm.controls['email'].errors?.['required'] ">
-              email is required.
-            </div>
-          </div>
-            <div class="mb-3">
-                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="receivable" placeholder="Receivable Amount">
-            </div>
-            <div
-            *ngIf="
-              supplierForm.controls['receivable']?.invalid &&
-              (supplierForm.controls['receivable']?.dirty || supplierForm.controls['receivable']?.touched)
-            "
-            class="alert alert-danger"
-          >
-            <div *ngIf="supplierForm.controls['receivable'].errors?.['required'] ">
-              receivable is required.
-            </div>
-          </div>
+          <div class="mb-3">
+            <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="mobile" placeholder="Mobile No.">
+        </div>
+        <div
+        *ngIf="
+          supplierForm.controls['mobile']?.invalid &&
+          (supplierForm.controls['mobile']?.dirty || supplierForm.controls['mobile']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="supplierForm.controls['mobile'].errors?.['required'] ">
+          mobile is required.
+        </div>
+        <div *ngIf="supplierForm.controls['mobile'].errors?.['minlength'] || supplierForm.controls['mobile'].errors?.['maxlength'] || supplierForm.controls['mobile'].errors?.['pattern']">
+          Phone number must be 10 Digits and not character.
+        </div>
+
+        
+      </div>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="email" placeholder="email">
+        </div>
+        <div
+        *ngIf="
+          supplierForm.controls['email']?.invalid &&
+          (supplierForm.controls['email']?.dirty || supplierForm.controls['email']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="supplierForm.controls['email'].errors?.['required']">
+          email is required.
+        </div>
+        <div *ngIf="supplierForm.controls['email'].errors?.['pattern']">
+          Please enter a valid email id.
+      </div>
+      </div>
 
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="payable" placeholder="Payable">
@@ -103,7 +81,30 @@
             <div *ngIf="supplierForm.controls['payable'].errors?.['required'] ">
               payable is required.
             </div>
+            <div *ngIf="supplierForm.controls['payable'].errors?.['pattern']">
+              Only digits are allowed
+            </div>
           </div>
+          
+        <div class="mb-3">
+          <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="receivable" placeholder="Receivable Amount">
+      </div>
+      <div
+      *ngIf="
+        supplierForm.controls['receivable']?.invalid &&
+        (supplierForm.controls['receivable']?.dirty || supplierForm.controls['receivable']?.touched)
+      "
+      class="alert alert-danger"
+    >
+      <div *ngIf="supplierForm.controls['receivable'].errors?.['required']">
+        receivable is required.
+      </div>
+      <div *ngIf="supplierForm.controls['receivable'].errors?.['pattern']">
+        Only digits are allowed
+      </div>
+    </div> 
+     
+      
 
             <div class="mb-3 button">
                 <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" > Add</button>

@@ -14,7 +14,7 @@ export class SupplierApi{
     //Post the suppliers data
     postsupplierData(supplierFormData:any):Observable<any>{
         return new Observable( observer=>{
-            observer.next(suppliers.push({...supplierFormData, id:Math.floor(Math.random()*100+1)}))
+            observer.next(suppliers.push({...supplierFormData,serialNo:Math.floor(Math.random()*100+1), id:Math.floor(Math.random()*100+1)}))
         })
     };
 

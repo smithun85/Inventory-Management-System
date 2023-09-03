@@ -100,7 +100,112 @@
                 width: 100%;
             };
         }
-    }
-    
-   
+    }   
+  };
+
+  @media (max-width:600px){
+    .contents {
+        width: 100%;
+        h5{
+            color:black;
+            padding-bottom: 10px;
+        }
+        .card-1{
+            width: 100%;
+          
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: .2rem;
+            
+            .card{
+                    
+                .card-body{
+                    margin: -10px;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    .cart{   
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                    }
+                    .icon{
+                        i{
+                            border-radius: 5px;
+                            padding: 10px;                  
+                            font-size:20px;
+                            color:white    
+                        };
+                    }
+                    
+                    .content{
+                        margin-left: 0.3rem;
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: space-evenly;
+                        span{
+                            font-size:.8rem
+                        }
+                        
+                    
+                    };
+                    .btnAll{                  
+                        button{
+                           font-size:10px;
+                        };
+                    }
+                }
+                
+               
+            }
+        };
+     
+        .card-2{   
+            p{
+            color: black;
+            font-size: 18px;
+            }
+            width: 100%;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: row;
+           
+            .graph{   
+                width: 60%;
+                
+                height: auto;         
+                .canvas{
+                    padding: 10px 10px 46px 10px;
+                    background-color: #fff;
+                }
+            };
+            .tableData{
+                width: 40%;
+                margin-left: 10px;
+                .table{
+                    margin-top: -16px;
+                }
+            }
+        };
+        .card-3{
+            margin-top: 4rem;
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            .table-item{
+                width: 50%;
+                .heading{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                }
+                .table-1{
+                    width: 100%;
+                };
+            }
+        }   
+      };
   }

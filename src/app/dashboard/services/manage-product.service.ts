@@ -29,7 +29,7 @@ export class ManageProductApi{
     //Post the categories data
     postCategoriesData(categoriesFormData:any):Observable<any>{
         return new Observable( observer=>{
-            observer.next(categories.push({...categoriesFormData, id:Math.floor(Math.random()*100+1)}))
+            observer.next(categories.push({...categoriesFormData,serialNo:Math.floor(Math.random()*100+1), id:Math.floor(Math.random()*100+1)}))
         })
     };
     //Update the categories data
@@ -56,7 +56,7 @@ export class ManageProductApi{
     //Post the categories data
     postBrandsData(brandsFormData:any):Observable<any>{
         return new Observable( observer=>{
-            observer.next(brands.push({...brandsFormData, id:Math.floor(Math.random()*100+1)}))
+            observer.next(brands.push({...brandsFormData,serialNo:Math.floor(Math.random()*100+1), id:Math.floor(Math.random()*100+1)}))
         })
     };
     //Update the brands data
@@ -83,7 +83,7 @@ export class ManageProductApi{
     //Post the units data
     postUnitsData(unitsFormData:any):Observable<any>{
         return new Observable( observer=>{
-            observer.next(units.push({...unitsFormData, id:Math.floor(Math.random()*100+1)}))
+            observer.next(units.push({...unitsFormData,serialNo:Math.floor(Math.random()*100+1), id:Math.floor(Math.random()*100+1)}))
         })
     };
     //Update the units data

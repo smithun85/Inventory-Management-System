@@ -14,11 +14,10 @@ import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent {
-
+  digits =/^[0-9\+\-\ ]*$/;
   productManage_Form:FormGroup = new FormGroup({
-    serialNo: new FormControl('',[Validators.required]),
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-    products: new FormControl('', Validators.required),
+    products: new FormControl('',[ Validators.required, Validators.pattern(this.digits)]),
    
   });
   bsModalRef?: BsModalRef;
@@ -92,39 +91,7 @@ openDialogExcel(){
 
 }
 
-// download Doc
-// exportAsConfig: ExportAsConfig = {
-//   type: 'xlsx', // the type you want to download
-//   elementIdOrContent: 'sampleTable', // the id of html/table element
-// };
-// // Save pdf:
-// savePDF(){
-//   this.exportAsConfig.type ='pdf';
-//   // download the file using old school javascript method
-//   this.exportAsService
-//     .save(this.exportAsConfig, 'Exported_File_Name')
-//     .subscribe(() => {
-//       // save started
-//     });
-//   // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
-//   this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
-//     console.log(content);
-//   });
-// };
 
-// saveCVS(){
-//   this.exportAsConfig.type ='xlsx';
-//   // download the file using old school javascript method
-//   this.exportAsService
-//     .save(this.exportAsConfig, 'Exported_File_Name')
-//     .subscribe(() => {
-//       // save started
-//     });
-//   // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
-//   this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
-//     console.log(content);
-//   });
-// }
 
 //update-modal
 openDialogFormUpdate(id:any){
@@ -132,9 +99,9 @@ console.log(id);
 this.categoriesItem.map( item=>{
 if(item.id === id){
   this.productManage_Form = new FormGroup({
-    serialNo:new FormControl(item.serialNo, Validators.required),
+    serialNo:new FormControl(item.serialNo),
     name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
-    products:new FormControl(item.products, Validators.required),   
+    products: new FormControl(item.products,[ Validators.required, Validators.pattern(this.digits)]),
   });
   let id = item.id
   
