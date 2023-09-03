@@ -5,7 +5,7 @@ import { products } from './data/dashboardData/productData';
 import { allSales, salesReturnList } from './data/SalesData';
 // import { CartModel } from '../models/cart.model';
 import { carts, carts_Bottom } from './data/dashboardData/carts';
-import { SALES_RETURN } from '../models/sales.model';
+import { SALES_RETURN } from '../Models/sales.model';
 
 @Injectable({providedIn:'root'})
 

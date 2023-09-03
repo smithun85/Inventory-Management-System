@@ -1,20 +1,63 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, CanActivateChild, Router }    from '@angular/router';
-// import { CanActivateFn, CanActivateChildFn, Router } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+} from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { LoaderService } from 'src/app/shared/loader/loader.service';
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthGuard {
+  constructor(public authService: AuthService, public router: Router, private loaderService:LoaderService) {}
+  
+  private showLoader(): void {
+    this.loaderService.show();
+  }
 
-@Injectable({providedIn:'root'})
-export class AuthGaurdService implements CanActivate{
-    
-    constructor(private auth:AuthService,private router:Router){};
-
-    canActivate():Promise<boolean> | boolean{
-        // will check if user having the login session in the storage or not
-        const isAutherize:boolean = this.auth.token ? true : false ;
-        if(!isAutherize){
-            this.router.navigate(['']);
-        }
-        return isAutherize
-    };
-    
+  private hideLoader(): void {
+    this.loaderService.hide();
+  }
+  
+  canActivate(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ):
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree>
+    | boolean
+    | UrlTree {
+        this.authService.getUser().subscribe(
+            res=>{
+              console.log(res);
+            },
+          
+            error=>{
+              this.showLoader()
+              this.authService.doLogout()
+              this.router.navigate(['login']);
+              this.hideLoader();
+            }
+            
+        )
+    if (this.authService.isLoggedIn !== true) {
+      this.showLoader()
+      window.alert('Access not allowed!');
+      this.authService.doLogout()
+      this.router.navigate(['']);
+      this.hideLoader();
+      return false;
+    }
+    return true;
+  }
+  //OR 
+//   const isAuthorize:boolean = this.authService.getToken() ? true :false;
+//   if(!isAuthorize){
+//     this.router.navigate([''])
+//   }
+//   return isAuthorize
+// };
 }

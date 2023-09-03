@@ -12,7 +12,8 @@ import { DialogsComponent } from './dialogs/dialogs.component';
 // dialog:model
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { DialogSalesReturnComponent } from './sales-return/dialog-sales-return.component';
-
+// import { PdfViewerModule } from 'ng2-pdf-viewer'; 
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';//pdf read
 
 @NgModule({
   declarations: [
@@ -28,6 +29,8 @@ import { DialogSalesReturnComponent } from './sales-return/dialog-sales-return.c
     ReactiveFormsModule,
     PaginationModule.forRoot(),
     ModalModule.forRoot(),
+    NgxExtendedPdfViewerModule,
+   
   ]
 })
 export class SalesModule { }

@@ -3,9 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 
-import { SignupComponent } from '../signup/signup.component';
-import { ResetPasswordComponent } from '../reset-password/reset-password.component';
-import { ForgetPasswordComponent } from '../forget-password/forget-password.component';
 import { AuthService } from '../authServices/auth.service';
 import { LOGIN } from '../models/auth.interface';
 
@@ -31,7 +28,7 @@ export class LoginComponent implements OnInit {
 
  ngOnInit(): void {
    this.loginForm = new FormGroup({
-    username:new FormControl('', [Validators.required,Validators.email]),
+    username:new FormControl('', [Validators.required]),
     password:new FormControl('', [Validators.required,Validators.minLength(6)])
    });
  };
@@ -42,28 +39,31 @@ export class LoginComponent implements OnInit {
 
 postLoginForm(loginForm:any){
   
-  // if(this.loginForm.invalid){
-  //   this.loginForm.markAllAsTouched()
-  //   return 
-  // };
+  if(this.loginForm.invalid){
+    this.loginForm.markAllAsTouched()
+    return 
+  };
   this.sending = true;
   console.log('username:',this.loginForm.value);
 
  
   setTimeout(()=>{
-    this.auth.login(loginForm.value).subscribe( (apiRes)=>{
+    this.auth.login(loginForm.value)
+    .subscribe( (apiRes)=>{
       console.log(apiRes);
       this.apiRes = apiRes
-      console.log(this.apiRes.response, this.apiRes.id)
+      console.log(this.apiRes.response, this.apiRes.id);
+
+      if(this.apiRes.token){
+        this.auth.token = this.apiRes.token        //set the token
+        localStorage.setItem('myToken',this.apiRes.token)
+        this.router.navigate(['/home/dashboard'])
+      }
     })
   
-    if(this.apiRes && this.apiRes.id){
-      this.auth.token = this.apiRes.token
-      localStorage.setItem('myToken',this.apiRes.token)
-      this.router.navigate(['dashboard'])
-    }
+    
     this.sending = false;
-  },1000)
+  },300)
  }
 
 }

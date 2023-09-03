@@ -26,8 +26,13 @@
         }
     };
     .header{
+        margin:10px 0px;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        label{
+            margin-right: 5px;
+        }
     }
     };
     
@@ -71,5 +76,10 @@
         content: '\25bc';
     }
     
-
+    .excel-view{
+        padding: 30px;
+        h2{
+            text-align: center;
+        }
+    }
    

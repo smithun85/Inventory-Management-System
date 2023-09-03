@@ -12,44 +12,67 @@
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="serialNo" placeholder="Serial No." >
             </div>
-            <!-- <div
+            <div
             *ngIf="
-              productManage_Form.controls['invoice']?.invalid &&
-              (productManage_Form.controls['invoice']?.dirty ||
-                productManage_Form.controls['invoice']?.touched)
+              productManage_Form.controls['serialNo']?.invalid &&
+              (productManage_Form.controls['serialNo']?.dirty ||
+                productManage_Form.controls['serialNo']?.touched)
             "
             class="alert alert-danger"
           >
-            <div *ngIf="productManage_Form.controls['invoice'].errors?.['required']">
-                invoice is required.
+            <div *ngIf="productManage_Form.controls['serialNo'].errors?.['required']">
+                serialNo is required.
             </div>
-            <div *ngIf="productManage_Form.controls['invoice'].errors?.['minlength']">
-              minimum char length must be 3.
-            </div>
-            <div *ngIf="productManage_Form.controls['invoice'].errors?.['maxlength']">
-              maximum char length should be less than 50
-            </div>
-          </div> -->
+          </div>
           
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name" placeholder="Name">
             </div>
+            <div
+            *ngIf="
+              productManage_Form.controls['name']?.invalid &&
+              (productManage_Form.controls['name']?.dirty ||
+                productManage_Form.controls['name']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="productManage_Form.controls['name'].errors?.['required']">
+                name is required.
+            </div>
+            <div *ngIf="productManage_Form.controls['name'].errors?.['minlength']">
+              minimum char length must be 3.
+            </div>
+            <div *ngIf="productManage_Form.controls['name'].errors?.['maxlength']">
+              maximum char length should be less than 50
+            </div>
+          </div>
             <div class="mb-3">
                 <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="products" placeholder="products.">
             </div>
+            <div
+            *ngIf="
+              productManage_Form.controls['products']?.invalid &&
+              (productManage_Form.controls['products']?.dirty ||
+                productManage_Form.controls['products']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="productManage_Form.controls['products'].errors?.['required']">
+                products is required.
+            </div>
+          </div>
 
             <div class="mb-3 button">
-                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" > Add</button>
-                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" [disabled]="productManage_Form['invalid']"> Update</button>
+                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" > Add</button>
+                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" [disabled]="productManage_Form['invalid']"> Update</button>
                 <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
-                  <!-- (click)="bsModalRef.hide()" [disabled]="productManage_Form['invalid']" -->
             </div>
         </form>
     </div>    
 </div>
 
  <!-- delete-Modal -->
-  <div class="delete-popup">
+  <div class="delete-popup" *ngIf="deleteModal">
     <div>
       <i>delete</i>
       <p>{{title}}</p>
@@ -59,3 +82,33 @@
       <button  class="btn btn-danger margin-right" (click)="deleteManageProduct()">DELETE</button>
     </div>
   </div>
+
+  <!-- Excel table Modal -->
+  <div *ngIf="isExcel">
+    <div  class="modal-header"> 
+      <h2 class="modal-title pull-left">{{title}}</h2>
+      <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+        <span aria-hidden="true" class="visually-hidden">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body"> 
+      <div class="col-md-8 form-group">        
+        <input type="file" class="btn btn-primary" (change)="addfile($event)" placeholder="Upload file" accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">        
+      </div> 
+      <table class="table table-bordered" id="sampleTable">
+        <thead>
+          <tr class="sort">
+            <th *ngFor="let data of header">{{ data }} </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of fileList">
+            <td *ngFor="let cell of header">{{ row[cell] }}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+  </div>
+
+
+ 

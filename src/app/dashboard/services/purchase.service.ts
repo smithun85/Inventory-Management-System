@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { purchase_List, purchase_Return } from './data/purchase-data';
-import { PURCHASE_LIST, PURCHASE_RETURN } from '../models/purchase.model';
+import { PURCHASE_LIST, PURCHASE_RETURN } from '../Models/purchase.model';
 @Injectable({providedIn:'root'})
 
 export class PurchaseApi{

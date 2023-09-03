@@ -1,4 +1,4 @@
-import { CartModel } from "src/app/dashboard/models/cart.model";
+import { CartModel } from "src/app/dashboard/Models/cart.model";
 export let carts:CartModel[]= [
         {
             icon:'fa-solid fa-cart-shopping',

@@ -5,6 +5,7 @@ import { ForgetPasswordComponent } from "./forget-password/forget-password.compo
 import { SignupComponent } from "./signup/signup.component";
 import { ResetPasswordComponent } from "./reset-password/reset-password.component";
 import { AuthLayoutComponent } from "../layouts/auth-layout/auth-layout.component";
+import { AuthGuard } from "./authServices/auth-guard.service";
 
 const routes:Routes=[
     {
@@ -13,6 +14,7 @@ const routes:Routes=[
         children:[
             {
                 path:'login',
+                // canActivate: [AuthGuard],
                 component:LoginComponent
             },
             {

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { salesApi } from '../../../services/dashboard-sales.service';
 import { ManageProductApi } from '../../../services/manage-product.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-dialogs',
@@ -27,7 +28,8 @@ export class DialogsComponent implements OnInit{
   formData?:any;
   id?:any;
   formModal?:boolean;
-  
+  deleteModal?:boolean;
+  isExcel?:boolean;
   
   
   userData:any[]=[];
@@ -58,25 +60,51 @@ resetForm(){
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.productManage_Form.value);
-  //  if (this.productManage_Form.invalid) {
-  //   this.productManage_Form.markAllAsTouched();
-  //   return;
-  // }
+   if (this.productManage_Form.invalid) {
+    this.productManage_Form.markAllAsTouched();
+    return;
+  }
 
   if(this.isAdded){
     this.manageProductApi.postCategoriesData(this.productManage_Form.value).subscribe()
   }
   else if(this.isEditted){
     this.manageProductApi.updateCategoriesData(this.productManage_Form.value,this.id).subscribe()
-  };
-   
-this.bsModalRef.hide()
-  // console.log("UsersData:",this.userData);    
+  };   
+  this.productManage_Form.reset()
+this.bsModalRef.hide()  
 };
 
 deleteManageProduct(){
   this.manageProductApi.deleteCategoriesData(this.id).subscribe();
   this.bsModalRef.hide()
-}
+};
+
+
+file:File | any;
+arrayBuffer:any 
+fileList:any[]=[];
+header:any[]= [];
+tableData:any[]=[];
+addfile(event:any)  {    
+  this.file= event.target.files[0];     
+  let fileReader = new FileReader();    
+  fileReader.readAsArrayBuffer(this.file);     
+  fileReader.onload = (e) => {    
+    this.arrayBuffer = fileReader.result;    
+    var data = new Uint8Array(this.arrayBuffer);    
+    var arr = new Array();    
+    for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);    
+    var bstr = arr.join("");    
+    var workbook = XLSX.read(bstr, {type:"binary"});    
+    var first_sheet_name = workbook.SheetNames[0];    
+    var worksheet = workbook.Sheets[first_sheet_name];    
+    console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));   
+    this.fileList = XLSX.utils.sheet_to_json(worksheet,{raw:true});                    
+    console.log(this.fileList) ;
+    
+    this.header = Object.keys(this.fileList[0])
+  }    
+} 
 
 }

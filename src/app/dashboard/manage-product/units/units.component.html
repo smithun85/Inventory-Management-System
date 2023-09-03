@@ -5,10 +5,8 @@
       <div class="button">
           <button class="btn btn-primary" (click)="openDialogForm()">
               <b>+</b>Add New Units
-            </button>
-            <button class="btn btn-primary">
-              Import to CSV
-            </button>
+            </button>    
+            <input type="button" value="  Import to CSV" class="btn btn-primary" (click)="saveCVS()">
         
       </div>
   </div>
@@ -38,7 +36,7 @@
     </div>
   </div>
 
-  <table class="table table-bordered">
+  <table class="table table-bordered"  id="sampleTable">
     <thead>
       <tr class="sort">
         <th>

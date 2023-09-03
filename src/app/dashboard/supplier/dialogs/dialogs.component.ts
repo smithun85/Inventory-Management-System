@@ -54,10 +54,10 @@ resetForm(){
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.supplierForm.value);
-  //  if (this.supplierForm.invalid) {
-  //   this.supplierForm.markAllAsTouched();
-  //   return;
-  // }
+   if (this.supplierForm.invalid) {
+    this.supplierForm.markAllAsTouched();
+    return;
+  }
 
   if(this.isAdded){
     this.supplierApi.postsupplierData(this.supplierForm.value).subscribe()
@@ -66,8 +66,8 @@ onSubmit(){
     this.supplierApi.updatesuppliersData(this.supplierForm.value,this.id).subscribe()
   };
    
-  this.supplierForm.reset()
-  // console.log("UsersData:",this.userData);    
+this.bsModalRef.hide();
+this.supplierForm.reset();
 }
 
 }

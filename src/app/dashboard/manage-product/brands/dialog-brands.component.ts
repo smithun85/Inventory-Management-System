@@ -24,6 +24,7 @@ export class DialogBrandsComponent {
   formData?:any;
   id?:any;
   formModal?:boolean;
+  deleteModal?:boolean
   
   
   
@@ -65,7 +66,8 @@ onSubmit(){
     this.manageProductApi.updateBrandsData(this.productManage_Form.value,this.id).subscribe()
   };
    
-  this.bsModalRef.hide()
+  this.bsModalRef.hide();
+  this.productManage_Form.reset();
   // console.log("UsersData:",this.userData);    
 };
 

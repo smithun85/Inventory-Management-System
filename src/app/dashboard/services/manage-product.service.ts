@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { BRANDS, CATEGORY, PRODUCTS, UNITS } from '../models/manage-product.models';
+import { BRANDS, CATEGORY, PRODUCTS, UNITS } from '../Models/manage-product.models';
 import { brands, categories, products, units } from './data/manage-product-data';
 
 

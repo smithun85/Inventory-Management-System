@@ -3,21 +3,21 @@ import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ManageProductApi } from '../../services/manage-product.service';
-import { PRODUCTS } from '../../models/manage-product.models';
+import { PRODUCTS } from '../../Models/manage-product.models';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { DialogProductsComponent } from './dialog-products.component';
+import { CustomValidatorService } from '../../services/customValidator.service';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
 export class ProductsComponent {
-
-  productManage_Form:FormGroup = new FormGroup({
-    image: new FormControl('',[Validators.required]),
+    productManage_Form:FormGroup = new FormGroup({
+    image: new FormControl('',[Validators.required, this.validator.validateImage ]),
     products: new FormControl('', Validators.required),
-    name: new FormControl('',[Validators.required]),
+    name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
     SKU: new FormControl('', Validators.required),
     serialNo: new FormControl('',[Validators.required]),
     category: new FormControl('', Validators.required),
@@ -56,6 +56,7 @@ constructor(
   private router: Router,
   private ManageProductApi:ManageProductApi,
   private modalService: BsModalService,
+  private validator:CustomValidatorService,
 ) 
 {}
 
@@ -67,11 +68,9 @@ ngOnInit(): void {
 
 //Add Category Data
 openDialogForm(){
-  this.isAdded = true
-  this.isEditted = false
   const initialState:ModalOptions = {
     initialState:{
-      title:'Add Customer',
+      title:'Add Product',
       isAdded:true,
     isEditted:false,
     productManage_FormAdd:this.productManage_Form
@@ -79,6 +78,7 @@ openDialogForm(){
   };
   this.bsModalRef = this.modalService.show(DialogProductsComponent, initialState);
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.getProductsData();
 };
 
 //update-modal
@@ -87,32 +87,31 @@ console.log(id);
 this.productsItem.map( item=>{
 if(item.id === id){
   this.productManage_Form = new FormGroup({
-    image:new FormControl(''),
-    name:new FormControl(item.name),
-    SKU:new FormControl(item.SKU),
-    category:new FormControl(item.category),
-    brand:new FormControl(item.brand),
-    stock:new FormControl(item.stock),
-    total_sale:new FormControl(item.total_sale),
-    altert_qnty:new FormControl(item.altert_qnty),  
-    unit:new FormControl(item.unit), 
+    image:new FormControl('',Validators.required),
+    name:new FormControl(item.name, [Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    SKU:new FormControl(item.SKU, Validators.required),
+    category:new FormControl(item.category, Validators.required),
+    brand:new FormControl(item.brand, Validators.required),
+    stock:new FormControl(item.stock, Validators.required),
+    total_sale:new FormControl(item.total_sale, Validators.required),
+    altert_qnty:new FormControl(item.altert_qnty, Validators.required),  
+    unit:new FormControl(item.unit, Validators.required), 
   });
   let id = item.id
   
   const initialState:ModalOptions = {
     initialState:{
-      title:'Update Sales Data',
+      title:'Update Product Data',
       isAdded:false,
       isEditted:true,
       productManage_FormAdd:this.productManage_Form,
       id:id,
-      // formData:formData,
-      
+      // formData:formData,     
     }
   };
   this.bsModalRef = this.modalService.show(DialogProductsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
   this.getProductsData();
-  this.bsModalRef.content.closeBtnName = 'Close'; 
 }
 });
 
@@ -124,7 +123,7 @@ if(item.id === id){
       console.log(productsList)
       this.productsItem = productsList;
       this. all_productsItem = productsList;
-      this.count = productsList.length;
+      this.count = Object.keys(productsList).length
     })
   };
 

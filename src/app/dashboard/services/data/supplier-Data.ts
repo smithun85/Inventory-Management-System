@@ -1,4 +1,4 @@
-import { SUPPLIER } from "../../models/supplier.model";
+import { SUPPLIER } from "../../Models/supplier.model";
 
 export let suppliers:SUPPLIER[] = [
     {

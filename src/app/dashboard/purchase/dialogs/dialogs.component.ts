@@ -32,7 +32,6 @@ export class DialogsComponent implements OnInit{
 
   constructor(
     public bsModalRef: BsModalRef,
-    private router: Router,
     private purchaseApi:PurchaseApi,
   ){}
  
@@ -51,10 +50,10 @@ resetForm(){
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.purchaseAllForm.value);
-  //  if (this.purchaseAllForm.invalid) {
-  //   this.purchaseAllForm.markAllAsTouched();
-  //   return;
-  // }
+   if (this.purchaseAllForm.invalid) {
+    this.purchaseAllForm.markAllAsTouched();
+    return;
+  }
 
   if(this.isAdded){
     this.purchaseApi.postpurchaseListData(this.purchaseAllForm.value).subscribe()
@@ -63,7 +62,8 @@ onSubmit(){
     this.purchaseApi.updatepurchaseListsData(this.purchaseAllForm.value,this.id).subscribe()
   };
    
-  this.purchaseAllForm.reset()
+  this.purchaseAllForm.reset();
+  this.bsModalRef.hide();
   // console.log("UsersData:",this.userData);    
 }
 

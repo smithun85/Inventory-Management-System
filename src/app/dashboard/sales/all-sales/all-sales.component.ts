@@ -1,4 +1,6 @@
-import { Component , OnInit} from '@angular/core';
+
+import { Component,OnInit, ElementRef, ViewChild } from '@angular/core';
+
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 import { Router } from '@angular/router';
 
@@ -7,6 +9,7 @@ import { salesApi } from '../../services/dashboard-sales.service';
 import { DialogsComponent } from '../dialogs/dialogs.component';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
+
 @Component({
   selector: 'app-all-sales',
   templateUrl: './all-sales.component.html',
@@ -14,8 +17,17 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AllSalesComponent implements OnInit {
 
+  // @ViewChild('pdfInput') pdfInput: ElementRef<HTMLInputElement> | any;
+  // pdf
+  pdfFile:any;
+  // pdfSrc:any;
+  pdfBufferRender:any;
+  // pdfSrc:string = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+  // Set PDF viewer options
+  pdfjs = "https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf";
+
   salesAllForm:FormGroup = new FormGroup({
-    invoice: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+    invoice: new FormControl('',[Validators.required]),
     date: new FormControl('',[Validators.required]),
     customer: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
     mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
@@ -52,7 +64,6 @@ sortType: string = 'name';
 
 
 constructor(
-  private router: Router,
   private salesApi:salesApi,
   private modalService: BsModalService,
 ) 
@@ -73,11 +84,36 @@ openDialogForm(){
       title:'Add Sales Data',
       isAdded:true,
     isEditted:false,
+    isForm:true,
     salesAllFormAdd:this.salesAllForm
     }
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
   this.bsModalRef.content.closeBtnName = 'Close';
+};
+
+
+openDialogExcel(){
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Excel',
+      isExcel:true,
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+
+}
+// Show pdf: 
+showPdf = false;
+  pdfSrc:string = '';
+  onPDFSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement && inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+      this.pdfSrc = URL.createObjectURL(file);
+      this.showPdf = true;
+  }
 };
 
 //update-modal
@@ -87,36 +123,24 @@ this.salesItem.map( item=>{
 if(item.id === id){
   this.salesAllForm = new FormGroup({
     invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-    date:new FormControl(item.date),
-    customer:new FormControl(item.customer),
-    mobile:new FormControl(item.mobile),
-    warehouse:new FormControl(item.warehouse),
-    totalAmount:new FormControl(item.totalAmount),
-    discount:new FormControl(item.discount),
-    receivable:new FormControl(item.receivable),
-    received:new FormControl(item.received),
-    due:new FormControl(item.due),
+    date:new FormControl(item.date, Validators.required),
+    customer:new FormControl(item.customer, Validators.required),
+    mobile:new FormControl(item.mobile, Validators.required),
+    warehouse:new FormControl(item.warehouse, Validators.required),
+    totalAmount:new FormControl(item.totalAmount, Validators.required),
+    discount:new FormControl(item.discount, Validators.required),
+    receivable:new FormControl(item.receivable, Validators.required),
+    received:new FormControl(item.received, Validators.required),
+    due:new FormControl(item.due, Validators.required),
   });
   let id = item.id
-   
-  // let formData = {
-  //   invoice:item.invoice,
-  //   date:item.date,
-  //   customer:item.customer,
-  //   mobile:item.mobile,
-  //   warehouse:item.warehouse,
-  //   totalAmount:item.totalAmount,
-  //   discount:item.discount,
-  //   receivable:item.receivable,
-  //   received:item.received,
-  //   due:item.due,
-  // }
   
   const initialState:ModalOptions = {
     initialState:{
       title:'Update Sales Data',
       isAdded:false,
       isEditted:true,
+      isForm:true,
       salesAllFormAdd:this.salesAllForm,
       id:id,
       getMethod:this.getSalesData()

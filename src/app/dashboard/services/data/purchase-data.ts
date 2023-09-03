@@ -1,4 +1,4 @@
-import { PURCHASE_LIST, PURCHASE_RETURN } from "../../models/purchase.model"
+import { PURCHASE_LIST, PURCHASE_RETURN } from "../../Models/purchase.model"
 
 export let purchase_List:PURCHASE_LIST[] = [
     {

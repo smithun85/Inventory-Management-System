@@ -4,10 +4,11 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { salesApi } from '../../services/dashboard-sales.service';
 import { BsModalService, BsModalRef, ModalOptions } from 'ngx-bootstrap/modal';
 
-import { SALES_RETURN } from '../../models/sales.model';
+import { SALES_RETURN } from '../../Models/sales.model';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DialogSalesReturnComponent } from './dialog-sales-return.component';
+import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as';
 
 @Component({
   selector: 'app-sales-return',
@@ -44,6 +45,7 @@ constructor(
   private router: Router,
   private salesApi:salesApi,
   private modalService: BsModalService,
+  private exportAsService: ExportAsService ,
 ) 
 {}
 
@@ -54,6 +56,42 @@ ngOnInit(): void {
   this.paginate()     
 };
 
+
+// download Doc
+exportAsConfig: ExportAsConfig = {
+  type: 'xlsx', // the type you want to download
+  elementIdOrContent: 'sampleTable', // the id of html/table element
+};
+// Save pdf:
+savePDF(){
+  this.exportAsConfig.type ='pdf';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+};
+
+saveCVS(){
+  this.exportAsConfig.type ='xlsx';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+}
+
+
 //update-modal
 openDialogFormUpdate(id:any){
   console.log(id);
@@ -61,15 +99,15 @@ openDialogFormUpdate(id:any){
   if(item.id === id){
     this.salesAllForm = new FormGroup({
       invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-      date:new FormControl(item.date),
-      customer:new FormControl(item.customer),
-      mobile:new FormControl(item.mobile),
-      warehouse:new FormControl(item.warehouse),
-      totalAmount:new FormControl(item.totalAmount),
-      discount:new FormControl(item.discount),
-      payable:new FormControl(item.payable),
-      paid:new FormControl(item.paid),
-      due:new FormControl(item.due),
+      date:new FormControl(item.date, Validators.required),
+      customer:new FormControl(item.customer,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
+      mobile:new FormControl(item.mobile , [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+      warehouse:new FormControl(item.warehouse, Validators.required),
+      totalAmount:new FormControl(item.totalAmount, Validators.required),
+      discount:new FormControl(item.discount, Validators.required),
+      payable:new FormControl(item.payable, Validators.required),
+      paid:new FormControl(item.paid, Validators.required),
+      due:new FormControl(item.due, Validators.required),
     });
     let id = item.id
     const initialState:ModalOptions = {

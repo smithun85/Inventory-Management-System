@@ -2,13 +2,13 @@ import { Component , OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
-import { SUPPLIER } from '../models/supplier.model';
+import { SUPPLIER } from '../Models/supplier.model';
 import { SupplierApi } from '../services/supplier.service';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { DialogsComponent } from './dialogs/dialogs.component';
-
+import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as';
 
 @Component({
   selector: 'app-supplier',
@@ -56,6 +56,7 @@ constructor(
   private router: Router,
   private supplierApi:SupplierApi,
   private modalService: BsModalService,
+  private exportAsService: ExportAsService, 
 ) 
 {}
 
@@ -71,16 +72,38 @@ openDialogForm(){
   this.isEditted = false
   const initialState:ModalOptions = {
     initialState:{
-      title:'Add Customer',
+      title:'Add Supplier',
       isAdded:true,
     isEditted:false,
     supplierFormAdd:this.salesAllForm
     }
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
-  this.getSupplierData();
+ 
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getSupplierData();
+  })
 };
+// download Doc
+exportAsConfig: ExportAsConfig = {
+  type: 'xlsx', // the type you want to download
+  elementIdOrContent: 'sampleTable', // the id of html/table element
+};
+
+saveCVS(){
+  this.exportAsConfig.type ='xlsx';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+}
 
 //update-modal
 openDialogFormUpdate(id:any){
@@ -88,18 +111,18 @@ console.log(id);
 this.supplierItem.map( item=>{
 if(item.id === id){
   this.salesAllForm = new FormGroup({
-    serialNo:new FormControl(item.serialNo),
+    serialNo:new FormControl(item.serialNo, Validators.required),
     name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
-    mobile:new FormControl(item.mobile),
-    email:new FormControl(item.email),
-    receivable:new FormControl(item.receivable),
-    payable:new FormControl(item.payable),
+    mobile:new FormControl(item.mobile, [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
+    email:new FormControl(item.email, Validators.required),
+    receivable:new FormControl(item.receivable, Validators.required),
+    payable:new FormControl(item.payable, Validators.required),
   });
   let id = item.id
   
   const initialState:ModalOptions = {
     initialState:{
-      title:'Update Sales Data',
+      title:'Update Supplier Data',
       isAdded:false,
       isEditted:true,
       supplierFormAdd:this.salesAllForm,
@@ -109,14 +132,13 @@ if(item.id === id){
     }
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
-  this.getSupplierData();
-
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getSupplierData();
+  })
   
 }
 });
-
-
 };
 
 
@@ -126,7 +148,8 @@ if(item.id === id){
       console.log(item)
       this.supplierItem = item;
       this. all_supplierItem = item;
-      this.count = item.length;
+      this.count = Object.keys(item).length;
+      this.paginate();
     })
   };
 
@@ -144,7 +167,6 @@ search(text:string){
     let startItem = (this.currentPage-1) * this.limit;
     let endItem = this.currentPage * this.limit;
     this.supplierItem = searched_users.slice(startItem,endItem)
-
     this.search_Data_Available = this.supplierItem.length > 0;         
   } else{
     this.search_Data_Available = true

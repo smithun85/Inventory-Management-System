@@ -23,6 +23,7 @@ export class DialogUnitsComponent {
   formData?:any;
   id?:any;
   formModal?:boolean;
+  deleteModal?:boolean;
   
   
   
@@ -50,10 +51,10 @@ resetForm(){
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.productManage_Form.value);
-  //  if (this.productManage_Form.invalid) {
-  //   this.productManage_Form.markAllAsTouched();
-  //   return;
-  // }
+   if (this.productManage_Form.invalid) {
+    this.productManage_Form.markAllAsTouched();
+    return;
+  }
 
   if(this.isAdded){
     this.manageProductApi.postUnitsData(this.productManage_Form.value).subscribe()
@@ -61,9 +62,8 @@ onSubmit(){
   else if(this.isEditted){
     this.manageProductApi.updateUnitsData(this.productManage_Form.value,this.id).subscribe()
   };
-   
-  this.productManage_Form.reset()
-  // console.log("UsersData:",this.userData);    
+this.bsModalRef.hide();
+this.productManage_Form.reset()
 };
 
 deleteManageProduct(){

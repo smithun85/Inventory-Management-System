@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ManageProductApi } from '../../services/manage-product.service';
 
@@ -52,10 +51,10 @@ resetForm(){
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.productManage_Form.value);
-  //  if (this.productManage_Form.invalid) {
-  //   this.productManage_Form.markAllAsTouched();
-  //   return;
-  // }
+   if (this.productManage_Form.invalid) {
+    this.productManage_Form.markAllAsTouched();
+    return;
+  }
 
   if(this.isAdded){
     this.manageProductApi.postProductsData(this.productManage_Form.value).subscribe()
@@ -63,9 +62,8 @@ onSubmit(){
   else if(this.isEditted){
     this.manageProductApi.updateProductsData(this.productManage_Form.value,this.id).subscribe()
   };
-   
-  this.productManage_Form.reset()
-  // console.log("UsersData:",this.userData);    
+this.bsModalRef.hide(); 
+this.productManage_Form.reset()
 }
 
 }

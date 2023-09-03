@@ -60,10 +60,10 @@ resetForm(){
 onSubmit(){  
   console.log(this.isAdded,this.isEditted);
   console.log("Form_value",this.salesAllForm.value);
-  //  if (this.salesAllForm.invalid) {
-  //   this.salesAllForm.markAllAsTouched();
-  //   return;
-  // }
+   if (this.salesAllForm.invalid) {
+    this.salesAllForm.markAllAsTouched();
+    return;
+  }
 
   if(this.isAdded){
     this.customerApi.postcustomerData(this.salesAllForm.value).subscribe()
@@ -71,8 +71,8 @@ onSubmit(){
   else if(this.isEditted){
     this.customerApi.updatecustomersData(this.salesAllForm.value,this.id).subscribe()
   };
-   
-  this.salesAllForm.reset()
+  this.bsModalRef.hide();
+  this.salesAllForm.reset();
   // console.log("UsersData:",this.userData);    
 }
 

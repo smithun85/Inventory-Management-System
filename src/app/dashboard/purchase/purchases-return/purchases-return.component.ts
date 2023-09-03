@@ -4,7 +4,7 @@ import { PurchaseApi } from '../../services/purchase.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { DialogPurchaseReturnComponent } from './dialog-purchase-return.component';
-
+import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as';
 @Component({
   selector: 'app-purchases-return',
   templateUrl: './purchases-return.component.html',
@@ -34,9 +34,14 @@ search_Data_Available:boolean = true;
 reverse:boolean = false;
 sortType: string = 'name';
 
+// pdf
+exportAsConfig: ExportAsConfig = {
+  type: 'xlsx', // the type you want to download
+  elementIdOrContent: 'sampleTable', // the id of html/table element
+};
 
 constructor(
-
+  private exportAsService: ExportAsService,
   private purchaseApi:PurchaseApi,
   private modalService: BsModalService,
 ) 
@@ -55,16 +60,16 @@ openDialogFormUpdate(id:any){
   this.purchaseReturnItem.map( item=>{
   if(item.id === id){
     this.purchaseAllForm = new FormGroup({
-      invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-      date:new FormControl(item.date),
-      supplier:new FormControl(item.supplier),
-      mobile:new FormControl(item.mobile),
-      warehouse:new FormControl(item.warehouse),
-      totalAmount:new FormControl(item.totalAmount),
-      lessed:new FormControl(item.lessed),
-      receivable:new FormControl(item.receivable),
-      received:new FormControl(item.received),
-      due:new FormControl(item.due),
+      invoice:new FormControl(item.invoice,[Validators.required]),
+      date:new FormControl(item.date,Validators.required),
+      supplier:new FormControl(item.supplier,Validators.required),
+      mobile:new FormControl(item.mobile,Validators.required),
+      warehouse:new FormControl(item.warehouse,Validators.required),
+      totalAmount:new FormControl(item.totalAmount,Validators.required),
+      lessed:new FormControl(item.lessed,Validators.required),
+      receivable:new FormControl(item.receivable,Validators.required),
+      received:new FormControl(item.received,Validators.required),
+      due:new FormControl(item.due,Validators.required),
     });
     let id = item.id
     
@@ -76,30 +81,60 @@ openDialogFormUpdate(id:any){
       }
     };
     this.bsModalRef = this.modalService.show(DialogPurchaseReturnComponent, initialState);
-    this.getpurchaseReturnData();
-  
     this.bsModalRef.content.closeBtnName = 'Close';
+    this.bsModalRef.onHide?.subscribe(()=>{
+      this.getpurchaseReturnData();
+    })
     
   }
   });
-  
-  
   }
+
+  // Save pdf 
+savePDF(){
+  this.exportAsConfig.type ='pdf';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+};
+
+saveCVS(){
+  this.exportAsConfig.type ='xlsx';
+  // download the file using old school javascript method
+  this.exportAsService
+    .save(this.exportAsConfig, 'Exported_File_Name')
+    .subscribe(() => {
+      // save started
+    });
+  // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+  this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+    console.log(content);
+  });
+ 
+}
+
   //get All user_Data:
   getpurchaseReturnData(){
     this.purchaseApi.getpurchaseListReturn().subscribe( (item:any)=>{
       console.log(item)
       this.purchaseReturnItem = item;
       this. all_purchaseReturnItem = item;
-      this.count = item.length;
+      this.count = Object.keys(item).length;
+      this.paginate();
     })
   };
 
 
 // Search Text
 search(text:string){ 
-  if(this.searchText !== ''){  
-          
+  if(this.searchText !== ''){           
     const searched_users = this.all_purchaseReturnItem.filter(
       data =>{
         return data.customer.toLowerCase().match(this.searchText.toLowerCase())

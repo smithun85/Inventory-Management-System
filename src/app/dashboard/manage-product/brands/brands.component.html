@@ -7,9 +7,8 @@
             <button class="btn btn-primary" (click)="openDialogForm()">
                 <b>+</b>Add New Brand
               </button>
-              <button class="btn btn-primary">
-                Import to CSV
-              </button>
+             
+              <input type="button" value="Import to CSV" class="btn btn-primary" (click)="saveCVS()">
           
         </div>
     </div>
@@ -17,7 +16,7 @@
         <!-- (click)="openFormSignupModal(modal)" -->
       <div class="left-side">
             <label>Show</label>
-            <select (change)="changeItemsPerPage($event.target)">
+            <select (change)="changeItemsPerPage($event.target)" >
               <option [value]="item" *ngFor="let item of limits; let i = index">
                 {{ item }}
               </option>
@@ -39,7 +38,7 @@
       </div>
     </div>
   
-    <table class="table table-bordered">
+    <table class="table table-bordered"  id="sampleTable">
       <thead>
         <tr class="sort">
           <th>

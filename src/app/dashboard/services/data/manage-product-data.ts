@@ -1,4 +1,4 @@
-import { BRANDS, CATEGORY, PRODUCTS, UNITS } from "../../models/manage-product.models";
+import { BRANDS, CATEGORY, PRODUCTS, UNITS } from "../../Models/manage-product.models";
 
 export let categories:CATEGORY[] = [
     {
@@ -9,19 +9,19 @@ export let categories:CATEGORY[] = [
     },
     {
         id:2,
-        serialNo:'51',
+        serialNo:'2',
         name:'Asample',
         products:'21'
     },
     {
         id:3,
-        serialNo:'51',
-        name:'sample',
+        serialNo:'3',
+        name:'Abssample',
         products:'12'
     },
     {
         id:4,
-        serialNo:'15',
+        serialNo:'4',
         name:'Csample',
         products:'52'
     }
@@ -49,7 +49,7 @@ export let brands:BRANDS[] = [
     {
         id:4,
         serialNo:'4',
-        name:'canon',
+        name:'Dcasanon',
         products:'2'
     },
     
@@ -71,7 +71,7 @@ export let units:UNITS[] = [
     {
         id:3,
         serialNo:'3',
-        name:'Pckts',
+        name:'pckts',
         products:'12'
     },
     {
@@ -85,7 +85,7 @@ export let units:UNITS[] = [
 export let products:PRODUCTS[] = [
     {
         id:1,
-        image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD…RAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQP//Z',
+        image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN2qqeMHmWoOGEr4zYQuHUYFkJ_rbpQIx-kQ&usqp=CAU',
         name:'Product-1',
         SKU:'SK133',
         category:'Foot Wear',
@@ -97,7 +97,7 @@ export let products:PRODUCTS[] = [
     },
     {
         id:2,
-        image:'',
+        image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN2qqeMHmWoOGEr4zYQuHUYFkJ_rbpQIx-kQ&usqp=CAU',
         name:'Product-5',
         SKU:'ASK133',
         category:' Wear',
@@ -109,7 +109,7 @@ export let products:PRODUCTS[] = [
     },
     {
         id:3,
-        image:'',
+        image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN2qqeMHmWoOGEr4zYQuHUYFkJ_rbpQIx-kQ&usqp=CAU',
         name:'tProduct-1',
         SKU:'SK133',
         category:'Foot Wear',
@@ -121,7 +121,7 @@ export let products:PRODUCTS[] = [
     },
     {
         id:2,
-        image:'',
+        image:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTN2qqeMHmWoOGEr4zYQuHUYFkJ_rbpQIx-kQ&usqp=CAU',
         name:'Product-1',
         SKU:'SK133',
         category:'Foot Wear',
@@ -133,7 +133,7 @@ export let products:PRODUCTS[] = [
     },
     {
         id:4,
-        image:'',
+        image:'https://images.unsplash.com/photo-1533543217756-e975139f45c1?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=7cecfb5e1f7f9e22459e90bd484e5d9a&auto=format&fit=crop&w=750&q=80',
         name:'Product-1',
         SKU:'SK133',
         category:'cloths',

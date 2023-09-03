@@ -4,8 +4,9 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { ManageProductApi } from '../../services/manage-product.service';
-import { CATEGORY } from '../../models/manage-product.models';
+import { CATEGORY } from '../../Models/manage-product.models';
 import { DialogsComponent } from './dialogs/dialogs.component';
+import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as';
 
 @Component({
   selector: 'app-categories',
@@ -50,6 +51,7 @@ sortType: string = 'name';
 constructor(
   private ManageProductApi:ManageProductApi,
   private modalService: BsModalService,
+  private exportAsService: ExportAsService,
 ) 
 {}
 
@@ -74,7 +76,55 @@ openDialogForm(){
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getCategoriesData();
+  })
 };
+openDialogExcel(){
+  const initialState:ModalOptions = {
+    initialState:{
+      title:'Excel',
+      isExcel:true,
+    }
+  };
+  this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
+  this.bsModalRef.content.closeBtnName = 'Close';
+
+}
+
+// download Doc
+// exportAsConfig: ExportAsConfig = {
+//   type: 'xlsx', // the type you want to download
+//   elementIdOrContent: 'sampleTable', // the id of html/table element
+// };
+// // Save pdf:
+// savePDF(){
+//   this.exportAsConfig.type ='pdf';
+//   // download the file using old school javascript method
+//   this.exportAsService
+//     .save(this.exportAsConfig, 'Exported_File_Name')
+//     .subscribe(() => {
+//       // save started
+//     });
+//   // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+//   this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+//     console.log(content);
+//   });
+// };
+
+// saveCVS(){
+//   this.exportAsConfig.type ='xlsx';
+//   // download the file using old school javascript method
+//   this.exportAsService
+//     .save(this.exportAsConfig, 'Exported_File_Name')
+//     .subscribe(() => {
+//       // save started
+//     });
+//   // get the data as base64 or json object for json type - this will be helpful in ionic or SSR
+//   this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
+//     console.log(content);
+//   });
+// }
 
 //update-modal
 openDialogFormUpdate(id:any){
@@ -82,9 +132,9 @@ console.log(id);
 this.categoriesItem.map( item=>{
 if(item.id === id){
   this.productManage_Form = new FormGroup({
-    serialNo:new FormControl(item.serialNo),
+    serialNo:new FormControl(item.serialNo, Validators.required),
     name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),    
-    products:new FormControl(item.products),   
+    products:new FormControl(item.products, Validators.required),   
   });
   let id = item.id
   
@@ -101,6 +151,9 @@ if(item.id === id){
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
   this.bsModalRef.content.closeBtnName = 'Close'; 
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getCategoriesData();
+  })
 }
 });
 };
@@ -110,18 +163,20 @@ openDeleteDialog(id:any){
   console.log(id);
   this.categoriesItem.map( item=>{
     if(item.id === id){
-      let id = item.id,
-      deleteModal:true
-  
+      let id = item.id; 
       const initialState:ModalOptions = {
         initialState:{
           title:'Are you sure ? Do you want to delete this details',
-          id:id,         
+          id:id,   
+          deleteModal:true,      
         }
       };
       this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
-      this.getCategoriesData();
+      
       this.bsModalRef.content.closeBtnName = 'Close'; 
+      this.bsModalRef.onHide?.subscribe(()=>{
+        this.getCategoriesData();
+      })
   }
   });
 };
@@ -131,7 +186,9 @@ openDeleteDialog(id:any){
       console.log(categoriesList)
       this.categoriesItem = categoriesList;
       this. all_categoriesItem = categoriesList;
-      this.count = categoriesList.length;
+      this.count = Object.keys(categoriesList).length;
+      this.paginate();
+      // this.sortClick(this.sortType)
     })
   };
 

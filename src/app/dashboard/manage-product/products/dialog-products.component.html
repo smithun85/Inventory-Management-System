@@ -11,55 +11,165 @@
             <div class="mb-3">
                 <input type="file" class="form-control" id="exampleFormControlInput1" formControlName="image" placeholder="image" >
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['image']?.invalid &&
+          (productManage_Form.controls['image']?.dirty ||
+            productManage_Form.controls['image']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['image'].errors?.['required']">
+            image is required.
+        </div>
+        <div *ngIf="productManage_Form.controls['image'].errors?.['invalidFileType']">
+          Invalid file type. Only JPEG, PNG, and GIF files are allowed.
+        </div>
+        <div *ngIf="productManage_Form.controls['image'].errors?.['invalidFileSize']">
+          Invalid file size. The maximum file size is 1MB.
+        </div>
+        <div *ngIf="productManage_Form.controls['image'].errors?.['invalidDimensions']">
+          Invalid image dimensions. The maximum image dimensions are 1000x1000.
+        </div>
+      </div>
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name" placeholder="Name">
             </div>
             
-            <!-- <div
+            <div
             *ngIf="
-              productManage_Form.controls['invoice']?.invalid &&
-              (productManage_Form.controls['invoice']?.dirty ||
-                productManage_Form.controls['invoice']?.touched)
+              productManage_Form.controls['name']?.invalid &&
+              (productManage_Form.controls['name']?.dirty ||
+                productManage_Form.controls['name']?.touched)
             "
             class="alert alert-danger"
           >
-            <div *ngIf="productManage_Form.controls['invoice'].errors?.['required']">
-                invoice is required.
+            <div *ngIf="productManage_Form.controls['name'].errors?.['required']">
+                name is required.
             </div>
-            <div *ngIf="productManage_Form.controls['invoice'].errors?.['minlength']">
+            <div *ngIf="productManage_Form.controls['name'].errors?.['minlength']">
               minimum char length must be 3.
             </div>
-            <div *ngIf="productManage_Form.controls['invoice'].errors?.['maxlength']">
+            <div *ngIf="productManage_Form.controls['name'].errors?.['maxlength']">
               maximum char length should be less than 50
             </div>
-          </div> -->
+          </div>
           <div class="mb-3">
             <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="SKU" placeholder="SKU.">
         </div>
+        <div
+        *ngIf="
+          productManage_Form.controls['SKU']?.invalid &&
+          (productManage_Form.controls['SKU']?.dirty ||
+            productManage_Form.controls['SKU']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['SKU'].errors?.['required']">
+            SKU is required.
+        </div>
+      </div>
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="category" placeholder="category">
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['category']?.invalid &&
+          (productManage_Form.controls['category']?.dirty ||
+            productManage_Form.controls['category']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['category'].errors?.['required']">
+            category is required.
+        </div>
+      </div>
+
             <div class="mb-3">
                 <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="brand" placeholder="brand.">
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['brand']?.invalid &&
+          (productManage_Form.controls['brand']?.dirty ||
+            productManage_Form.controls['brand']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['brand'].errors?.['required']">
+          brand is required.
+        </div>
+      </div>
 
             <div class="mb-3">
             <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="stock" placeholder="stock.">
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['stock']?.invalid &&
+          (productManage_Form.controls['stock']?.dirty ||
+            productManage_Form.controls['stock']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['stock'].errors?.['required']">
+            stock is required.
+        </div>
+      </div>
+
             <div class="mb-3">
                 <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="total_sale" placeholder="total_sale">
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['total_sale']?.invalid &&
+          (productManage_Form.controls['total_sale']?.dirty ||
+            productManage_Form.controls['total_sale']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['total_sale'].errors?.['required']">
+            total_sale is required.
+        </div>
+      </div>
+
             <div class="mb-3">
                 <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="altert_qnty" placeholder="altert_qnty.">
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['altert_qnty']?.invalid &&
+          (productManage_Form.controls['altert_qnty']?.dirty ||
+            productManage_Form.controls['altert_qnty']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['altert_qnty'].errors?.['required']">
+            altert_qnty is required.
+        </div>
+      </div>
+
             <div class="mb-3">
                 <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="unit" placeholder="unit.">
             </div>
+            <div
+        *ngIf="
+          productManage_Form.controls['unit']?.invalid &&
+          (productManage_Form.controls['unit']?.dirty ||
+            productManage_Form.controls['unit']?.touched)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="productManage_Form.controls['unit'].errors?.['required']">
+            unit is required.
+        </div>
+      </div>
+
             <div class="mb-3 button">
-                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" > Add</button>
-                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" (click)="bsModalRef.hide()" [disabled]="productManage_Form['invalid']"> Update</button>
+                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" > Add</button>
+                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" [disabled]="productManage_Form['invalid']"> Update</button>
                 <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
-                  <!-- (click)="bsModalRef.hide()" [disabled]="productManage_Form['invalid']" -->
+                  
             </div>
         </form>
     </div>    

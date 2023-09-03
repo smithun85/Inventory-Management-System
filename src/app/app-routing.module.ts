@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { DashboardLayoutComponent } from './layouts/dashboard-layout/dashboard-layout.component';
-import { AuthGaurdService } from './Authentication/authServices/auth-guard.service';
+import { AuthGuard } from './Authentication/authServices/auth-guard.service';
 
 const routes: Routes = [
   {
@@ -11,14 +11,13 @@ const routes: Routes = [
     pathMatch:'full',
   },
   {
-    path:'dashboard',
-    canActivate:[AuthGaurdService],
-    component:DashboardLayoutComponent,
+    path:'home',
     loadChildren:()=>import('./dashboard/dashboard.module').then(m=>m.DashboardModule)  
   },
 
   {
     path:'auth',
+    // canActivate: [AuthGuard],
     loadChildren: ()=> import('./Authentication/auth.module').then(m=>m.authModule)
   },
   

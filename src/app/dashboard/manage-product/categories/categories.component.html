@@ -4,11 +4,9 @@
       <p>Category List</p>
       <div class="button">
           <button class="btn btn-primary" (click)="openDialogForm()">
-              <b>+</b>Add New Sales
+              <b>+</b>Add New Category
             </button>
-            <button class="btn btn-primary">
-              Import to CSV
-            </button>
+            <button class="btn btn-primary" (click)="openDialogExcel()">CSV</button>
         
       </div>
   </div>
@@ -37,7 +35,7 @@
     </div>
   </div>
 
-  <table class="table table-bordered">
+  <table class="table table-bordered"  id="sampleTable">
     <thead>
       <tr class="sort">
         <th>

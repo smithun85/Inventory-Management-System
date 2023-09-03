@@ -1,4 +1,4 @@
-import { CUSTOMER } from "../../models/customer.model";
+import { CUSTOMER } from "../../Models/customer.model";
 
 export let customers:CUSTOMER[] = [
     {

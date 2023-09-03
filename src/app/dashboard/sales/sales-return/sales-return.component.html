@@ -3,12 +3,9 @@
     <div class="salesList">
         <p>Sales Return List</p>
         <div class="button">
-              <button class="btn btn-primary">
-                CSV
-              </button>
-              <button class="btn btn-primary">
-               PDF
-              </button>
+         
+          <input type="button" value=" CSV" class="btn btn-primary" (click)="saveCVS()">
+          <input type="button" value="PDF" class="btn btn-success" (click)="savePDF()">
         </div>
     </div>
     <div class="header">
@@ -37,7 +34,7 @@
       </div>
     </div>
   
-    <table class="table table-bordered">
+    <table class="table table-bordered"  id="sampleTable">
       <thead>
         <tr class="sort">
           <th>

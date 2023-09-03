@@ -2,29 +2,54 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { AuthGuard } from '../Authentication/authServices/auth-guard.service';
+import { DashboardLayoutComponent } from '../layouts/dashboard-layout/dashboard-layout.component';
+
 const routes:Routes= [
     {
         path:'',
-        component:DashboardComponent,
-    },    
+        redirectTo:'dashboard',
+        pathMatch:'full',
+      },
+    {
+        path:'',
+        canActivate:[AuthGuard],
+        component:DashboardLayoutComponent,
+        children:[
+            {
+                path:'dashboard',
+                canActivate:[AuthGuard],
+                component:DashboardComponent,
+            },   
+            {
+                path:'user-profile',
+                component:UserProfileComponent
+            } ,
+            
             {
                 path:'manage-product',
+               canActivate:[AuthGuard],
                 loadChildren: ()=> import('../dashboard/manage-product/manage-product.module').then(m=>m.ManageProductModule)
             },
             {
                 path:'',
+               canActivate:[AuthGuard],
                 loadChildren: ()=> import('../dashboard/customer/customer.module').then(m=>m.CustomerModule)
             },
             {
                 path:'',
+               canActivate:[AuthGuard],
                 loadChildren: ()=> import('../dashboard/supplier/supplier.module').then(m=>m.SupplierModule)
             },
             {
                 path:'purchase',
+               canActivate:[AuthGuard],
                 loadChildren: ()=> import('../dashboard/purchase/purchase.module').then(m=>m.PurchaseModule)
             },
             {
                 path:'sales',
+               canActivate:[AuthGuard],
                 loadChildren: ()=> import('../dashboard/sales/sales.module').then(m=>m.SalesModule)
             },
             {
@@ -57,9 +82,17 @@ const routes:Routes= [
             },
             {
                 path:'**',
-                redirectTo:'',
+                redirectTo:'dashboard',
                 pathMatch:'full'
               }
+        ]
+    },
+    {
+        path:'**',
+        redirectTo:'dashboard',
+        pathMatch:'full'
+      }
+            
           
         ];
 

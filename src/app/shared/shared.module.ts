@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoaderComponent } from './loader/loader.component';
+import { NotificationComponent } from './notification/notification/notification.component';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import { LoaderComponent } from './loader/loader.component';
     SidebarComponent,
     HeaderComponent,
     FooterComponent,
-    LoaderComponent
+    LoaderComponent,
+    NotificationComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,9 @@ import { LoaderComponent } from './loader/loader.component';
   exports:[
     SidebarComponent,  //exports b/c we use SidebarComponent in other module
     HeaderComponent ,  //same ,,
-    FooterComponent
+    FooterComponent,
+    LoaderComponent,
+    NotificationComponent,
   ]
 })
 export class SharedModule { }

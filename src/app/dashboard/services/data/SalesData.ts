@@ -1,4 +1,4 @@
-import { SALES_RETURN } from "../../models/sales.model";
+import { SALES_RETURN } from "../../Models/sales.model";
 
 export let  allSales = {
     salesList: [

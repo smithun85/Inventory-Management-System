@@ -19,10 +19,10 @@ export class AllPurchasesComponent {
     mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
     warehouse: new FormControl('', Validators.required),
     totalAmount: new FormControl('', Validators.required),
-    discount:new FormControl('',Validators.requiredTrue),
+    discount:new FormControl('',Validators.required),
     payable: new FormControl('', Validators.required),
     paid: new FormControl('', Validators.required),
-    due:new FormControl('',Validators.requiredTrue)
+    due:new FormControl('',Validators.required)
   });
   bsModalRef?: BsModalRef;
   isAdded: boolean = false;
@@ -31,10 +31,10 @@ export class AllPurchasesComponent {
   all_purchaseListItem:any[]=[];
 
   // pdf
-  exportAsConfig: ExportAsConfig = {
-    type: 'xlsx', // the type you want to download
-    elementIdOrContent: 'sampleTable', // the id of html/table element
-  };
+  // exportAsConfig: ExportAsConfig = {
+  //   type: 'xlsx', // the type you want to download
+  //   elementIdOrContent: 'sampleTable', // the id of html/table element
+  // };
 
 //searching:
 searchText:string = ''
@@ -81,6 +81,9 @@ openDialogForm(){
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getpurchaseListData();
+  })
 };
 
 //update-modal
@@ -90,15 +93,15 @@ this.purchaseListItem.map( item=>{
 if(item.id === id){
   this.purchaseAllForm = new FormGroup({
     invoice:new FormControl(item.invoice,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-    date:new FormControl(item.date),
-    supplier:new FormControl(item.supplier),
-    mobile:new FormControl(item.mobile),
-    warehouse:new FormControl(item.warehouse),
-    totalAmount:new FormControl(item.totalAmount),
-    discount:new FormControl(item.discount),
-    payable:new FormControl(item.payable),
-    paid:new FormControl(item.paid),
-    due:new FormControl(item.due),
+    date:new FormControl(item.date, Validators.required),
+    supplier:new FormControl(item.supplier, Validators.required),
+    mobile:new FormControl(item.mobile, Validators.required),
+    warehouse:new FormControl(item.warehouse, Validators.required),
+    totalAmount:new FormControl(item.totalAmount, Validators.required),
+    discount:new FormControl(item.discount, Validators.required),
+    payable:new FormControl(item.payable, Validators.required),
+    paid:new FormControl(item.paid, Validators.required),
+    due:new FormControl(item.due, Validators.required),
   });
   let id = item.id
   
@@ -114,15 +117,20 @@ if(item.id === id){
     }
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
-  this.getpurchaseListData();
-
   this.bsModalRef.content.closeBtnName = 'Close';
-  
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getpurchaseListData();
+  })
 }
 });
 }
 
-// Save pdf
+// download Doc
+exportAsConfig: ExportAsConfig = {
+  type: 'xlsx', // the type you want to download
+  elementIdOrContent: 'sampleTable', // the id of html/table element
+};
+// Save pdf: private exportAsService: ExportAsService import {ExportAsService,ExportAsConfig, SupportedExtensions} from 'ngx-export-as';
 savePDF(){
   this.exportAsConfig.type ='pdf';
   // download the file using old school javascript method
@@ -149,7 +157,6 @@ saveCVS(){
   this.exportAsService.get(this.exportAsConfig).subscribe((content) => {
     console.log(content);
   });
- 
 }
 
 
@@ -160,7 +167,8 @@ saveCVS(){
       console.log(item.purchaseListList)
       this.purchaseListItem = item;
       this. all_purchaseListItem = item;
-      this.count = item.length;
+      this.count = Object.keys(item).length;
+      this.paginate();
     })
   };
 

@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { salesApi } from './services/dashboard-sales.service';
-import { CartModel } from './models/cart.model';
+import { CartModel } from './Models/cart.model'; 
 import { AuthService } from '../Authentication/authServices/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,9 @@ import { Observable } from 'rxjs';
 })
 export class DashboardComponent implements OnInit{
 
+  currentUser= {};
   // user$ : Observable<any>
+  private token = localStorage.getItem('myToken')
   // Card-1:
   cart:CartModel[] = [];
   cartBottom:CartModel[] = [];
@@ -25,9 +28,17 @@ export class DashboardComponent implements OnInit{
     //table:
     public product:any[] = [];
 
+    apiRes:any = ''
+
 
 
 ngOnInit(): void {
+  console.log(this.token);
+  // console.log(this.auth.getUser().add());
+  // if(!this.token){
+  //   this.router.navigate(['./login'])
+  // }
+  
   this.createChart();
   this.createTable();
   this.getCart();
@@ -35,12 +46,14 @@ ngOnInit(): void {
 };
 constructor(
   private salesApi:salesApi,
-  private auth: AuthService
+  private auth: AuthService,
+  private router:Router,
   ){
-  this.auth.getUser().subscribe( (res)=>{
-    console.log(res)
-  })
-  }
+this.auth.getUser().subscribe( (res)=>{
+console.log(res);
+  this.currentUser = res
+})
+}
 
 getCart(){
   this.salesApi.getCarts().subscribe( item=>{

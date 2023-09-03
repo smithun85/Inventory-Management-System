@@ -44,12 +44,14 @@ resetForm(){
 //Post and update userForm_Data
 onSubmit(){  
   console.log("Form_value",this.purchaseAllForm.value);
-  //  if (this.purchaseAllForm.invalid) {
-  //   this.purchaseAllForm.markAllAsTouched();
-  //   return;
-  // }
-    this.purchaseApi.updatepurchaseListReturnData(this.purchaseAllForm.value,this.id).subscribe()   
-  this.purchaseAllForm.reset()
+   if (this.purchaseAllForm.invalid) {
+    this.purchaseAllForm.markAllAsTouched();
+    return;
+  }
+    this.purchaseApi.updatepurchaseListReturnData(this.purchaseAllForm.value,this.id).subscribe();  
+    this.bsModalRef.hide();
+  this.purchaseAllForm.reset();
+
   // console.log("UsersData:",this.userData);    
 }
 

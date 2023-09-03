@@ -61,10 +61,7 @@ onSubmit(){
   //   return;
   // }
   this.salesApi.updateSalesReturnData(this.salesAllForm.value,this.id).subscribe()
-
-   
-  this.salesAllForm.reset()
-  // console.log("UsersData:",this.userData);    
+this.bsModalRef.hide(); 
 }
 
 }

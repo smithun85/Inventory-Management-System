@@ -6,12 +6,8 @@
             <button type="button" class="btn btn-primary" (click)="openDialogForm()">
                 <b>+</b>Add New Sales
               </button>
-              <button class="btn btn-primary">
-                CSV
-              </button>
-              <button class="btn btn-primary">
-               PDF
-              </button>
+              <button class="btn btn-primary" (click)="openDialogExcel()">CSV</button>
+              <input type="file" value="PDF" class="btn btn-success" (change)="onPDFSelected($event)">
         </div>
     </div>
     <div class="header">
@@ -39,7 +35,7 @@
       </div>
     </div>
   
-    <table class="table table-bordered">
+    <table class="table table-bordered" id="sampleTable">
       <thead>
         <tr class="sort">
           <th>
@@ -165,4 +161,29 @@
           (pageChanged)="changePage($event)"
         ></pagination>
       </div>
+
+      <div class="">
+        <!-- <pdf-viewer
+          [src]="src"
+          [original-size]="true"
+          [rotation]="0"
+          [show-all]="true"
+          [fit-to-page]="false"
+          [zoom]="1"
+          [zoom-scale]="'page-width'"
+          [stick-to-page]="true"
+          [render-text]="true"
+          [external-link-target]="'blank'"
+          [autoresize]="true"
+          [show-borders]="false"
+          (after-load-complete)="showPDF($event)"
+          (page-rendered)="pageRendered($event)"
+          class="pdf-viewer"
+        ></pdf-viewer> -->
+      </div>
   </div>
+  <h1>PDF Viewer</h1>
+  <div *ngIf="showPdf">
+    <ngx-extended-pdf-viewer [src]="pdfSrc" [height]="'80vh'"></ngx-extended-pdf-viewer>
+  </div>
+  

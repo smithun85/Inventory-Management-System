@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { CustomerApi } from '../services/customer.service';
-import { CUSTOMER } from '../models/customer.model';
+import { CUSTOMER } from '../Models/customer.model';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
 import { DialogsComponent } from './dialogs/dialogs.component';
@@ -16,13 +16,16 @@ import { DialogsComponent } from './dialogs/dialogs.component';
 })
 export class CustomerComponent {
 
+  email = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/;
+  digits =/^[0-9\+\-\ ]*$/;
+
   salesAllForm:FormGroup = new FormGroup({
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
     address: new FormControl('',[Validators.required]),
-    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10)]),
-    email: new FormControl('', Validators.required),
-    receivable: new FormControl('', Validators.required),
-    payable: new FormControl('', Validators.required),
+    mobile: new FormControl('', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern(this.digits)]),
+    email: new FormControl('', [Validators.required, Validators.pattern(this.email)]),
+    receivable: new FormControl('', [Validators.required, Validators.pattern(this.digits)]),
+    payable: new FormControl('', [Validators.required, Validators.pattern(this.digits)]),
    
   });
   bsModalRef?: BsModalRef;
@@ -77,6 +80,9 @@ openDialogForm(){
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getcustomerData();
+  })
 };
 
 //update-modal
@@ -86,11 +92,11 @@ this.customerItem.map( item=>{
 if(item.id === id){
   this.salesAllForm = new FormGroup({
     name:new FormControl(item.name,[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
-    address:new FormControl(item.address),
-    mobile:new FormControl(item.mobile),
-    email:new FormControl(item.email),
-    receivable:new FormControl(item.receivable),
-    payable:new FormControl(item.payable),
+    address:new FormControl(item.address,Validators.required),
+    mobile:new FormControl(item.mobile,[Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern(this.digits)]),
+    email:new FormControl(item.email,[Validators.required, Validators.pattern(this.email)]),
+    receivable:new FormControl(item.receivable,[Validators.required, Validators.pattern(this.digits)]),
+    payable:new FormControl(item.payable,[Validators.required, Validators.pattern(this.digits)]),
   });
   let id = item.id
   
@@ -106,9 +112,10 @@ if(item.id === id){
     }
   };
   this.bsModalRef = this.modalService.show(DialogsComponent, initialState);
-  this.getcustomerData();
-
   this.bsModalRef.content.closeBtnName = 'Close';
+  this.bsModalRef.onHide?.subscribe(()=>{
+    this.getcustomerData();
+  })
   
 }
 });
@@ -122,7 +129,8 @@ if(item.id === id){
       console.log(item)
       this.customerItem = item;
       this. all_customerItem = item;
-      this.count = item.length;
+      this.count = Object.keys(item).length;
+      this.paginate();
     })
   };
 

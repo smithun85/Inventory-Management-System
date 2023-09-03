@@ -14,20 +14,24 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 //http for server;
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 //dropdown
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
+
 //pagination
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-// import { LoadingInterceptor } from './loading.interceptor';
+import { LoaderComponent } from './shared/loader/loader.component';
+import { AlertComponent } from 'ngx-bootstrap/alert';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
     AppComponent,
+    LoaderComponent,
+    // AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,9 +44,12 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BsDropdownModule.forRoot(),
     PaginationModule.forRoot(),
     FontAwesomeModule, 
+    NgxExtendedPdfViewerModule,
    
   ],
-  providers: [],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
