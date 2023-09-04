@@ -103,50 +103,42 @@
     }   
   };
 
-  @media (max-width:600px){
+  @media(max-width:950px){
     .contents {
         width: 100%;
-        h5{
-            color:black;
-            padding-bottom: 10px;
-        }
         .card-1{
             width: 100%;
           
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: space-between;
             gap: .2rem;
             
             .card{
-                    
+                width:33%;       
                 .card-body{
-                    margin: -10px;
                     display: flex;
                     flex-direction: row;
                     justify-content: space-between;
                     .cart{   
                         display: flex;
                         flex-direction: row;
-                        justify-content: center;
-                        align-items: center;
+                        justify-content: flex-start;
+                        align-items: flex-start;
                     }
                     .icon{
                         i{
                             border-radius: 5px;
-                            padding: 10px;                  
-                            font-size:20px;
+                            padding: 7px;                  
+                            font-size:15px;
                             color:white    
                         };
                     }
                     
                     .content{
                         margin-left: 0.3rem;
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: space-evenly;
                         span{
-                            font-size:.8rem
+                            font-size:.7rem
                         }
                         
                     
@@ -170,10 +162,10 @@
             width: 100%;
             margin-top: 20px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
            
             .graph{   
-                width: 60%;
+                width: 100%;
                 
                 height: auto;         
                 .canvas{
@@ -182,7 +174,7 @@
                 }
             };
             .tableData{
-                width: 40%;
+                width: 100%;
                 margin-left: 10px;
                 .table{
                     margin-top: -16px;
