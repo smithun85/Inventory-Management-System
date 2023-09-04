@@ -19,7 +19,7 @@ export class DialogProductsComponent {
   isEditted?:boolean ;
   title?: string; 
   invoice?:string;
-  productManage_FormAdd?:FormGroup;
+  productManage_FormAdd:FormGroup | any;
   formData?:any;
   id?:any;
   
@@ -36,10 +36,17 @@ export class DialogProductsComponent {
 
   ngOnInit(): void {
    
-      this.productManage_Form = this.productManage_FormAdd
-      
-      // console.log(this.formData);
-    
+      this.productManage_Form = this.productManage_FormAdd 
+  };
+
+  
+
+  onFileChange(event: any) {
+    const fileInput = event.target;
+    if (fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      this.productManage_FormAdd.get('image').setValue(file);
+    }
   }
 
 //reset Form:

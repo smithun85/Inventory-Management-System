@@ -26,10 +26,10 @@
         <div *ngIf="productManage_Form.controls['image'].errors?.['invalidFileType']">
           Invalid file type. Only JPEG, PNG, and GIF files are allowed.
         </div>
-        <!-- <div *ngIf="productManage_Form.controls['image'].errors?.['invalidFileSize']">
+        <div *ngIf="productManage_Form.get('image').hasError('invalidFileSize')">
           Invalid file size. The maximum file size is 1MB.
         </div>
-        <div *ngIf="productManage_Form.controls['image'].errors?.['invalidDimensions']">
+        <!-- <div *ngIf="productManage_Form.controls['image'].errors?.['invalidDimensions']">
           Invalid image dimensions. The maximum image dimensions are 1000x1000.
         </div> -->
       </div>

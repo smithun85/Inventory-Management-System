@@ -23,13 +23,6 @@ export class CustomValidatorService {
     return {invalidFileType:true};
   };
 
-
-  // const maxSize = 1048; // 1MB in bytes
-  // console.log(file.size)
-  // if (file.size > maxSize) {
-  //   return {invalidFileSize:true};
-  // };
-
 //   const maxWidth = 1000;
 //   const maxHeight = 1000;
 //   const image = new Image();
@@ -43,7 +36,55 @@ export class CustomValidatorService {
 //       }
 //     };
 //   });
+};
+
+// fileSizeValidator(maxSize: number) {
+//   return (control: any) => {
+//     if (control.value && control.value.length > 0) {
+//       const file = control.value[0]; // Assuming it's a single file input
+//       const fileSize = file.size / 1024; // Convert to KB
+//       console.log(control.value, control.value.length)
+//       console.log(file, fileSize)
+
+//       if (fileSize > maxSize) {
+//         return {invalidFileSize:true};
+//       }
+//     }
+
+//     return null;
+//   };
+// }
+fileSizeValidator(event:any) {
+  return (control: any) => {
+
+    const file = event.target.files[0];
+    
+// if (file) {
+//   const maxSize = 1024 * 1024; // 1 MB (adjust as needed)
+
+//   if (file.size > maxSize) {
+//     this.imageForm.get('image').setErrors({ maxSizeExceeded: true });
+//     this.fileInput.nativeElement.value = ''; // Clear the file input
+//   } else {
+//     this.imageForm.get('image').setErrors(null);
+//   }
+// }
+
+    // if (control.value && control.value.length > 0) {
+    //   const file = control.value[0]; // Assuming it's a single file input
+    //   const fileSize = file.size / 1024; // Convert to KB
+    //   console.log(control.value, control.value.length)
+    //   console.log(file, fileSize)
+
+    //   if (fileSize > maxSize) {
+    //     return {invalidFileSize:true};
+    //   }
+    // }
+
+    return null;
+  };
 }
+
 
 }
 

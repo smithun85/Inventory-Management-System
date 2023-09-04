@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
 
   title:string = 'Login'
   loginForm:FormGroup | any;
-  sending:boolean = false
+  sending:boolean = false;
+  showNotification: boolean = false;
 
   apiRes:any={}
 
@@ -55,11 +56,16 @@ postLoginForm(loginForm:any){
       console.log(this.apiRes.response, this.apiRes.id);
 
       if(this.apiRes.token){
+        this.showNotification = true;
         this.auth.token = this.apiRes.token        //set the token
         localStorage.setItem('myToken',this.apiRes.token)
         this.router.navigate(['/home/dashboard'])
       }
-    })
+    });
+
+    setTimeout(() => {
+      this.showNotification = false;
+    }, 3000);
   
     
     this.sending = false;

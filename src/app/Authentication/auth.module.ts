@@ -8,6 +8,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthLayoutComponent } from '../layouts/auth-layout/auth-layout.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationComponent } from '../shared/notification/notification/notification.component';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
     ForgetPasswordComponent,
     ResetPasswordComponent,
     AuthLayoutComponent, 
+    NotificationComponent,
 
   ],
   imports: [

@@ -15,7 +15,7 @@ import { CustomValidatorService } from '../../services/customValidator.service';
 })
 export class ProductsComponent {
     productManage_Form:FormGroup = new FormGroup({
-    image: new FormControl('',[Validators.required, this.validator.validateImage ]),
+    image: new FormControl('',[Validators.required, this.validator.validateImage, this.fileSizeValidator ]),
     products: new FormControl('', Validators.required),
     name: new FormControl('',[Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
     SKU: new FormControl('', Validators.required),
@@ -87,7 +87,7 @@ console.log(id);
 this.productsItem.map( item=>{
 if(item.id === id){
   this.productManage_Form = new FormGroup({
-    image:new FormControl('',Validators.required),
+    image:new FormControl(item.image,Validators.required),
     name:new FormControl(item.name, [Validators.required,Validators.minLength(3),Validators.maxLength(50)]),
     SKU:new FormControl(item.SKU, Validators.required),
     category:new FormControl(item.category, Validators.required),
@@ -193,5 +193,19 @@ changeItemsPerPage(e:any){
       }
      })
     this.paginate()
-}
+};
+
+
+  // Define your custom file size validator here
+  fileSizeValidator(control: FormControl) {
+    const maxSize = 1024; // 1 MB (adjust as needed)
+    const file = control.value;
+    console.log(file.size)
+
+    if (file.size > maxSize) {
+      return { invalidFileSize: true };
+    }
+
+    return null;
+  }
 }
