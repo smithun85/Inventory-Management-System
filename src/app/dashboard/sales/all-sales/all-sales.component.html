@@ -1,0 +1,189 @@
+<div class="container">
+    <h4>All sales</h4>
+    <div class="salesList">
+        <p>Sales List</p>
+        <div class="button">
+            <button type="button" class="btn btn-primary" (click)="openDialogForm()">
+                <b>+</b>Add New Sales
+              </button>
+              <button class="btn btn-primary" (click)="openDialogExcel()">CSV</button>
+              <input type="file" value="PDF" class="btn btn-success" (change)="onPDFSelected($event)">
+        </div>
+    </div>
+    <div class="header">
+      <div class="left-side">
+            <label>Show</label>
+            <select (change)="changeItemsPerPage($event.target)">
+              <option [value]="item" *ngFor="let item of limits; let i = index">
+                {{ item }}
+              </option>
+            </select>
+            <label>entries</label>
+      </div>
+      
+      <div class="search d-flex">
+        <label for="">search</label>
+        <input
+          class="form-control me-2"
+          type="search"
+          [(ngModel)]="searchText"
+          (input)="search(searchText)"
+          aria-label="Search"
+        />
+        
+        
+      </div>
+    </div>
+  
+    <table class="table table-bordered" id="sampleTable">
+      <thead>
+        <tr class="sort">
+          <th>
+            <span (click)="sortClick('invoice')">Invoice No|Date</span>
+            <span
+              class="sortorder descending"
+              [hidden]="sortType === 'invoice' && reverse === true"
+            ></span>
+            <span
+              class="sortorder"
+              [hidden]="sortType === 'invoice' && reverse === false"
+            ></span>
+          </th>
+          <th>
+            <span (click)="sortClick('customer')">Customer|Mobile</span>
+            <span
+              class="sortorder descending"
+              [hidden]="sortType === 'customer' && reverse == true"
+            ></span>
+            <span
+              class="sortorder"
+              [hidden]="sortType === 'customer' && reverse === false"
+            ></span>
+          </th>
+          <th>
+            <span (click)="sortClick('warehouse')">Warehouse|Total Amount</span>
+            <span
+              class="sortorder descending"
+              [hidden]="sortType === 'warehouse' && reverse == true"
+            ></span>
+            <span
+              class="sortorder"
+              [hidden]="sortType === 'warehouse' && reverse === false"
+            ></span>
+          </th>
+          <th>
+            <span (click)="sortClick('discount')">Discount|Receivable</span>
+            <span
+              class="sortorder descending"
+              [hidden]="sortType === 'discount' && reverse == true"
+            ></span>
+            <span
+              class="sortorder"
+              [hidden]="sortType === 'discount' && reverse === false"
+            ></span>
+          </th>
+          <th>
+            <span (click)="sortClick('received')">Received|Due</span>
+            <span
+              class="sortorder descending"
+              [hidden]="sortType === 'received' && reverse == true"
+            ></span>
+            <span
+              class="sortorder"
+              [hidden]="sortType === 'received' && reverse === false"
+            ></span>
+          </th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <div *ngIf="search_Data_Available; then printData; else empty"></div>
+      <ng-template #printData>
+        <tbody>
+          <tr *ngFor="let item of salesItem">
+            <td><p>{{ item.invoice }}</p>
+                <p>{{ item.date }}</p>
+            </td>
+            <td>
+                <p>{{ item.customer }}</p>
+                <p>{{ item.mobile }}</p>
+            </td>
+            <td>
+                <p>{{ item.warehouse }}</p>
+                <p>{{ item.totalAmount }}</p>
+            </td>
+            <td>
+                <p>{{ item.discount }}</p>
+                <p>{{ item.receivable }}</p>
+            </td>
+            <td>
+                <p>{{ item.received }}</p>
+                <p>{{ item.due }}</p>
+            </td>
+            <td>
+              <div class="worksheet">
+                <button
+                  type="button"
+                  class="btn btn-primary margin-right"
+                  (click)="openDialogFormUpdate(item.id)"
+                >
+                <i></i>
+                  Edit
+                </button>
+               
+                <button
+                  type="button"
+                  class="btn btn-danger"
+                >
+                <i></i>
+                  More
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </ng-template>
+      <ng-template #empty>
+        <h2>data not found.......</h2>
+      </ng-template>
+    </table>
+  
+  
+      
+      <div class="pagination">
+        <pagination
+          [boundaryLinks]="showBoundaryLinks"
+          [totalItems]="count"
+          [itemsPerPage]="limit"
+          [rotate]="rotate"
+          [maxSize]="maxSize"
+          [(ngModel)]="currentPage"
+          name="currentPage"
+          (pageChanged)="changePage($event)"
+        ></pagination>
+      </div>
+
+      <div class="">
+        <!-- <pdf-viewer
+          [src]="src"
+          [original-size]="true"
+          [rotation]="0"
+          [show-all]="true"
+          [fit-to-page]="false"
+          [zoom]="1"
+          [zoom-scale]="'page-width'"
+          [stick-to-page]="true"
+          [render-text]="true"
+          [external-link-target]="'blank'"
+          [autoresize]="true"
+          [show-borders]="false"
+          (after-load-complete)="showPDF($event)"
+          (page-rendered)="pageRendered($event)"
+          class="pdf-viewer"
+        ></pdf-viewer> -->
+      </div>
+  </div>
+  <h1>PDF Viewer</h1>
+  <div *ngIf="showPdf">
+    <ngx-extended-pdf-viewer [src]="pdfSrc" [height]="'80vh'"></ngx-extended-pdf-viewer>
+  </div>
+  

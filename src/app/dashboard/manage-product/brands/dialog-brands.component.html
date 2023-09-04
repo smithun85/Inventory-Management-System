@@ -1,0 +1,71 @@
+<div class="container" *ngIf="formModal">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide() ; productManage_Form.reset()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">  
+       
+      <form class="form" [formGroup]="productManage_Form" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="name" placeholder="Name">
+            </div>
+            <div
+            *ngIf="
+              productManage_Form.controls['name']?.invalid &&
+              (productManage_Form.controls['name']?.dirty ||
+                productManage_Form.controls['name']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="productManage_Form.controls['name'].errors?.['required']">
+                name is required.
+            </div>
+            <div *ngIf="productManage_Form.controls['name'].errors?.['minlength']">
+              minimum char length must be 3.
+            </div>
+            <div *ngIf="productManage_Form.controls['name'].errors?.['maxlength']">
+              maximum char length should be less than 50
+            </div>
+          </div>
+            <div class="mb-3">
+                <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="products" placeholder="products.">
+            </div>
+            <div
+            *ngIf="
+              productManage_Form.controls['products']?.invalid &&
+              (productManage_Form.controls['products']?.dirty ||
+                productManage_Form.controls['products']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="productManage_Form.controls['products'].errors?.['required']">
+                products is required.
+            </div>
+            <div *ngIf=" productManage_Form.controls['products'].errors?.['pattern']">
+              Only number is valid not character.
+            </div>
+
+          </div>
+
+            <div class="mb-3 button">
+                <button  *ngIf="isAdded" type="submit" class="btn btn-primary margin-right" > Add</button>
+                <button  *ngIf="isEditted" type="submit" class="btn btn-primary margin-right" [disabled]="productManage_Form['invalid']"> Update</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
+            </div>
+        </form>
+    </div>    
+</div>
+
+<!-- delete-Modal -->
+<div class="delete-popup" *ngIf="deleteModal">
+  <div>
+    <i>delete</i>
+    <p>{{title}}</p>
+    <button  type="button"  class="btn btn-info margin-right"(click)="bsModalRef.hide()">
+      <span>CANCEL</span>
+    </button>
+    <button  class="btn btn-danger margin-right" (click)="deleteManageProduct()">DELETE</button>
+  </div>
+</div>

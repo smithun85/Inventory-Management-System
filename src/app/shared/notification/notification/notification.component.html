@@ -1,0 +1,12 @@
+
+
+
+ <div class="container">
+  <div *ngIf="notificationService.messages.length" class="alert alert-success">
+    <div *ngFor = 'let message of notificationService.messages'>{{message}}</div>
+  </div>
+ </div>
+
+
+
+

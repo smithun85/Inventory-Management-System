@@ -1,0 +1,38 @@
+
+
+<div class="container">
+
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">{{title}}</h4>
+  </div>
+
+  <div class="modal-body">
+    <div class="message">
+      <p *ngIf=" apiRes.code==500" class="text-danger">{{apiRes.response.message}}</p>
+    </div>
+    <form  class="form-container" [formGroup]="loginForm" (ngSubmit)="postLoginForm(loginForm)">
+      <div class="mb-3">
+          <input type="email" class="form-control" placeholder="Enter Username" formControlName="username">
+      </div>
+      <div class="alert alert-danger" *ngIf="login.username.invalid && (login.username.dirty || login.username.touched)">
+        <span *ngIf="login.username.errors?.['required']">username must be required</span>
+      </div>
+  
+      <div class="mb-3">
+          <input type="password" class="form-control" placeholder="enter password" autocomplete="off" formControlName="password">
+       </div>
+       <div class="alert alert-danger" *ngIf="login.password.invalid && (login.password.dirty || login.password.touched)">
+        <span *ngIf="login.password.errors?.['required']">password must be required</span>
+        <span *ngIf="login.password.errors?.['minlength']">Paaword length must be greater than 5</span>
+      </div>
+       
+    
+        <div class="button">
+          <button type="submit" class="btn btn-primary" [disabled]="sending">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="sending"></span>
+            {{sending ? 'please wait' : 'login'}}</button>
+        </div>
+      </form>
+
+  </div>  
+  </div>

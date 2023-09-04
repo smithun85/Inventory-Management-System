@@ -1,0 +1,166 @@
+<!-- <div class="container">
+    <div class="sidebar">
+        <ul class="nav-list">
+            <li class="nav-list-item" *ngFor="let item of lists">
+              <i class="{{ item.icon }}"></i>
+              <span>                
+                <a [routerLink]="item.router" [routerLinkActive]="['active-link']">{{item.name}}</a>
+              </span>
+            </li>
+        </ul>
+    </div>
+</div> -->
+
+<nav id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <h3>Imberntaryo</h3>
+  </div>
+
+  <ul class="list-unstyled components">
+    <li>
+      <a [routerLink]="['dashboard']">Dashboard</a>
+    </li>
+    <li class="active">
+      <a
+        href="#productSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Manage Product</a
+      >
+      <ul class="collapse list-unstyled" id="productSubmenu">
+        <li>
+          <a [routerLink]="['manage-product/categories']">Categories</a>
+        </li>
+        <li>
+          <a [routerLink]="['manage-product/brands']">Brands</a>
+        </li>
+        <li>
+          <a [routerLink]="['manage-product/units']">Units</a>
+        </li>
+        <li>
+          <a [routerLink]="['manage-product/products']">Products</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a [routerLink]="['customer']">Customer</a>
+    </li>
+    <li>
+      <a [routerLink]="['supplier']">Supplier</a>
+    </li>
+    <li class="active">
+      <a
+      href="#purchaseSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Purchase</a
+      >
+      <ul class="collapse list-unstyled" id="purchaseSubmenu">
+        <li>
+          <a [routerLink]="['purchase/all-purchases']">All Purchases</a>
+        </li>
+        <li>
+          <a [routerLink]="['purchase/purchases-return']">Purchases Return</a>
+        </li>
+      </ul>
+    </li>
+    <li class="active">
+      <a
+        href="#salesSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Sales</a
+      >
+      <ul class="collapse list-unstyled" id="salesSubmenu">
+        <li>
+          <a [routerLink]="['sales/all-sales']">All Sales</a>
+        </li>
+        <li>
+          <a [routerLink]="['sales/sales-return']">Sales Return</a>
+        </li>
+      </ul>
+    </li>
+    
+    <li>
+      <a [routerLink]="['warehouse']">Warehouse</a>
+    </li>
+    <li>
+      <a [routerLink]="['stock-transfer']">Stock Transfer</a>
+    </li>
+    <li>
+      <a [routerLink]="['adjustment']">Adjustment</a>
+    </li>
+
+    <li class="active">
+      <a
+        href="#expenseSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Expense</a
+      >
+      <ul class="collapse list-unstyled" id="expenseSubmenu">
+        <li>
+          <a [routerLink]="['warehouse']">home1</a>
+        </li>
+        <li>
+          <a [routerLink]="['warehouse']">home2</a>
+        </li>
+        <li>
+          <a [routerLink]="['warehouse']">home3</a>
+        </li>
+      </ul>
+    </li>
+    <li class="active">
+      <a
+        href="#paymentSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Payment Report</a
+      >
+      <ul class="collapse list-unstyled" id="paymentSubmenu">
+        <li>
+          <a [routerLink]="['warehouse']">home1</a>
+        </li>
+        <li>
+          <a [routerLink]="['warehouse']">home2</a>
+        </li>
+        <li>
+          <a [routerLink]="['warehouse']">home3</a>
+        </li>
+      </ul>
+    </li>
+
+    <li>
+      <a [routerLink]="['stock-report']">Stock Report</a>
+    </li>
+
+    <li class="active">
+      <a
+        href="#staffSubmenu"
+        data-toggle="collapse"
+        aria-expanded="false"
+        class="dropdown-toggle"
+        >Staff</a
+      >
+      <ul class="collapse list-unstyled" id="staffSubmenu">
+        <li>
+          <a [routerLink]="['warehouse']">home1</a>
+        </li>
+        <li>
+          <a [routerLink]="['warehouse']">home2</a>
+        </li>
+        <li>
+          <a [routerLink]="['warehouse']">home3</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+</nav>
+

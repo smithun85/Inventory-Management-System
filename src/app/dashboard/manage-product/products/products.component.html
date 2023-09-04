@@ -1,0 +1,176 @@
+<div class="container">
+  <h4>All Products</h4>
+  <div class="salesList">
+      <p>Product List</p>
+      <div class="button">
+          <button class="btn btn-primary"  (click)="openDialogForm()">
+              <b>+</b>Add New Product
+            </button>
+          
+            <button class="btn btn-primary">
+              Action
+            </button>
+            <!-- <button class="btn btn-primary">
+             PDF
+            </button> -->
+      </div>
+  </div>
+  <div class="header">
+      <!-- (click)="openFormSignupModal(modal)" -->
+    <div class="left-side">
+          <label>Show</label>
+          <select (change)="changeItemsPerPage($event.target)">
+            <option [value]="item" *ngFor="let item of limits; let i = index">
+              {{ item }}
+            </option>
+          </select>
+          <label>entries</label>
+    </div>
+    
+    <div class="search d-flex">
+      <label for="">search</label>
+      <input
+        class="form-control me-2"
+        type="search"
+        [(ngModel)]="searchText"
+        (input)="search(searchText)"
+        aria-label="Search"
+      />
+      
+      
+    </div>
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr class="sort">
+        <th>
+          <span (click)="sortClick('image')">Image</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'image' && reverse === true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'image' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('name')">Name|SKU</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'name' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'name' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('category')">category|Brand</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'category' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'category' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('stock')">stock</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'stock' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'stock' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('total_sale')">Total Sale|Alert Qty</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'total_sale' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'total_sale' && reverse === false"
+          ></span>
+        </th>
+        <th>
+          <span (click)="sortClick('unit')">Unit</span>
+          <span
+            class="sortorder descending"
+            [hidden]="sortType === 'unit' && reverse == true"
+          ></span>
+          <span
+            class="sortorder"
+            [hidden]="sortType === 'unit' && reverse === false"
+          ></span>
+        </th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <div *ngIf="search_Data_Available; then printData; else empty"></div>
+    <ng-template #printData>
+      <tbody>
+        <tr *ngFor="let item of productsItem">
+          <td> <img src="{{ item.image }}" alt="image"></td>
+          <td>
+              <p>{{ item.name }}</p>
+              <p>{{ item.SKU }}</p>
+          </td>
+          <td>
+              <p>{{ item.category }}</p>
+              <p>{{ item.brand }}</p>
+          </td>
+          <td>
+            <p>{{ item.stock }}</p>
+        </td>
+          <td>
+              <p>{{ item.total_sale }}</p>
+              <p>{{ item.altert_qnty }}</p>
+          </td>
+          <td>
+              <p>{{ item.unit }}</p>
+          </td>
+          <td>
+            <div class="worksheet">
+              <button
+                type="button"
+                class="btn btn-primary margin-right"
+                (click)="openDialogFormUpdate(item.id)"    
+              >
+              <i></i>
+                Edit
+              </button>
+              <!-- (click)="openFormUpdateModal(modal, user.id)"
+              (click)="openDeleteModal(deleteModal, user.id)" -->
+            
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </ng-template>
+    <ng-template #empty>
+      <h2>data not found.......</h2>
+    </ng-template>
+  </table>
+
+
+    
+    <div class="pagination">
+      <pagination
+        [boundaryLinks]="showBoundaryLinks"
+        [totalItems]="count"
+        [itemsPerPage]="limit"
+        [rotate]="rotate"
+        [maxSize]="maxSize"
+        [(ngModel)]="currentPage"
+        name="currentPage"
+        (pageChanged)="changePage($event)"
+      ></pagination>
+    </div>
+</div>

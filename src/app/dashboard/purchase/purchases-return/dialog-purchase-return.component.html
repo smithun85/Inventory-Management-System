@@ -1,0 +1,180 @@
+<div class="container">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide(); purchaseAllForm.reset()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">  
+       
+      <form class="form" [formGroup]="purchaseAllForm" (ngSubmit)="onSubmit()">            
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="invoice" placeholder="Invoice No." >
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['invoice']?.invalid &&
+              (purchaseAllForm.controls['invoice']?.dirty ||
+                purchaseAllForm.controls['invoice']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['invoice'].errors?.['required']">
+                invoice is required.
+            </div>
+            <!-- <div *ngIf="purchaseAllForm['invoice'].errors?.['minlength']">
+              minimum char length must be 3.
+            </div>
+            <div *ngIf="purchaseAllForm['invoice'].errors?.['maxlength']">
+              maximum char length should be less than 50
+            </div> -->
+          </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="date" placeholder="Date">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['date']?.invalid &&
+              (purchaseAllForm.controls['date']?.dirty ||
+                purchaseAllForm.controls['date']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['date'].errors?.['required']">
+                date is required.
+            </div>
+        </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="supplier" placeholder="supplier Name">
+            </div>
+            <div
+            *ngIf="purchaseAllForm.controls['supplier']?.invalid && (purchaseAllForm.controls['supplier']?.dirty || purchaseAllForm.controls['supplier']?.touched)"
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['supplier'].errors?.['required']">
+                supplier is required.
+            </div>
+        </div>
+
+            <div class="mb-3">
+                <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="mobile" placeholder="Mobile No.">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['mobile']?.invalid &&
+              (purchaseAllForm.controls['mobile']?.dirty ||
+                purchaseAllForm.controls['mobile']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['mobile'].errors?.['required']">
+                mobile is required.
+            </div>
+        </div>
+        
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="warehouse" placeholder="Warehouse">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['warehouse']?.invalid &&
+              (purchaseAllForm.controls['warehouse']?.dirty ||
+                purchaseAllForm.controls['warehouse']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['warehouse'].errors?.['required']">
+                warehouse is required.
+            </div>
+        </div>
+
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="totalAmount" placeholder="Total Amount">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['totalAmount']?.invalid &&
+              (purchaseAllForm.controls['totalAmount']?.dirty ||
+                purchaseAllForm.controls['totalAmount']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['totalAmount'].errors?.['required']">
+                totalAmount is required.
+            </div>
+        </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="lessed" placeholder="Lessed Amount">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['lessed']?.invalid &&
+              (purchaseAllForm.controls['lessed']?.dirty ||
+                purchaseAllForm.controls['lessed']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['lessed'].errors?.['required']">
+                lessed is required.
+            </div>
+        </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="receivable" placeholder="Receivable">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['receivable']?.invalid &&
+              (purchaseAllForm.controls['receivable']?.dirty ||
+                purchaseAllForm.controls['receivable']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['receivable'].errors?.['required']">
+                receivable is required.
+            </div>
+        </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="received" placeholder="Received">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['received']?.invalid &&
+              (purchaseAllForm.controls['received']?.dirty ||
+                purchaseAllForm.controls['received']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['received'].errors?.['required']">
+                received is required.
+            </div>
+        </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="due" placeholder="Due">
+            </div>
+            <div
+            *ngIf="
+              purchaseAllForm.controls['due']?.invalid &&
+              (purchaseAllForm.controls['due']?.dirty ||
+                purchaseAllForm.controls['due']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="purchaseAllForm.controls['due'].errors?.['required']">
+                due is required.
+            </div>
+        </div>
+
+            <div class="mb-3 button">              
+                <button type="submit" class="btn btn-primary margin-right" [disabled]="purchaseAllForm['invalid']"> Update</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
+            </div>
+        </form>
+    </div>    
+</div>
+     
+

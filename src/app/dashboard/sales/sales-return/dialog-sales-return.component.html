@@ -1,0 +1,314 @@
+<div class="container">
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">{{title}}</h4>
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="bsModalRef.hide(); salesAllForm.reset()">
+          <span aria-hidden="true" class="visually-hidden">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">  
+       
+      <form class="form" [formGroup]="salesAllForm" (ngSubmit)="onSubmit()">            
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="invoice" placeholder="Invoice No." >
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['invoice']?.invalid &&
+              (salesAllForm.controls['invoice']?.dirty ||
+                salesAllForm.controls['invoice']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['invoice'].errors?.['required']">
+                invoice is required.
+            </div>
+          </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="date" placeholder="Date">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['date']?.invalid &&
+              (salesAllForm.controls['date']?.dirty || salesAllForm.controls['date']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['date'].errors?.['required'] ">
+              date is required.
+            </div>
+          </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="customer" placeholder="Customer Name">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['customer']?.invalid &&
+              (salesAllForm.controls['customer']?.dirty ||
+                salesAllForm.controls['customer']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['customer'].errors?.['required']">
+                customer is required.
+            </div>
+            <div *ngIf="salesAllForm.controls['invoice'].errors?.['minlength']">
+              minimum char length must be 3.
+            </div>
+            <div *ngIf="salesAllForm.controls['invoice'].errors?.['maxlength']">
+              maximum char length should be less than 50
+            </div>
+          </div>
+            <div class="mb-3">
+                <input type="tel" class="form-control" id="exampleFormControlInput1" formControlName="mobile" placeholder="Mobile No.">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['mobile']?.invalid &&
+              (salesAllForm.controls['mobile']?.dirty || salesAllForm.controls['mobile']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['mobile'].errors?.['required'] ">
+              mobile is required.
+            </div>
+            <div *ngIf="salesAllForm.controls['mobile'].errors?.['minlength'] || salesAllForm.controls['mobile'].errors?.['maxlength']">
+              Phone number must be 10 Digits.
+            </div>
+          </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="warehouse" placeholder="Warehouse">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['warehouse']?.invalid &&
+              (salesAllForm.controls['warehouse']?.dirty || salesAllForm.controls['warehouse']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['warehouse'].errors?.['required'] ">
+              warehouse is required.
+            </div>
+          </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="totalAmount" placeholder="Total Amount">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['totalAmount']?.invalid &&
+              (salesAllForm.controls['totalAmount']?.dirty || salesAllForm.controls['totalAmount']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['totalAmount'].errors?.['required'] ">
+              totalAmount is required.
+            </div>
+          </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="discount" placeholder="Discount">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['discount']?.invalid &&
+              (salesAllForm.controls['discount']?.dirty || salesAllForm.controls['discount']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['discount'].errors?.['required'] ">
+              discount is required.
+            </div>
+          </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="payable" placeholder="Payable">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['payable']?.invalid &&
+              (salesAllForm.controls['payable']?.dirty || salesAllForm.controls['payable']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['payable'].errors?.['required'] ">
+              payable is required.
+            </div>
+          </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="paid" placeholder="Paid">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['paid']?.invalid &&
+              (salesAllForm.controls['paid']?.dirty || salesAllForm.controls['paid']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['paid'].errors?.['required'] ">
+              paid is required.
+            </div>
+          </div>
+
+            <div class="mb-3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" formControlName="due" placeholder="Due">
+            </div>
+            <div
+            *ngIf="
+              salesAllForm.controls['due']?.invalid &&
+              (salesAllForm.controls['due']?.dirty || salesAllForm.controls['due']?.touched)
+            "
+            class="alert alert-danger"
+          >
+            <div *ngIf="salesAllForm.controls['due'].errors?.['required'] ">
+              due is required.
+            </div>
+          </div>
+
+            <div class="mb-3 button">
+                <button type="submit" class="btn btn-primary margin-right" [disabled]="salesAllForm['invalid']"> Update</button>
+                <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset </button>    
+                  <!-- (click)="bsModalRef.hide()" [disabled]="salesAllForm['invalid']" -->
+            </div>
+        </form>
+    </div>    
+</div>
+     
+   
+
+  <div class="container"> 
+    <!-- Form-Modals-->
+    <ng-template #modal>
+      <div class="modal-body">
+        <form class="form" [formGroup]="salesAllForm" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Name"
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                salesAllForm.controls['name']?.invalid &&
+                (salesAllForm.controls['name']?.dirty ||
+                  salesAllForm.controls['name']?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="usersControls['name'].errors?.['required']">
+                Name is required.
+              </div>
+              <div *ngIf="usersControls['name'].errors?.['minlength']">
+                minimum char length must be 3.
+              </div>
+              <div *ngIf="usersControls['name'].errors?.['maxlength']">
+                maximum char length should be less than 50
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <textarea
+              class="form-control"
+              rows="3"
+              placeholder="Address"
+              formControlName="address"
+            ></textarea>
+            <div
+              *ngIf="
+                usersControls['address']?.invalid &&
+                (usersControls['address']?.dirty || usersControls['address']?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="usersControls['address'].errors?.['required']">
+                Address is required.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="text"
+              formControlName="text"
+            />
+            <div
+              *ngIf="
+                usersControls['text']?.invalid &&
+                (usersControls['text']?.dirty || usersControls['text']?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="usersControls['text'].errors?.['required']">
+                text is required.
+              </div>
+              <div *ngIf="usersControls['text'].errors?.['text']">
+                text must be valid.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Mobile no"
+              formControlName="mobile"
+            />
+            <div
+              *ngIf="
+                usersControls['mobile']?.invalid &&
+                (usersControls['mobile']?.dirty || usersControls['mobile']?.touched)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="usersControls['mobile'].errors?.['required']">
+                mobile no. is required.
+              </div>
+              <div
+                *ngIf=" usersControls['mobile'].errors?.['minlength'] || usersControls['mobile'].errors?.['maxlength']"
+              >
+                Phone number must be 10 Digits.
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" name="gender">Gender</label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  formControlName="gender"
+                />
+                <label class="form-check-label">male</label>
+              </div>
+  
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  formControlName="gender"
+                />
+                <label class="form-check-label">female</label>
+              </div>
+            </div>
+            <div
+            *ngIf="usersControls['gender'].touched && usersControls['gender'].invalid"
+            class="alert alert-danger"
+          >
+            <div *ngIf="usersControls['gender'].errors?.['required']">
+              gender is required.
+            </div>
+          </div>
+          </div>
+        </form>
+      </div>
+    </ng-template>
+  
+ 
+   
+  </div>

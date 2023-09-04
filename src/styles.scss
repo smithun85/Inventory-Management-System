@@ -1,0 +1,85 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+// select bootstrap style
+@import "~@ng-select/ng-select/themes/default.theme.css";
+.body{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container{
+    .salesList{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        .button{
+            display: flex;
+            flex-direction: row;
+            gap: 4px
+        }
+    };
+    .header{
+        margin:10px 0px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        label{
+            margin-right: 5px;
+        }
+    }
+    };
+    
+    
+    
+    .delete-popup{
+        margin: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 20px 20px 2px 10px, rgb(177, 90, 90);
+    };
+    
+    
+    
+    .margin-right{
+        margin-right: 20px;
+    }
+    
+    .items-per-page{
+        display: flex; 
+        gap: 2px;
+        justify-content: center;
+        align-items: center;
+    };
+    .items-per-page select{
+        border: none;
+        padding: 2px;
+    }
+    
+    
+    .sort{
+        cursor: pointer;
+    }
+    
+    
+    .sortorder:after {
+        content: '\25b2';
+    } 
+    .sortorder.descending:after {
+        content: '\25bc';
+    }
+    
+    .excel-view{
+        padding: 30px;
+        h2{
+            text-align: center;
+        }
+    }
+   
